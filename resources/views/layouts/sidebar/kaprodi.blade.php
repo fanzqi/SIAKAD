@@ -3,16 +3,16 @@
         <ul class="metismenu" id="menu">
             <li class="nav-label">Dashboard</li>
             <li>
-                <a href="{{ url('akademik/dashboard') }}">
+                <a href="{{ url('kaprodi/dashboard') }}">
                     <i class="icon-speedometer menu-icon"></i><span class="nav-text">Home</span>
                 </a>
             </li>
             <li class="nav-label">Menu</li>
             <li>
                 <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
-                    <i class="icon-grid menu-icon"></i><span class="nav-text">Akademik</span>
+                    <i class="icon-grid menu-icon"></i><span class="nav-text">Kaprodi</span>
                 </a>
-                <ul aria-expanded="false">
+                {{-- <ul aria-expanded="false">
             <li>
                 <a href="{{ url('akademik/semester') }}">
                     <i class="fa fa-book"></i><span class="nav-text">Semester</span>
@@ -28,7 +28,7 @@
                         <i class="icon-chart menu-icon"></i><span class="nav-text">Monitoring Nilai</span>
                     </a>
                 </li>
-                </ul>
+                </ul> --}}
             </li>
         </ul>
     </div>

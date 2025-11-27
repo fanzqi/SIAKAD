@@ -5,31 +5,47 @@ namespace App\Http\Controllers\Akademik;
 use App\Http\Controllers\Controller;
 use App\Models\TahunAkademik;
 use App\Models\InputNilai;
-use Illuminate\Http\Request;
 use App\Models\Notification;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SemesterController extends Controller
 {
+public function markAsRead(Request $request, $id)
+{
+    $notification = Notification::findOrFail($id);
+
+    // Tandai hanya untuk user ini
+    if($notification->user_id === null || $notification->user_id == auth()->id()){
+        $notification->is_read = 1;
+        $notification->save();
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false, 'message' => 'Notifikasi tidak bisa diubah']);
+}
+
     /**
-     * Menampilkan daftar Tahun Akademik / Semester
+     * Menampilkan daftar Tahun Akademik / Input Nilai
      */
     public function index()
     {
-        $semesters = TahunAkademik::all();      // Menampilkan semua tahun akademik
-        $inputNilai = InputNilai::all();        // Menampilkan data input nilai
-        return view('Semester.Semester', compact('semesters', 'inputNilai'));
+        $semesters = TahunAkademik::all();
+        $inputNilai = InputNilai::all();
+
+        return view('akademik.semester.index', compact('semesters', 'inputNilai'));
     }
 
     /**
-     * Halaman form tambah tahun akademik
+     * Halaman form tambah Tahun Akademik
      */
     public function create()
     {
-        return view('Semester.create');
+        return view('akademik.semester.create');
     }
 
     /**
-     * Menyimpan data tahun akademik baru
+     * Simpan data Tahun Akademik baru
      */
     public function store(Request $request)
     {
@@ -39,81 +55,81 @@ class SemesterController extends Controller
             'status' => 'required|in:Aktif,Nonaktif',
         ]);
 
-        TahunAkademik::create([
+        $semester = TahunAkademik::create([
             'tahun_akademik' => $request->tahun_akademik,
             'semester' => $request->semester,
             'status' => $request->status,
         ]);
 
-        // 🔔 Buat notifikasi tambah
+        // Notifikasi global untuk semua user
         Notification::create([
-            'message' => 'Menambahkan Tahun Akademik ' . $request->tahun_akademik . ' (' . $request->semester . ')'
+            'user_id' => null, // null = semua user
+            'author_name' => Auth::user()?->name ?? 'Sistem',
+            'type' => 'add',
+            'message' => 'Tahun Akademik ' . $semester->tahun_akademik . ' (' . $semester->semester . '), telah dimulai'
         ]);
 
-        return redirect()->route('semester.semester')
+        return redirect()->route('semester.index')
             ->with('success', 'Data tahun akademik berhasil ditambahkan');
     }
 
     /**
-     * Halaman form edit input nilai semester
+     * Halaman form edit Tahun Akademik
      */
     public function edit($id)
     {
-        $data = InputNilai::findOrFail($id);
-        $tahun = TahunAkademik::all();
-        return view('akademik.semester.edit', compact('data', 'tahun'));
+        $semester = TahunAkademik::findOrFail($id);
+        return view('akademik.semester.edit', compact('semester'));
     }
 
     /**
-     * Update data input nilai semester
+     * Update Tahun Akademik
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'tahun_akademik_id' => 'required',
-            'deskripsi' => 'required',
-            'tanggal_mulai' => 'required|date',
-            'tanggal_akhir' => 'required|date',
-            'status' => 'required',
+            'tahun_akademik' => 'required',
+            'semester' => 'required|in:Ganjil,Genap,Pendek',
+            'status' => 'required|in:Aktif,Nonaktif',
         ]);
 
-        $data = InputNilai::findOrFail($id);
-
-        $data->update([
-            'tahun_akademik_id' => $request->tahun_akademik_id,
-            'deskripsi' => $request->deskripsi,
-            'tanggal_mulai' => $request->tanggal_mulai,
-            'tanggal_akhir' => $request->tanggal_akhir,
+        $semester = TahunAkademik::findOrFail($id);
+        $semester->update([
+            'tahun_akademik' => $request->tahun_akademik,
+            'semester' => $request->semester,
             'status' => $request->status,
         ]);
 
-        // 🔔 Buat notifikasi edit
+        // Notifikasi khusus user yang update
         Notification::create([
-            'message' => 'Mengedit Input Nilai: ' . $request->deskripsi
+            'user_id' => Auth::id(),
+            'author_name' => Auth::user()?->name ?? 'Sistem',
+            'type' => 'edit',
+            'message' => 'Mengedit Tahun Akademik ' . $semester->tahun_akademik . ' (' . $semester->semester . ')'
         ]);
 
         return redirect()->route('semester.index')
-            ->with('success', 'Data berhasil diperbarui');
+            ->with('edit', 'Data Tahun Akademik berhasil diperbarui');
     }
 
     /**
-     * Menghapus Tahun Akademik
+     * Hapus Tahun Akademik
      */
     public function destroy($id)
     {
-        $data = TahunAkademik::findOrFail($id);
+        $semester = TahunAkademik::findOrFail($id);
+        $info = $semester->tahun_akademik . ' (' . $semester->semester . ')';
+        $semester->delete();
 
-        // Simpan info sebelum dihapus
-        $info = $data->tahun_akademik . ' (' . $data->semester . ')';
-
-        $data->delete();
-
-        // 🔔 Buat notifikasi hapus
+        // Notifikasi khusus user yang delete
         Notification::create([
+            'user_id' => Auth::id(),
+            'author_name' => Auth::user()?->name ?? 'Sistem',
+            'type' => 'delete',
             'message' => 'Menghapus Tahun Akademik ' . $info
         ]);
 
-        return redirect()->route('semester.semester')
-            ->with('success', 'Data berhasil dihapus');
+        return redirect()->route('semester.index')
+            ->with('delete', 'Data Tahun Akademik berhasil dihapus');
     }
 }

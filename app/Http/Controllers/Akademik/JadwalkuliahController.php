@@ -9,7 +9,7 @@ class JadwalkuliahController extends Controller
 {
     public function index()
     {
-        return view('jadwalkuliah.jadwalkuliah');
+        return view('akademik.jadwalkuliah.index');
     }
-    
+
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Akademik\DashboardController;
 use App\Http\Controllers\Akademik\SemesterController;
 use App\Http\Controllers\Akademik\JadwalkuliahController;
 
+use App\Http\Controllers\NotificationController;
 
 // ===============================
 // Halaman Welcome
@@ -28,32 +29,21 @@ Route::post('/login', [AuthController::class, 'loginProcess'])->name('login.proc
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+include 'akademik.php';
+include 'warek1.php';
+include 'dekan.php';
+include 'kaprodi.php';
+include 'dosen.php';
+include 'mahasiswa.php';
 
 // ===============================
-// Protected Routes (Wajib Login)
+// Notifikasi
 // ===============================
-Route::middleware('auth')->group(function () {
 
-    // Dashboard
-    Route::get('/akademik/dashboard', function () {
-        return view('Dashboard.Dashboard');
-    })->name('dashboard');
+Route::post('/akademik/notification/read/{id}', [NotificationController::class, 'markAsRead'])->name('notification.read');
+Route::delete('/akademik/notification/{id}', [NotificationController::class, 'destroy'])->name('notification.delete');
 
-    // Semester
-    Route::get('/akademik/semester', [SemesterController::class, 'index'])->name('semester.semester');
+// opsional: buat notifikasi global via route (hanya contoh)
+Route::get('/akademik/notification/global/create', [NotificationController::class, 'createGlobalNotification']);
 
-    Route::post('/akademik/semester', [SemesterController::class, 'store'])->name('semester.store');
-    Route::get('/akademik/semester/create', [SemesterController::class, 'create'])->name('semester.create');
-    // Route::get('/akademik/semester/{id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
-    // Route::put('/akademik/semester/{id}', [SemesterController::class,'update'])->name('semester.update');
-    Route::delete('/akademik/semester/{id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
-    Route::delete('/notification/{id}', function ($id) {
-        \App\Models\Notification::where('id', $id)->delete();
-        return response()->json(['success' => true]);
-    })->name('notification.delete');
-
-
-    // Jadwal Kuliah
-    Route::get('/akademik/jadwalkuliah', [JadwalkuliahController::class, 'index'])->name('jadwalkuliah');
-
-});
+Route::patch('/akademik/notification/{id}', [NotificationController::class, 'markAsRead']);Route::patch('/akademik/notification/{id}', [NotificationController::class, 'markAsRead']);

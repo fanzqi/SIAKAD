@@ -7,37 +7,53 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    // tampilkan halaman login
     public function login()
     {
         return view('login');
     }
 
-    // proses login
     public function loginProcess(Request $request)
     {
-        $credentials = $request->validate([
+        // Validasi input
+        $request->validate([
             'username' => 'required',
             'password' => 'required'
         ]);
 
+        // Coba login dengan field username
+        $credentials = [
+            'username' => $request->username,
+            'password' => $request->password
+        ];
+
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();  // penting!
-            return redirect()->route('dashboard');
+
+            $request->session()->regenerate();
+
+            $role = strtolower(Auth::user()->role);
+
+            return match ($role) {
+                'akademik'   => redirect()->route('akademik.dashboard'),
+                'warek1' => redirect()->route('warek1.dashboard'),
+                'dekan'      => redirect()->route('dekan.dashboard'),
+                'kaprodi'    => redirect()->route('kaprodi.dashboard'),
+                'dosen'      => redirect()->route('dosen.dashboard'),
+                'mahasiswa'  => redirect()->route('mahasiswa.dashboard'),
+                default      => redirect()->route('dashboard'),
+            };
         }
 
+        // Jika gagal login
         return back()->withErrors([
             'username' => 'Username atau password salah!',
         ]);
     }
 
-    // logout
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return redirect('/login');
     }
 }

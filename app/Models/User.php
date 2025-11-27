@@ -7,12 +7,21 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class, 'notification_user')
+                    ->withPivot('is_read')
+                    ->withTimestamps();
+    }
+
     use Notifiable;
 
     protected $fillable = [
         'name',
         'username',
         'password',
+        'role',
     ];
 
     protected $hidden = [
@@ -20,7 +29,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // memakai username untuk login
+    // gunakan username sebagai field login
     public function username()
     {
         return 'username';

@@ -3,6 +3,45 @@
 @section('title', 'Jadwal Kuliah')
 
 @section('content')
+    @php
+        $segments = request()->segments();
+        // Treat 'akademik' as the dashboard root and remove it from segments to avoid duplication
+        if (!empty($segments) && $segments[0] === 'akademik') {
+            array_shift($segments);
+        }
+        $mapping = [
+            'semester' => 'Semester',
+            'jadwal-kuliah' => 'Jadwal Kuliah',
+            'monitoring-nilai' => 'Monitoring Nilai',
+        ];
+        $base = url('akademik');
+        $cumulative = $base;
+    @endphp
+
+    <div class="row page-titles mx-0">
+        <div class="col p-md-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('akademik/dashboard') }}">Dashboard</a></li>
+
+                @foreach ($segments as $i => $seg)
+                    @php
+                        $cumulative .= '/' . $seg;
+                        $isLast = $i === array_key_last($segments);
+                        $label = $mapping[$seg] ?? ucwords(str_replace(['-', '_'], ' ', $seg));
+                    @endphp
+
+                    <li class="breadcrumb-item {{ $isLast ? 'active' : '' }}">
+                        @if ($isLast)
+                            <a href="javascript:void(0)">{{ $label }}</a>
+                        @else
+                            <a href="{{ $cumulative }}">{{ $label }}</a>
+                        @endif
+                    </li>
+                @endforeach
+            </ol>
+        </div>
+    </div>
+    <div class="container mt-3">
 <div class="row">
     <!-- SLOT WAKTU KULIAH -->
     <div class="col-lg-6 col-12">
@@ -55,7 +94,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- DAFTAR RUANGAN -->
     <div class="col-lg-6 col-12">
         <div class="card shadow-sm">
@@ -124,7 +163,7 @@
         </div>
     </div>
 </div>
-
+</div>
 @push('scripts')
 <script>
     (function () {

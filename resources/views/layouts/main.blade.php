@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@include('partials.head')
+@include('layouts.head')
 
 <body>
     <!-- Preloader -->
@@ -16,53 +16,47 @@
     <!-- Main Wrapper -->
     <div id="main-wrapper">
 
-        @include('partials.header')
-        @include('partials.sidebar')
+        {{-- Header --}}
+        @include('layouts.header')
+
+        {{-- Sidebar sesuai role yang login --}}
+        @php
+            $role = strtolower(Auth::user()->role);
+        @endphp
+
+        @switch($role)
+            @case('akademik')
+                @include('layouts.sidebar.akademik')
+                @break
+
+            @case('warek1')
+                @include('layouts.sidebar.warek1')
+                @break
+
+            @case('dekan')
+                @include('layouts.sidebar.dekan')
+                @break
+
+            @case('kaprodi')
+                @include('layouts.sidebar.kaprodi')
+                @break
+
+            @case('dosen')
+                @include('layouts.sidebar.dosen')
+                @break
+
+            @case('mahasiswa')
+                @include('layouts.sidebar.mahasiswa')
+                @break
+        @endswitch
 
         <!-- Content -->
         <div class="content-body">
-                @php
-                $segments = request()->segments();
-                // Treat 'akademik' as the dashboard root and remove it from segments to avoid duplication
-                if (!empty($segments) && $segments[0] === 'akademik') {
-                    array_shift($segments);
-                }
-                $mapping = [
-                    'semester' => 'Semester',
-                    'jadwal-kuliah' => 'Jadwal Kuliah',
-                    'monitoring-nilai' => 'Monitoring Nilai',
-                ];
-                $base = url('akademik');
-                $cumulative = $base;
-            @endphp
-
-            <div class="row page-titles mx-0">
-                <div class="col p-md-0">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('akademik/dashboard') }}">Dashboard</a></li>
-
-                        @foreach($segments as $i => $seg)
-                            @php
-                                $cumulative .= '/' . $seg;
-                                $isLast = $i === array_key_last($segments);
-                                $label = $mapping[$seg] ?? ucwords(str_replace(['-','_'], ' ', $seg));
-                            @endphp
-
-                            <li class="breadcrumb-item {{ $isLast ? 'active' : '' }}">
-                                @if($isLast)
-                                    <a href="javascript:void(0)">{{ $label }}</a>
-                                @else
-                                    <a href="{{ $cumulative }}">{{ $label }}</a>
-                                @endif
-                            </li>
-                        @endforeach
-                    </ol>
-                </div>
-            </div>
             @yield('content')
         </div>
 
-        @include('partials.footer')
+        {{-- Footer --}}
+        @include('layouts.footer')
 
     </div>
 

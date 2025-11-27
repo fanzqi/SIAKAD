@@ -1,66 +1,101 @@
 @extends('layouts.main')
 
-@section('title', 'Dashboard')
+@section('title', 'Dashboard Akademik')
 
 @section('content')
+    @php
+        $segments = request()->segments();
+        // Treat 'akademik' as the dashboard root and remove it from segments to avoid duplication
+        if (!empty($segments) && $segments[0] === 'akademik') {
+            array_shift($segments);
+        }
+        $mapping = [
+            'semester' => 'Semester',
+            'jadwal-kuliah' => 'Jadwal Kuliah',
+            'monitoring-nilai' => 'Monitoring Nilai',
+        ];
+        $base = url('akademik');
+        $cumulative = $base;
+    @endphp
 
+    <div class="row page-titles mx-0">
+        <div class="col p-md-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('akademik/dashboard') }}">Dashboard</a></li>
+
+                @foreach ($segments as $i => $seg)
+                    @php
+                        $cumulative .= '/' . $seg;
+                        $isLast = $i === array_key_last($segments);
+                        $label = $mapping[$seg] ?? ucwords(str_replace(['-', '_'], ' ', $seg));
+                    @endphp
+
+                    <li class="breadcrumb-item {{ $isLast ? 'active' : '' }}">
+                        @if ($isLast)
+                            <a href="javascript:void(0)">{{ $label }}</a>
+                        @else
+                            <a href="{{ $cumulative }}">{{ $label }}</a>
+                        @endif
+                    </li>
+                @endforeach
+            </ol>
+        </div>
+    </div>
     <div class="container-fluid mt-3">
         <div class="row">
-            <div class="col-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="text-center">
-                            <span class="display-5"><i class="icon-earphones gradient-3-text"></i></span>
-                            <h2 class="mt-3">5K Songs</h2>
-                            <p>Your playlist download complete</p><a href="javascript:void()"
-                                class="btn gradient-3 btn-lg border-0 btn-rounded px-5">Download
-                                now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="text-center">
-                            <span class="display-5"><i class="icon-diamond gradient-4-text"></i></span>
-                            <h2 class="mt-3">765 Point</h2>
-                            <p>Nice, you are doing great!</p>
-                            <a href="javascript:void()" class="btn gradient-4 btn-lg border-0 btn-rounded px-5">Redeem
-                                now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="text-center">
-                            <span class="display-5"><i class="icon-user gradient-4-text"></i></span>
-                            <h2 class="mt-3">5210 Users</h2>
-                            <p>Currently active</p><a href="javascript:void()"
-                                class="btn gradient-4 btn-lg border-0 btn-rounded px-5">Add
-                                more</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="text-center">
-                            <span class="display-5"><i class="icon-grid gradient-9-text"></i></span>
-                            <h2 class="mt-3">2 Grid Servers</h2>
-                            <p>Currently inactive</p><a href="javascript:void()"
-                                class="btn gradient-9 btn-lg border-0 btn-rounded px-5">Fix
-                                now</a>
-                        </div>
-                    </div>
+    <!-- Mahasiswa -->
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <span class="display-5"><i class="icon-user gradient-3-text"></i></span>
+                    <h2 class="mt-3">200 Mahasiswa</h2>
+                    <p>Total mahasiswa terdaftar</p>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Dosen -->
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <span class="display-5"><i class="icon-briefcase gradient-4-text"></i></span>
+                    <h2 class="mt-3">80 Dosen</h2>
+                    <p>Total dosen aktif</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mata Kuliah -->
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <span class="display-5"><i class="icon-book-open gradient-5-text"></i></span>
+                    <h2 class="mt-3">45 Mata Kuliah</h2>
+                    <p>Mata kuliah semester ini</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Semester -->
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <span class="display-5"><i class="fa fa-calendar gradient-9-text"></i></span>
+                    <h2 class="mt-3">Semester Ganjil 2025/2026</h2>
+                    <p>Semester Berjalan</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
         <div class="row mt-4">
             <div class="col-12">
