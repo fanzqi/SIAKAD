@@ -32,12 +32,12 @@
                 <ul aria-expanded="false">
                     <li>
                         <a href="{{ url('akademik/ruang') }}">
-                            <i class="fa-solid fa-suitcase"></i><span class="nav-text">Ruang dan Jam</span>
+                            <i class="fa fa-clock-o"></i><span class="nav-text">Ruang dan Jam</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('akademik/matakuliah') }}">
-                            <i class="fa fa-calendar"></i><span class="nav-text">Mata Kuliah</span>
+                            <i class="fa fa-book"></i><span class="nav-text">Mata Kuliah</span>
                         </a>
                     </li>
                     <li>

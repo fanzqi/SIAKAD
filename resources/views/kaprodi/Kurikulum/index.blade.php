@@ -3,48 +3,18 @@
 @section('title', 'Kurikulum')
 
 @section('content')
-    @php
-        $segments = request()->segments();
-        // Treat 'akademik' as the dashboard root and remove it from segments to avoid duplication
-        if (!empty($segments) && $segments[0] === 'kaprodi') {
-            array_shift($segments);
-        }
-        $mapping = [
-            'semester' => 'Semester',
-            'jadwal-kuliah' => 'Jadwal Kuliah',
-            'monitoring-nilai' => 'Monitoring Nilai',
-        ];
-        $base = url('kaprodi');
-        $cumulative = $base;
-    @endphp
 
     <div class="row page-titles mx-0">
         <div class="col p-md-0">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('kaprodi/dashboard') }}">Dashboard</a></li>
-
-                @foreach ($segments as $i => $seg)
-                    @php
-                        $cumulative .= '/' . $seg;
-                        $isLast = $i === array_key_last($segments);
-                        $label = $mapping[$seg] ?? ucwords(str_replace(['-', '_'], ' ', $seg));
-                    @endphp
-
-                    <li class="breadcrumb-item {{ $isLast ? 'active' : '' }}">
-                        @if ($isLast)
-                            <a href="javascript:void(0)">{{ $label }}</a>
-                        @else
-                            <a href="{{ $cumulative }}">{{ $label }}</a>
-                        @endif
-                    </li>
-                @endforeach
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Manajemen Kurikulum</a></li>
             </ol>
         </div>
     </div>
+
     <!-- Floating Alerts -->
     <div style="position: fixed; top: 20px; right: 20px; z-index: 9999; width: 300px;">
-
-        <!-- Alert Tambah -->
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Berhasil!</strong> {{ session('success') }}
@@ -54,7 +24,6 @@
             </div>
         @endif
 
-        <!-- Alert Edit -->
         @if (session('edit'))
             <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <strong>Diperbarui!</strong> {{ session('edit') }}
@@ -64,7 +33,6 @@
             </div>
         @endif
 
-        <!-- Alert Hapus -->
         @if (session('delete'))
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Terhapus!</strong> {{ session('delete') }}
@@ -73,84 +41,75 @@
                 </button>
             </div>
         @endif
-
     </div>
 
-
-    <div class="container mt-3">
+    <div class="container mt-4">
         <div class="row">
             <div class="col-12">
                 <div class="card shadow-sm">
-
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Daftar Kurikulum</h5>
                         <a href="{{ route('kurikulum.create') }}" class="btn btn-primary btn-sm">
                             <i class="bi bi-plus-lg"></i> Tambah Kurikulum
                         </a>
                     </div>
-
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered">
                                 <thead class="table-light">
                                     <tr>
-                                        <th style="width:5%;">No</th>
+                                        <th>No.</th>
                                         <th>Semester</th>
                                         <th>Kode MK</th>
-                                        <th>Nama MK</th>
-                                        <th style="width:5%;">sks</th>
-                                        <th>Wajib Pilihan</th>
+                                        <th>Nama Mata Kuliah</th>
+                                        <th>SKS</th>
+                                        <th>Wajib/Pilihan</th>
                                         <th>Prasyarat</th>
-                                        <th style="width:12%;">Status</th>
-                                        <th style="width:15%;">Aksi</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($semesters as $semester)
+                                    @forelse($kurikulums as $index => $kurikulum)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $semester->tahun_akademik }}</td>
-                                            <td>{{ $semester->semester }}</td>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $kurikulum->tahunAkademik->semester }}
+                                                {{ $kurikulum->tahunAkademik->tahun_akademik }}</td>
+                                            <td>{{ $kurikulum->kode_mk }}</td>
+                                            <td>{{ $kurikulum->nama_mk }}</td>
+                                            <td>{{ $kurikulum->sks }}</td>
+                                            <td>{{ $kurikulum->wajib_pilihan }}</td>
+                                            <td>{{ $kurikulum->prasyarat ?? '-' }}</td>
                                             <td>
                                                 <span
-                                                    class="badge {{ $semester->status == 'Aktif' ? 'bg-success' : 'bg-secondary' }}">
-                                                    {{ $semester->status }}
+                                                    class="badge {{ $kurikulum->status == 'Aktif' ? 'bg-success' : 'bg-secondary' }}">
+                                                    {{ $kurikulum->status }}
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('kurikulum.edit', $semester->id) }}"
-                                                    class="btn btn-sm btn-warning">
-                                                    <i class="bi bi-pencil-square"></i> Edit
-                                                </a>
-                                                <form action="{{ route('kurikulum.destroy', $semester->id) }}"
-                                                    method="POST" style="display: inline-block;">
+                                                <a href="{{ route('kurikulum.edit', $kurikulum->id) }}"
+                                                    class="btn btn-sm btn-warning">Edit</a>
+                                                <form action="{{ route('kurikulum.destroy', $kurikulum->id) }}"
+                                                    method="POST" style="display:inline-block;"
+                                                    onsubmit="return confirm('Yakin ingin menghapus data ini?');">
                                                     @csrf
                                                     @method('DELETE')
-
-                                                    <button type="submit" class="btn btn-sm btn-danger"
-                                                        onclick="return confirm('Hapus data?')">
-                                                        Hapus
-                                                    </button>
+                                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                                                 </form>
-
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center">Belum ada data.</td>
+                                            <td colspan="9" class="text-center">Belum ada data.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-
-
-
 
 @endsection

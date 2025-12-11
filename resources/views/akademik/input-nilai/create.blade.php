@@ -58,9 +58,9 @@
                     <div class="card-body">
                         <form action="{{ route('input-nilai.store') }}" method="POST">
                             @csrf
-                            <div class="mb-3">
+                            <div class="form-group">
                                 <label for="tahun_akademik_id" class="form-label">Tahun Akademik</label>
-                                <select name="tahun_akademik_id" id="tahun_akademik_id"
+                                <select class="form-control"name="tahun_akademik_id" id="tahun_akademik_id"
                                     class="form-select @error('tahun_akademik_id') is-invalid @enderror" required>
                                     <option value="">-- Pilih Tahun Akademik --</option>
                                     @if (!empty($tahunAkademikList) && count($tahunAkademikList))

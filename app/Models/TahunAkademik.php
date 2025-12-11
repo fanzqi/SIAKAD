@@ -18,4 +18,10 @@ class TahunAkademik extends Model
     {
         return $this->hasMany(InputNilai::class);
     }
+
+     // Relasi ke Kurikulum
+    public function kurikulums()
+    {
+        return $this->hasMany(Kurikulum::class);
+    }
 }

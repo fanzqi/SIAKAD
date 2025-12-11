@@ -29,9 +29,9 @@
                         @method('PUT')
 
                         {{-- Tahun Akademik --}}
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="tahun_akademik" class="form-label">Tahun Akademik</label>
-                            <input type="text" name="tahun_akademik" id="tahun_akademik"
+                            <input class="form-control" type="text" name="tahun_akademik" id="tahun_akademik"
                                    class="form-control @error('tahun_akademik') is-invalid @enderror"
                                    value="{{ old('tahun_akademik', $semester->tahun_akademik) }}" placeholder="contoh: 2024/2025">
                             @error('tahun_akademik')
@@ -40,9 +40,9 @@
                         </div>
 
                         {{-- Semester --}}
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="semester" class="form-label">Semester</label>
-                            <select name="semester" id="semester"
+                            <select class="form-control" name="semester" id="semester"
                                     class="form-select @error('semester') is-invalid @enderror">
                                 <option value="">-- Pilih Semester --</option>
                                 <option value="Ganjil" {{ old('semester', $semester->semester) == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>

@@ -59,9 +59,9 @@
                     <form action="{{ route('semester.store') }}" method="POST">
                         @csrf
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="tahun_akademik" class="form-label">Tahun Akademik</label>
-                            <input type="text" name="tahun_akademik" id="tahun_akademik"
+                            <input class="form-control" type="text" name="tahun_akademik" id="tahun_akademik"
                                    class="form-control @error('tahun_akademik') is-invalid @enderror"
                                    value="{{ old('tahun_akademik') }}" placeholder="contoh: 2024/2025">
                             @error('tahun_akademik')
@@ -69,10 +69,10 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group mb-3">
                             <label for="semester" class="form-label">Semester</label>
-                            <select name="semester" id="semester"
-                                    class="form-select @error('semester') is-invalid @enderror">
+                            <select class="form-control" name="semester" id="semester"
+                                     @error('semester') is-invalid @enderror">
                                 <option value="">-- Pilih Semester --</option>
                                 <option value="Ganjil" {{ old('semester') == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
                                 <option value="Genap" {{ old('semester') == 'Genap' ? 'selected' : '' }}>Genap</option>

@@ -3,72 +3,121 @@
 @section('title', 'Tambah Kurikulum')
 
 @section('content')
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow-sm">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Tambah Kurikulum</h5>
-                    <a href="{{ route('kurikulum.index') }}" class="btn btn-secondary btn-sm">
-                        <i class="bi bi-arrow-left"></i> Kembali
-                    </a>
-                </div>
+    <div class="row page-titles mx-0">
+        <div class="col p-md-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('kaprodi/dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('kurikulum.index') }}">Manajemen Kurikulum</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Tambah Kurikulum</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container mt-4">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5>Form Tambah Kurikulum</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('kurikulum.store') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="tahun_akademik_id" class="form-label">Tahun Akademik</label>
+                        <select class="form-control" name="tahun_akademik_id" id="tahun_akademik_id"
+                            class="form-select @error('tahun_akademik_id') is-invalid @enderror" required>
+                            <option value="">-- Pilih Tahun Akademik --</option>
+                            @if (!empty($tahunAkademikList) && count($tahunAkademikList))
+                                @foreach ($tahunAkademikList as $tahun)
+                                    <option value="{{ $tahun->id }}"
+                                        {{ old('tahun_akademik_id') == $tahun->id ? 'selected' : '' }}>
+                                        {{ $tahun->semester }}
+                                        {{ substr($tahun->tahun_akademik, 0, 4) }}{{ strtolower($tahun->semester) == 'ganjil' ? 1 : 2 }}
+                                        ({{ $tahun->tahun_akademik }})
+                                    </option>
+                                @endforeach
+                            @else
+                                <option value="">Tidak ada data tahun akademik</option>
+                            @endif
+                        </select>
+                        @error('tahun_akademik_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div class="card-body">
-                    <form action="{{ route('kurikulum.store') }}" method="POST">
-                        @csrf
+                    <div class="mb-3">
+                        <label for="kode_mk" class="form-label">Kode MK</label>
+                        <input type="text" name="kode_mk" id="kode_mk"
+                            class="form-control @error('kode_mk') is-invalid @enderror"
+                            value="{{ old('kode_mk') }}" required>
+                        @error('kode_mk')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="tahun_akademik" class="form-label">Tahun Akademik</label>
-                            <input type="text" name="tahun_akademik" id="tahun_akademik"
-                                   class="form-control @error('tahun_akademik') is-invalid @enderror"
-                                   value="{{ old('tahun_akademik') }}" placeholder="contoh: 2024/2025">
-                            @error('tahun_akademik')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    <div class="mb-3">
+                        <label for="nama_mk" class="form-label">Nama Mata Kuliah</label>
+                        <input type="text" name="nama_mk" id="nama_mk"
+                            class="form-control @error('nama_mk') is-invalid @enderror"
+                            value="{{ old('nama_mk') }}" required>
+                        @error('nama_mk')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="semester" class="form-label">Semester</label>
-                            <select name="semester" id="semester"
-                                    class="form-select @error('semester') is-invalid @enderror">
-                                <option value="">-- Pilih Semester --</option>
-                                <option value="Ganjil" {{ old('semester') == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
-                                <option value="Genap" {{ old('semester') == 'Genap' ? 'selected' : '' }}>Genap</option>
-                            </select>
-                            @error('semester')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    <div class="mb-3">
+                        <label for="sks" class="form-label">SKS</label>
+                        <input type="number" name="sks" id="sks"
+                            class="form-control @error('sks') is-invalid @enderror"
+                            value="{{ old('sks') }}" required>
+                        @error('sks')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div class="mb-3">
-                            <label class="form-label d-block">Status</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="status_aktif" value="Aktif"
-                                       {{ old('status', 'Tidak Aktif') == 'Aktif' ? 'checked' : '' }}>
-                                <label class="form-check-label" for="status_aktif">Aktif</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="status_tidak" value="Tidak Aktif"
-                                       {{ old('status') == 'Tidak Aktif' ? 'checked' : '' }}>
-                                <label class="form-check-label" for="status_tidak">Tidak Aktif</label>
-                            </div>
-                            @error('status')
-                                <div class="text-danger small mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    <div class="form-group">
+                        <label for="wajib_pilihan" class="form-label">Wajib/Pilihan</label>
+                        <select class="form-control" name="wajib_pilihan" id="wajib_pilihan"
+                            class="form-select @error('wajib_pilihan') is-invalid @enderror" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="Wajib" {{ old('wajib_pilihan') == 'Wajib' ? 'selected' : '' }}>Wajib</option>
+                            <option value="Pilihan" {{ old('wajib_pilihan') == 'Pilihan' ? 'selected' : '' }}>Pilihan</option>
+                        </select>
+                        @error('wajib_pilihan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-save"></i> Simpan
-                            </button>
-                            <a href="{{ route('semester.index') }}" class="btn btn-outline-secondary">Batal</a>
-                        </div>
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <label for="prasyarat" class="form-label">Mata Kuliah Prasyarat</label>
+                        <select class="form-control" name="prasyarat" id="prasyarat">
+                            <option value="">Tidak Ada</option>
+                            @if (!empty($kurikulums))
+                                @foreach ($kurikulums as $mk)
+                                    <option value="{{ $mk->kode_mk }}"
+                                        {{ old('prasyarat') == $mk->kode_mk ? 'selected' : '' }}>
+                                        {{ $mk->kode_mk }} - {{ $mk->nama_mk }}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-control" name="status" id="status"
+                            class="form-select @error('status') is-invalid @enderror" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="Aktif" {{ old('status') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                            <option value="Nonaktif" {{ old('status') == 'Nonaktif' ? 'selected' : '' }}>Nonaktif</option>
+                        </select>
+                        @error('status')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a href="{{ route('kurikulum.index') }}" class="btn btn-secondary">Batal</a>
+                </form>
             </div>
         </div>
     </div>
-</div>
 @endsection

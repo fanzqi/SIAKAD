@@ -12,24 +12,24 @@
                 <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
                     <i class="icon-grid menu-icon"></i><span class="nav-text">Kaprodi</span>
                 </a>
-                {{-- <ul aria-expanded="false">
+                <ul aria-expanded="false">
             <li>
-                <a href="{{ url('akademik/semester') }}">
-                    <i class="fa fa-book"></i><span class="nav-text">Semester</span>
+                <a href="{{ url('kaprodi/kurikulum') }}">
+                    <i class="fa fa-book"></i><span class="nav-text">Kurikulum</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ url('akademik/jadwalkuliah') }}">
+            {{-- <li>
+                <a href="{{ url('kaprodi/jadwalkuliah') }}">
                     <i class="fa fa-calendar"></i><span class="nav-text">Jadwal Kuliah</span>
                 </a>
             </li>
                 <li>
-                    <a href="{{ url('akademik/classes') }}">
+                    <a href="{{ url('kaprodi/classes') }}">
                         <i class="icon-chart menu-icon"></i><span class="nav-text">Monitoring Nilai</span>
                     </a>
                 </li>
-                </ul> --}}
-            </li>
+                </ul>
+            </li> --}}
         </ul>
     </div>
 </div>
