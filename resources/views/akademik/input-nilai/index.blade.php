@@ -3,6 +3,46 @@
 @section('title', 'Input Nilai')
 
 @section('content')
+
+
+@php
+    $segments = request()->segments();
+    if (!empty($segments) && $segments[0] === 'akademik') {
+        array_shift($segments);
+    }
+    $mapping = [
+        'ruang' => 'Ruang',
+        'jadwal-kuliah' => 'Jadwal Kuliah',
+        'monitoring-nilai' => 'Monitoring Nilai',
+        'semester' => 'Semester',
+    ];
+    $base = url('akademik');
+    $cumulative = $base;
+@endphp
+
+<div class="row page-titles mx-0">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('akademik/dashboard') }}">Dashboard</a></li>
+
+            @foreach ($segments as $i => $seg)
+                @php
+                    $cumulative .= '/' . $seg;
+                    $isLast = $i === array_key_last($segments);
+                    $label = $mapping[$seg] ?? ucwords(str_replace(['-', '_'], ' ', $seg));
+                @endphp
+
+                <li class="breadcrumb-item {{ $isLast ? 'active' : '' }}">
+                    @if ($isLast)
+                        <a href="javascript:void(0)">{{ $label }}</a>
+                    @else
+                        <a href="{{ $cumulative }}">{{ $label }}</a>
+                    @endif
+                </li>
+            @endforeach
+        </ol>
+    </div>
+</div>
 <div style="position: fixed; top: 20px; right: 20px; z-index: 9999; width: 300px;">
 
         <!-- Alert Tambah -->

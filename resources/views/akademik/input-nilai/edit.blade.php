@@ -3,6 +3,16 @@
 @section('title', 'Edit Input Nilai')
 
 @section('content')
+
+<div class="row page-titles mx-0">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('akademik/dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('input-nilai.index') }}">Input Nilai</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Edit Input Nilai</a></li>
+        </ol>
+    </div>
+</div>
     <div class="container mt-3">
         <div class="row">
             <div class="col-12">

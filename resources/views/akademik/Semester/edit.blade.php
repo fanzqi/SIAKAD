@@ -3,6 +3,15 @@
 @section('title', 'Edit Semester')
 
 @section('content')
+<div class="row page-titles mx-0">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('akademik/dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('semester.index') }}">Semester</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Edit Semester</a></li>
+        </ol>
+    </div>
+</div>
 <div class="container mt-3">
     <div class="row">
         <div class="col-12">
