@@ -11,22 +11,21 @@ use Illuminate\Support\Facades\Auth;
 
 class SemesterController extends Controller
 {
-public function markAsRead(Request $request, $id)
-{
-    $notification = Notification::findOrFail($id);
+    public function markAsRead(Request $request, $id)
+    {
+        $notification = Notification::findOrFail($id);
 
-    // Tandai hanya untuk user ini
-    if($notification->user_id === null || $notification->user_id == auth()->id()){
-        $notification->is_read = 1;
-        $notification->save();
-        return response()->json(['success' => true]);
+        if ($notification->user_id === null || $notification->user_id == Auth::id()) {
+            $notification->is_read = 1;
+            $notification->save();
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Notifikasi tidak bisa diubah']);
     }
 
-    return response()->json(['success' => false, 'message' => 'Notifikasi tidak bisa diubah']);
-}
-
     /**
-     * Menampilkan daftar Tahun Akademik / Input Nilai
+     * Menampilkan daftar Tahun Akademik / Semester
      */
     public function index()
     {
@@ -37,7 +36,7 @@ public function markAsRead(Request $request, $id)
     }
 
     /**
-     * Halaman form tambah Tahun Akademik
+     * Halaman form tambah Semester
      */
     public function create()
     {
@@ -45,36 +44,43 @@ public function markAsRead(Request $request, $id)
     }
 
     /**
-     * Simpan data Tahun Akademik baru
+     * Simpan data Semester baru
      */
     public function store(Request $request)
     {
         $request->validate([
             'tahun_akademik' => 'required',
             'semester' => 'required|in:Ganjil,Genap,Pendek',
-            'status' => 'required|in:Aktif,Nonaktif',
+            'kode_semester' => 'required',
+            'semester_ke' => 'required|numeric',
+            'periode_mulai' => 'required|date',
+            'periode_selesai' => 'required|date|after_or_equal:periode_mulai',
+            'status' => 'required|in:Aktif,Nonaktif,Ditutup',
         ]);
 
         $semester = TahunAkademik::create([
             'tahun_akademik' => $request->tahun_akademik,
             'semester' => $request->semester,
+            'kode_semester' => $request->kode_semester,
+            'semester_ke' => $request->semester_ke,
+            'periode_mulai' => $request->periode_mulai,
+            'periode_selesai' => $request->periode_selesai,
             'status' => $request->status,
         ]);
 
-        // Notifikasi global untuk semua user
         Notification::create([
-            'user_id' => null, // null = semua user
+            'user_id' => null,
             'author_name' => Auth::user()?->name ?? 'Sistem',
             'type' => 'add',
             'message' => 'Tahun Akademik ' . $semester->tahun_akademik . ' (' . $semester->semester . '), telah dimulai'
         ]);
 
         return redirect()->route('semester.index')
-            ->with('success', 'Data tahun akademik berhasil ditambahkan');
+            ->with('success', 'Data semester berhasil ditambahkan');
     }
 
     /**
-     * Halaman form edit Tahun Akademik
+     * Halaman edit Semester
      */
     public function edit($id)
     {
@@ -83,24 +89,31 @@ public function markAsRead(Request $request, $id)
     }
 
     /**
-     * Update Tahun Akademik
+     * Update Semester
      */
     public function update(Request $request, $id)
     {
         $request->validate([
             'tahun_akademik' => 'required',
             'semester' => 'required|in:Ganjil,Genap,Pendek',
-            'status' => 'required|in:Aktif,Nonaktif',
+            'kode_semester' => 'required',
+            'semester_ke' => 'required|numeric',
+            'periode_mulai' => 'required|date',
+            'periode_selesai' => 'required|date|after_or_equal:periode_mulai',
+            'status' => 'required|in:Aktif,Nonaktif,Ditutup',
         ]);
 
         $semester = TahunAkademik::findOrFail($id);
         $semester->update([
             'tahun_akademik' => $request->tahun_akademik,
             'semester' => $request->semester,
+            'kode_semester' => $request->kode_semester,
+            'semester_ke' => $request->semester_ke,
+            'periode_mulai' => $request->periode_mulai,
+            'periode_selesai' => $request->periode_selesai,
             'status' => $request->status,
         ]);
 
-        // Notifikasi khusus user yang update
         Notification::create([
             'user_id' => Auth::id(),
             'author_name' => Auth::user()?->name ?? 'Sistem',
@@ -109,11 +122,11 @@ public function markAsRead(Request $request, $id)
         ]);
 
         return redirect()->route('semester.index')
-            ->with('edit', 'Data Tahun Akademik berhasil diperbarui');
+            ->with('edit', 'Data semester berhasil diperbarui');
     }
 
     /**
-     * Hapus Tahun Akademik
+     * Hapus Semester
      */
     public function destroy($id)
     {
@@ -121,7 +134,6 @@ public function markAsRead(Request $request, $id)
         $info = $semester->tahun_akademik . ' (' . $semester->semester . ')';
         $semester->delete();
 
-        // Notifikasi khusus user yang delete
         Notification::create([
             'user_id' => Auth::id(),
             'author_name' => Auth::user()?->name ?? 'Sistem',
@@ -130,6 +142,6 @@ public function markAsRead(Request $request, $id)
         ]);
 
         return redirect()->route('semester.index')
-            ->with('delete', 'Data Tahun Akademik berhasil dihapus');
+            ->with('delete', 'Data semester berhasil dihapus');
     }
 }

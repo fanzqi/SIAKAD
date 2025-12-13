@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Akademik;
 use App\Http\Controllers\Controller;
 use App\Models\Ruang;
 use Illuminate\Http\Request;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class RuangController extends Controller
 {
@@ -61,4 +61,19 @@ public function destroy($id)
 
     return redirect()->route('ruang.index')->with('delete', 'Ruang berhasil dihapus.');
 }
+public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls'
+    ]);
+
+    try {
+        Excel::import(new \App\Imports\RuangImport, $request->file('file'));
+        return redirect()->route('ruang.index')->with('success', 'Data ruang berhasil diimport!');
+    } catch (\Exception $e) {
+        return redirect()->route('ruang.index')->with('delete', 'Gagal mengimport data!');
+    }
+}
+
+
 }

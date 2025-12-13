@@ -39,6 +39,7 @@ class MatakuliahController extends Controller
             'fakultas' => 'required|string',
             'program_studi' => 'required|string',
             'sks' => 'required|integer|min:1',
+            'group' => 'nullable|string',
         ]);
 
         mata_kuliah::create($request->all());
@@ -68,6 +69,7 @@ class MatakuliahController extends Controller
             'fakultas' => 'required|string',
             'program_studi' => 'required|string',
             'sks' => 'required|integer|min:1',
+            'group' => 'nullable|string',
         ]);
 
         $data = mata_kuliah::findOrFail($id);

@@ -13,9 +13,26 @@ return new class extends Migration
     {
         Schema::create('tahun_akademik', function (Blueprint $table) {
             $table->id();
-            $table->string('tahun_akademik');
+
+            // Tahun akademik seperti 2024/2025
+            $table->string('tahun_akademik', 9);
+
+            // Kode semester seperti 20241 / 20242 / 20243
+            $table->string('kode_semester', 10);
+
+            // Semester: ganjil, genap, pendek
             $table->enum('semester', ['Ganjil', 'Genap', 'Pendek']);
-            $table->enum('status', ['Aktif', 'Nonaktif'])->default('Nonaktif');
+
+            // Semester ke (1-14)
+            $table->integer('semester_ke');
+
+            // Periode tanggal
+            $table->date('periode_mulai');
+            $table->date('periode_selesai');
+
+            // Status
+            $table->enum('status', ['aktif','nonaktif','ditutup'])->default('nonaktif');
+
             $table->timestamps();
         });
     }

@@ -20,28 +20,16 @@
             <div class="card-body">
                 <form action="{{ route('kurikulum.store') }}" method="POST">
                     @csrf
-                    <div class="form-group">
-                        <label for="tahun_akademik_id" class="form-label">Tahun Akademik</label>
-                        <select class="form-control" name="tahun_akademik_id" id="tahun_akademik_id"
-                            class="form-select @error('tahun_akademik_id') is-invalid @enderror" required>
-                            <option value="">-- Pilih Tahun Akademik --</option>
-                            @if (!empty($tahunAkademikList) && count($tahunAkademikList))
-                                @foreach ($tahunAkademikList as $tahun)
-                                    <option value="{{ $tahun->id }}"
-                                        {{ old('tahun_akademik_id') == $tahun->id ? 'selected' : '' }}>
-                                        {{ $tahun->semester }}
-                                        {{ substr($tahun->tahun_akademik, 0, 4) }}{{ strtolower($tahun->semester) == 'ganjil' ? 1 : 2 }}
-                                        ({{ $tahun->tahun_akademik }})
-                                    </option>
-                                @endforeach
-                            @else
-                                <option value="">Tidak ada data tahun akademik</option>
-                            @endif
-                        </select>
-                        @error('tahun_akademik_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                         {{-- Tahun Akademik (readonly) --}}
+                            <div class="mb-3">
+                                <label for="tahun_akademik" class="form-label">Tahun Akademik</label>
+                                <input type="text" class="form-control" readonly
+                                    value="{{ optional($tahunAktif)->semester }} {{ optional($tahunAktif)->tahun_akademik }}">
+                                <input type="hidden" name="tahun_akademik_id" value="{{ optional($tahunAktif)->id }}">
+
+
+
+                            </div>
 
                     <div class="mb-3">
                         <label for="kode_mk" class="form-label">Kode MK</label>

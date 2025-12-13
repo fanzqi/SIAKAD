@@ -10,13 +10,22 @@ return new class extends Migration
     {
         Schema::create('jadwal', function (Blueprint $table) {
             $table->id();
-            $table->string('mata_kuliah');
-            $table->string('dosen');
-            $table->string('program_studi');
-            $table->integer('semester');
-            $table->string('hari');
-            $table->time('jam');
-            $table->string('ruangan');
+
+            // Foreign key ke tabel mata_kuliah
+            $table->foreignId('mata_kuliah_id')
+                  ->constrained('mata_kuliah')
+                  ->onDelete('cascade');
+
+            // Foreign key ke tabel ruangs
+            $table->foreignId('ruangs_id')
+                  ->constrained('ruangs')
+                  ->onDelete('cascade');
+
+            $table->string('semester');      // misal "Ganjil 2025/2026"
+            $table->string('hari');          // misal "Senin"
+            $table->time('jam_mulai');
+            $table->time('jam_selesai');
+
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Akademik\InputNilaiController;
 use App\Http\Controllers\Akademik\RuangController;
 use App\Http\Controllers\Akademik\MatakuliahController;
 use App\Http\Controllers\Akademik\JadwalkuliahController;
+use App\Http\Controllers\SmartJadwalController;
 
 
 Route::middleware('auth')->prefix('akademik')->group(function () {
@@ -26,7 +27,7 @@ Route::middleware('auth')->prefix('akademik')->group(function () {
     Route::delete('/semester/{id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
 
 
-Route::get('/input-nilai', [InputNilaiController::class, 'index'])->name('input-nilai.index');
+    Route::get('/input-nilai', [InputNilaiController::class, 'index'])->name('input-nilai.index');
     Route::get('/input-nilai/create', [InputNilaiController::class, 'create'])->name('input-nilai.create');
     Route::post('/input-nilai', [InputNilaiController::class, 'store'])->name('input-nilai.store');
     Route::get('/input-nilai/{id}/edit', [InputNilaiController::class, 'edit'])->name('input-nilai.edit');
@@ -60,9 +61,23 @@ Route::get('/input-nilai', [InputNilaiController::class, 'index'])->name('input-
     Route::get('/jadwalkuliah/{id}/edit', [JadwalkuliahController::class, 'edit'])->name('jadwalkuliah.edit');
     Route::put('/jadwalkuliah/{id}', [JadwalkuliahController::class, 'update'])->name('jadwalkuliah.update');
     Route::delete('/jadwalkuliah/{id}', [JadwalkuliahController::class, 'destroy'])->name('jadwalkuliah.destroy');
-    // ===============================
+    Route::post(
+        'matakuliah/generate-jadwal-smart',
+        [SmartJadwalController::class, 'generate']
+    )->name('generate.jadwal.smart');
+
+ 
     // Hapus Notifikasi
-    // ===============================
     Route::delete('/notification/{id}', [NotificationController::class, 'destroy'])->name('notification.delete');
+
+    // Import Ruangan
+    Route::post('/ruang/index', [RuangController::class, 'import'])->name('ruang.import');
+    // Export Jadwal Kuliah excel
+
+    Route::get('jadwalkuliah/export/excel', [JadwalKuliahController::class, 'exportExcel'])
+        ->name('jadwalkuliah.export.excel');
+
+
+
 
 });

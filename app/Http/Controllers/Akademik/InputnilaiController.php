@@ -16,10 +16,19 @@ class InputNilaiController extends Controller
         return view('akademik.input-nilai.index', compact('inputNilai'));
     }
 
-    public function create()
+  public function create()
     {
-        $tahunAkademikList = TahunAkademik::all();
-        return view('akademik.input-nilai.create', compact('tahunAkademikList'));
+        // Ambil Tahun Akademik yang statusnya Aktif
+        $tahunAktif = TahunAkademik::where('status', 'Aktif')->first();
+
+        // Jika tidak ada Tahun Akademik aktif, redirect
+        if (!$tahunAktif) {
+            return redirect()->route('input-nilai.index')
+                ->with('error', 'Tidak ada Tahun Akademik aktif.');
+        }
+
+        // Kirim $tahunAktif ke view
+        return view('akademik.input-nilai.create', compact('tahunAktif'));
     }
 
     public function store(Request $request)

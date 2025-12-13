@@ -11,6 +11,10 @@ class TahunAkademik extends Model
     protected $fillable = [
         'tahun_akademik',
         'semester',
+        'kode_semester',
+        'semester_ke',
+        'periode_mulai',
+        'periode_selesai',
         'status'
     ];
 
@@ -19,7 +23,7 @@ class TahunAkademik extends Model
         return $this->hasMany(InputNilai::class);
     }
 
-     // Relasi ke Kurikulum
+    // Relasi ke Kurikulum
     public function kurikulums()
     {
         return $this->hasMany(Kurikulum::class);

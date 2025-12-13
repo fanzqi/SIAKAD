@@ -22,9 +22,4 @@ Route::middleware('auth')->prefix('kaprodi')->group(function () {
     Route::put('/kurikulum/{id}', [KurikulumController::class, 'update'])->name('kurikulum.update');
     Route::delete('/kurikulum/{id}', [KurikulumController::class, 'destroy'])->name('kurikulum.destroy');
 
-
-
-
-
-
 });

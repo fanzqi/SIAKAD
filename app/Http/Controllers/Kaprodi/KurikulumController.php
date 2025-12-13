@@ -17,12 +17,21 @@ class KurikulumController extends Controller
     }
 
     // Form tambah kurikulum
-    public function create()
+  public function create()
     {
-        $tahunAkademikList = TahunAkademik::all();
-        $kurikulums = Kurikulum::all(); // untuk prasyarat
-        return view('kaprodi.kurikulum.create', compact('kurikulums', 'tahunAkademikList'));
+        // Ambil Tahun Akademik yang statusnya Aktif
+        $tahunAktif = TahunAkademik::where('status', 'Aktif')->first();
+
+        // Jika tidak ada Tahun Akademik aktif, redirect
+        if (!$tahunAktif) {
+            return redirect()->route('input-nilai.index')
+                ->with('error', 'Tidak ada Tahun Akademik aktif.');
+        }
+
+        // Kirim $tahunAktif ke view
+        return view('kaprodi.kurikulum.create', compact('tahunAktif'));
     }
+
 
     // Menyimpan kurikulum baru
     public function store(Request $request)
