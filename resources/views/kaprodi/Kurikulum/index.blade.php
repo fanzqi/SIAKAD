@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Kurikulum')
+@section('title', 'kurikulum')
 
 @section('content')
 
@@ -73,8 +73,8 @@
                                     @forelse($kurikulums as $index => $kurikulum)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ $kurikulum->tahunAkademik->semester }}
-                                                {{ $kurikulum->tahunAkademik->tahun_akademik }}</td>
+                                            <td>{{ $kurikulum->tahunAkademik->semester ?? '-'}}
+                                                {{ $kurikulum->tahunAkademik->tahun_akademik ?? '-' }}</td>
                                             <td>{{ $kurikulum->kode_mk }}</td>
                                             <td>{{ $kurikulum->nama_mk }}</td>
                                             <td>{{ $kurikulum->sks }}</td>
