@@ -3,140 +3,85 @@
 @section('title', 'Dashboard Dosen')
 
 @section('content')
+<div class="container-fluid">
 
-@php
-        $segments = request()->segments();
-        // Treat 'akademik' as the dashboard root and remove it from segments to avoid duplication
-        if (!empty($segments) && $segments[0] === 'dosen') {
-            array_shift($segments);
-        }
-        $mapping = [
-            'semester' => 'Semester',
-            'jadwal-kuliah' => 'Jadwal Kuliah',
-            'monitoring-nilai' => 'Monitoring Nilai',
-        ];
-        $base = url('dosen');
-        $cumulative = $base;
-    @endphp
-
-    <div class="row page-titles mx-0">
+    <div class="row page-titles mx-0 mb-3">
         <div class="col p-md-0">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('dosen/dashboard') }}">Dashboard</a></li>
-
-                @foreach ($segments as $i => $seg)
-                    @php
-                        $cumulative .= '/' . $seg;
-                        $isLast = $i === array_key_last($segments);
-                        $label = $mapping[$seg] ?? ucwords(str_replace(['-', '_'], ' ', $seg));
-                    @endphp
-
-                    <li class="breadcrumb-item {{ $isLast ? 'active' : '' }}">
-                        @if ($isLast)
-                            <a href="javascript:void(0)">{{ $label }}</a>
-                        @else
-                            <a href="{{ $cumulative }}">{{ $label }}</a>
-                        @endif
-                    </li>
-                @endforeach
-            </ol>
+            <h4 class="mb-0">Dashboard Dosen</h4>
+            <small class="text-muted">
+                Selamat datang  {{ Auth::user()->name }}
+            </small>
         </div>
     </div>
 
-    <!-- Card -->
-    <div class="container">
-    <div class="row g-4">
-
-        <div class="col-12 col-sm-6 col-lg-3" style="margin-top: 20px; margin-bottom: 20px;">
-            <div class="card h-100 text-center p-3">
+    <div class="row">
+        <!-- Nama Dosen -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card text-center">
                 <div class="card-body">
-                    <span class="display-5"><i class="icon-user gradient-3-text"></i></span>
-                    <h5 class="card-title">72 Mahasiswa</h5>
-                    <p class="card-text">Total mahasiswa terdaftar</p>
+                    <i class="icon-user text-primary display-5"></i>
+                    <h5 class="mt-2">{{ Auth::user()->name }}</h5>
+                    <small>Nama Dosen</small>
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-sm-6 col-lg-3" style="margin-top: 20px; margin-bottom: 20px;">
-            <div class="card h-100 text-center p-3">
+        <!-- Email Dosen -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card text-center">
                 <div class="card-body">
-                    <span class="display-5"><i class="icon-book-open gradient-5-text"></i></span>
-                    <h5 class="card-title">11 Mata Kuliah</h5>
-                    <p class="card-text">Mata kuliah semester ini</p>
+                    <i class="icon-envelope text-success display-5"></i>
+                    <h5 class="mt-2">{{ \App\Models\Dosen::orderByDesc('id')->value('email') ?? '-' }}</h5>
+                    <small>Email Dosen</small>
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-sm-6 col-lg-3" style="margin-top: 20px; margin-bottom: 20px;">
-            <div class="card h-100 text-center p-3">
+        <!-- Total Mahasiswa -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card text-center">
                 <div class="card-body">
-                    <span class="display-5"><i class="icon-note gradient-4-text"></i></span>
-                    <h5 class="card-title">7/11</h5>
-                    <p class="card-text">Nilai telah di input</p>
+                    <i class="icon-people text-warning display-5"></i>
+                    <h3>{{ $totalMahasiswa }} </h3>
+                    <small>Total Mahasiswa</small>
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-sm-6 col-lg-3" style="margin-top: 20px; margin-bottom: 20px;">
-            <div class="card h-100 text-center p-3">
+        <!-- Total Mata Kuliah -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card text-center">
                 <div class="card-body">
-                    <span class="display-5"><i class="fa fa-calendar gradient-9-text"></i></span>
-                    <h5 class="card-title">Semester Ganjil</h5>
-                    <p class="card-text">2025/2026</p>
+                    <i class="icon-book-open text-danger display-5"></i>
+                    <h3>{{ $totalMatkul }}</h3>
+                    <small>Mata Kuliah Yang Diampu</small>
                 </div>
             </div>
         </div>
-
     </div>
+
+
+    <!-- Notifikasi -->
+    <div class="row mt-4">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Notifikasi Terbaru</h4>
+                    <ul class="list-group">
+                        @forelse ($notifications as $notif)
+                            <li class="list-group-item">
+                                <strong>{{ $notif->judul }}</strong>
+                                <br>
+                                <small class="text-muted">{{ $notif->created_at->format('d M Y') }}</small>
+                            </li>
+                        @empty
+                            <li class="list-group-item text-center text-muted">Tidak ada notifikasi</li>
+                        @endforelse
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
-<!-- End Card -->
-
-<!-- Tabel Activity -->
-    
-    <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Mata Kuliah Saya</h4>
-                        <p class="text-muted mb-3">Tanggal: {{ \Carbon\Carbon::now()->format('d M Y') }}</p>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th style="width:40px">#</th>
-                                        <th>Mata Kuliah</th>
-                                        <th>Kelas</th>
-                                        <th>Jadwal</th>
-                                        <th>Status Nilai</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($activities ?? [] as $activity)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ optional($activity)->created_at ? \Carbon\Carbon::parse(optional($activity)->created_at)->format('d M Y') : '—' }}
-                                            </td>
-                                            <td>{{ optional($activity)->created_at ? \Carbon\Carbon::parse(optional($activity)->created_at)->format('H:i:s') : '—' }}
-                                            </td>
-                                            <td>{{ optional(optional($activity)->user)->name ?? (optional($activity)->user_name ?? '—') }}
-                                            </td>
-                                            <td>{{ optional($activity)->description ?? (optional($activity)->activity ?? (optional($activity)->action ?? '—')) }}
-                                            </td>
-                                        </tr>
-                                    @empty
-
-                                        <tr>
-                                            <td colspan="5" class="text-center">Tidak ada aktivitas hari ini.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-<!-- End Table Activity -->
 @endsection

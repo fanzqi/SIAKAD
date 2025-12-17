@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jadwals', function (Blueprint $table) {
+        Schema::create('program_studi', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
+            $table->foreignId('fakultas_id')
+                  ->constrained('fakultas')
+                  ->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes(); // menambahkan kolom deleted_at untuk soft delete
         });
     }
 
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jadwals');
+        Schema::dropIfExists('program_studi');
     }
 };

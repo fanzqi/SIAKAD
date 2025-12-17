@@ -7,14 +7,15 @@ use App\Http\Controllers\Akademik\RuangController;
 use App\Http\Controllers\Akademik\MatakuliahController;
 use App\Http\Controllers\Akademik\JadwalkuliahController;
 use App\Http\Controllers\SmartJadwalController;
-
+use App\Http\Controllers\Akademik\JadwalPdfController;
+ use App\Http\Controllers\Akademik\DashboardController;
 
 Route::middleware('auth')->prefix('akademik')->group(function () {
 
     // Dashboard
-    Route::get('/dashboard', function () {
-        return view('akademik.dashboard.index');
-    })->name('akademik.dashboard');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('akademik.dashboard');
 
     // ===============================
     // Semester / Tahun Akademik
@@ -66,7 +67,7 @@ Route::middleware('auth')->prefix('akademik')->group(function () {
         [SmartJadwalController::class, 'generate']
     )->name('generate.jadwal.smart');
 
- 
+
     // Hapus Notifikasi
     Route::delete('/notification/{id}', [NotificationController::class, 'destroy'])->name('notification.delete');
 
@@ -76,6 +77,9 @@ Route::middleware('auth')->prefix('akademik')->group(function () {
 
     Route::get('jadwalkuliah/export/excel', [JadwalKuliahController::class, 'exportExcel'])
         ->name('jadwalkuliah.export.excel');
+
+    Route::get('/jadwal/pdf-all', [JadwalPdfController::class, 'exportAll'])
+        ->name('jadwal.pdf.all');
 
 
 

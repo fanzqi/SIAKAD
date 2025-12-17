@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Akademik;
+
 use App\Http\Controllers\Controller;
 use App\Models\mata_kuliah;
+use App\Models\Dosen;
 use Illuminate\Http\Request;
-
-
-
 
 class MatakuliahController extends Controller
 {
@@ -15,7 +14,8 @@ class MatakuliahController extends Controller
      */
     public function index()
     {
-        $data = mata_kuliah::all();
+        // Load relasi dosen agar bisa menampilkan nama dosen
+        $data = mata_kuliah::with('dosen')->get();
         return view('akademik.matakuliah.index', compact('data'));
     }
 
@@ -24,7 +24,9 @@ class MatakuliahController extends Controller
      */
     public function create()
     {
-        return view('akademik.matakuliah.create');
+        // Ambil semua dosen untuk dropdown
+        $dosens = Dosen::all();
+        return view('akademik.matakuliah.create', compact('dosens'));
     }
 
     /**
@@ -35,14 +37,14 @@ class MatakuliahController extends Controller
         $request->validate([
             'kode' => 'required|unique:mata_kuliah,kode',
             'nama_mata_kuliah' => 'required|string',
-            'dosen' => 'required|string',
+            'dosen_id' => 'required|exists:dosen,id', // validasi FK
             'fakultas' => 'required|string',
             'program_studi' => 'required|string',
             'sks' => 'required|integer|min:1',
             'group' => 'nullable|string',
         ]);
 
-        mata_kuliah::create($request->all());
+        Mata_kuliah::create($request->all());
 
         return redirect()->route('matakuliah.index')
             ->with('success', 'Data berhasil ditambahkan.');
@@ -53,8 +55,9 @@ class MatakuliahController extends Controller
      */
     public function edit($id)
     {
-        $data = mata_kuliah::findOrFail($id);
-        return view('akademik.matakuliah.edit', compact('data'));
+        $data = Mata_kuliah::findOrFail($id);
+        $dosens = Dosen::all(); // dropdown dosen
+        return view('akademik.matakuliah.edit', compact('data', 'dosen'));
     }
 
     /**
@@ -65,14 +68,14 @@ class MatakuliahController extends Controller
         $request->validate([
             'kode' => 'required|unique:mata_kuliah,kode,' . $id . ',id',
             'nama_mata_kuliah' => 'required|string',
-            'dosen' => 'required|string',
+            'dosen_id' => 'required|exists:dosen,id', // validasi FK
             'fakultas' => 'required|string',
             'program_studi' => 'required|string',
             'sks' => 'required|integer|min:1',
             'group' => 'nullable|string',
         ]);
 
-        $data = mata_kuliah::findOrFail($id);
+        $data = Mata_kuliah::findOrFail($id);
         $data->update($request->all());
 
         return redirect()->route('matakuliah.index')
@@ -84,7 +87,7 @@ class MatakuliahController extends Controller
      */
     public function destroy($id)
     {
-        $data = mata_kuliah::findOrFail($id);
+        $data = Mata_kuliah::findOrFail($id);
         $data->delete();
 
         return redirect()->route('matakuliah.index')

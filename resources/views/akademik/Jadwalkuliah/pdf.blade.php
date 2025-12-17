@@ -14,30 +14,43 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 class JadwalKuliahExport implements FromCollection, WithHeadings, WithMapping, WithEvents
 {
     private int $index = 0;
-    private string $semester;
+    private string $judulSemester = '';
+    private string $judulProdi = '';
+    private string $judulFakultas = '';
 
     public function __construct()
     {
-        $this->semester = Jadwalkuliah::distinct()
-            ->orderBy('semester')
-            ->pluck('semester')
-            ->implode(', ');
+        $first = Jadwalkuliah::with([
+            'mata_kuliah.program_studi',
+            'mata_kuliah.fakultas'
+        ])->first();
+
+        $this->judulSemester = $first->semester ?? '-';
+        $this->judulProdi    = $first->mata_kuliah->program_studi->nama ?? 'SEMUA PROGRAM STUDI';
+        $this->judulFakultas = $first->mata_kuliah->fakultas->nama ?? 'SEMUA FAKULTAS';
     }
 
     public function collection()
     {
-        return Jadwalkuliah::with(['mata_kuliah', 'ruang'])
-            ->orderBy('semester')
-            ->orderBy('hari')
-            ->orderBy('jam_mulai')
-            ->get();
+        return Jadwalkuliah::with([
+            'mata_kuliah.dosen',
+            'mata_kuliah.program_studi',
+            'mata_kuliah.fakultas',
+            'ruang'
+        ])
+        ->orderBy('semester')
+        ->orderBy('hari')
+        ->orderBy('jam_mulai')
+        ->get();
     }
 
     public function headings(): array
     {
         return [
             ['JADWAL KULIAH'],
-            ['Semester: ' . $this->semester],
+            ['FAKULTAS ' . strtoupper($this->judulFakultas)],
+            ['PROGRAM STUDI ' . strtoupper($this->judulProdi)],
+            ['SEMESTER ' . $this->judulSemester],
             ['INSTITUT TEKNOLOGI DAN SAINS MANDALA'],
             [],
             [
@@ -46,8 +59,6 @@ class JadwalKuliahExport implements FromCollection, WithHeadings, WithMapping, W
                 'Jam',
                 'Mata Kuliah',
                 'Dosen',
-                'Program Studi',
-                'Semester',
                 'Group',
                 'Ruangan',
             ]
@@ -62,8 +73,6 @@ class JadwalKuliahExport implements FromCollection, WithHeadings, WithMapping, W
             $row->jam_mulai . ' - ' . $row->jam_selesai,
             $row->mata_kuliah->nama_mata_kuliah ?? '-',
             $row->mata_kuliah->dosen->nama ?? '-',
-            $row->mata_kuliah->program_studi->nama ?? '-',
-            $row->semester,
             $row->mata_kuliah->group ?? '-',
             $row->ruang->nama_ruang ?? '-',
         ];
@@ -79,23 +88,20 @@ class JadwalKuliahExport implements FromCollection, WithHeadings, WithMapping, W
                     ->setPaperSize(PageSetup::PAPERSIZE_FOLIO);
 
                 // MERGE JUDUL
-                $event->sheet->mergeCells('A1:I1');
-                $event->sheet->mergeCells('A2:I2');
-                $event->sheet->mergeCells('A3:I3');
+                $event->sheet->mergeCells('A1:G1');
+                $event->sheet->mergeCells('A2:G2');
+                $event->sheet->mergeCells('A3:G3');
+                $event->sheet->mergeCells('A4:G4');
+                $event->sheet->mergeCells('A5:G5');
 
                 // STYLE JUDUL
-                $event->sheet->getStyle('A1')->applyFromArray([
-                    'font' => ['bold' => true, 'size' => 16],
-                    'alignment' => ['horizontal' => 'center'],
-                ]);
-
-                $event->sheet->getStyle('A2:A3')->applyFromArray([
-                    'font' => ['bold' => true, 'size' => 14],
+                $event->sheet->getStyle('A1:A5')->applyFromArray([
+                    'font' => ['bold' => true],
                     'alignment' => ['horizontal' => 'center'],
                 ]);
 
                 // HEADER TABEL
-                $event->sheet->getStyle('A5:I5')->applyFromArray([
+                $event->sheet->getStyle('A7:G7')->applyFromArray([
                     'font' => ['bold' => true],
                     'alignment' => ['horizontal' => 'center'],
                     'borders' => [
@@ -105,18 +111,18 @@ class JadwalKuliahExport implements FromCollection, WithHeadings, WithMapping, W
                     ],
                 ]);
 
-                // AUTO SIZE
-                foreach (range('A', 'I') as $col) {
+                // AUTO WIDTH
+                foreach (range('A', 'G') as $col) {
                     $event->sheet->getColumnDimension($col)->setAutoSize(true);
                 }
 
-                // TTD WAREK I
+                // TTD
                 $lastRow = $event->sheet->getHighestRow() + 3;
-                $event->sheet->setCellValue("F{$lastRow}", 'Jember, ' . date('d F Y'));
-                $event->sheet->setCellValue("F" . ($lastRow + 1), 'Wakil Rektor I');
-                $event->sheet->setCellValue("F" . ($lastRow + 5), '________________________');
+                $event->sheet->setCellValue("E{$lastRow}", 'Jember, ' . date('d F Y'));
+                $event->sheet->setCellValue("E" . ($lastRow + 1), 'Bagian Akademik');
+                $event->sheet->setCellValue("E" . ($lastRow + 5), '( ____________________ )');
 
-                $event->sheet->getStyle("F{$lastRow}:I" . ($lastRow + 5))->applyFromArray([
+                $event->sheet->getStyle("E{$lastRow}:G" . ($lastRow + 5))->applyFromArray([
                     'alignment' => ['horizontal' => 'center'],
                     'font' => ['bold' => true],
                 ]);

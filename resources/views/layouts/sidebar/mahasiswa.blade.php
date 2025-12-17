@@ -10,25 +10,30 @@
             <li class="nav-label">Menu</li>
             <li>
                 <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
-                    <i class="icon-grid menu-icon"></i><span class="nav-text">Mahasiswa</span>
+                    <i class="icon-grid menu-icon"></i><span class="nav-text">Akademik</span>
                 </a>
-                {{-- <ul aria-expanded="false">
+                <ul aria-expanded="false">
             <li>
-                <a href="{{ url('akademik/semester') }}">
-                    <i class="fa fa-book"></i><span class="nav-text">Semester</span>
+                {{-- <a href="{{ url('akademik/semester') }}">
+                    <i class="fa fa-book"></i><span class="nav-text">Rencana Studi</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ url('akademik/jadwalkuliah') }}">
+            <li> --}}
+                <a href="{{ url('mahasiswa/jadwalkuliah') }}">
                     <i class="fa fa-calendar"></i><span class="nav-text">Jadwal Kuliah</span>
                 </a>
             </li>
                 <li>
-                    <a href="{{ url('akademik/classes') }}">
-                        <i class="icon-chart menu-icon"></i><span class="nav-text">Monitoring Nilai</span>
+                    <a href="">
+                        <i class="fa fa-book"></i><span class="nav-text">Hasil Studi</span>
                     </a>
                 </li>
-                </ul> --}}
+                {{-- <li>
+                    <a href="{{ url('akademik/classes') }}">
+                        <i class="icon-chart menu-icon"></i><span class="nav-text">Transkrip</span>
+                    </a>
+                </li> --}}
+                </ul>
             </li>
         </ul>
     </div>

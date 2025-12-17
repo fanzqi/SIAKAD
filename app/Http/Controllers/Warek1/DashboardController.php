@@ -8,9 +8,14 @@ use App\Models\Notification;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
-        $notifications = Notification::orderBy('id', 'desc')->limit(5)->get();
-        return view('warek1.dashboard.index', compact('notifications'));
-    }
+  public function index()
+{
+    return view('warek1.dashboard.index', [
+        'totalDosen'     => \App\Models\User::where('role', 'dosen')->count(),
+        'totalMahasiswa' => \App\Models\Mahasiswa::count(),
+        'totalMatkul'    => \App\Models\mata_kuliah::count(),
+        'semesterAktif'  => \App\Models\TahunAkademik::orderByDesc('id')->value('tahun_akademik') ?? '-',
+    ]);
+}
+
 }

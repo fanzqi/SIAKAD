@@ -55,7 +55,7 @@ class SemesterController extends Controller
             'semester_ke' => 'required|numeric',
             'periode_mulai' => 'required|date',
             'periode_selesai' => 'required|date|after_or_equal:periode_mulai',
-            'status' => 'required|in:Aktif,Nonaktif,Ditutup',
+            'status' => 'required|in:aktif,nonaktif,ditutup',
         ]);
 
         $semester = TahunAkademik::create([
@@ -100,7 +100,7 @@ class SemesterController extends Controller
             'semester_ke' => 'required|numeric',
             'periode_mulai' => 'required|date',
             'periode_selesai' => 'required|date|after_or_equal:periode_mulai',
-            'status' => 'required|in:Aktif,Nonaktif,Ditutup',
+            'status' => 'required|in:aktif,nonaktif,ditutup',
         ]);
 
         $semester = TahunAkademik::findOrFail($id);

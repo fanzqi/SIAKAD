@@ -4,42 +4,11 @@
 
 @section('content')
 
-    @php
-        $segments = request()->segments();
-        if (!empty($segments) && $segments[0] === 'akademik') {
-            array_shift($segments);
-        }
-        $mapping = [
-            'ruang' => 'Ruang',
-            'jadwal-kuliah' => 'Jadwal Kuliah',
-            'monitoring-nilai' => 'Monitoring Nilai',
-            'semester' => 'Semester',
-        ];
-        $base = url('akademik');
-        $cumulative = $base;
-    @endphp
-
-    {{-- Breadcrumb --}}
     <div class="row page-titles mx-0">
         <div class="col p-md-0">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('akademik/dashboard') }}">Dashboard</a></li>
-
-                @foreach ($segments as $i => $seg)
-                    @php
-                        $cumulative .= '/' . $seg;
-                        $isLast = $i === array_key_last($segments);
-                        $label = $mapping[$seg] ?? ucwords(str_replace(['-', '_'], ' ', $seg));
-                    @endphp
-
-                    <li class="breadcrumb-item {{ $isLast ? 'active' : '' }}">
-                        @if ($isLast)
-                            <a href="javascript:void(0)">{{ $label }}</a>
-                        @else
-                            <a href="{{ $cumulative }}">{{ $label }}</a>
-                        @endif
-                    </li>
-                @endforeach
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Daftar Input Nilai</a></li>
             </ol>
         </div>
     </div>
@@ -52,14 +21,12 @@
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
         @endif
-
         @if (session('edit'))
             <div class="alert alert-info alert-dismissible fade show">
                 <strong>Diperbarui!</strong> {{ session('edit') }}
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
         @endif
-
         @if (session('delete'))
             <div class="alert alert-warning alert-dismissible fade show">
                 <strong>Terhapus!</strong> {{ session('delete') }}
@@ -68,7 +35,6 @@
         @endif
     </div>
 
-    {{-- === TEMPLATE SESUAI DATATABLES === --}}
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -84,7 +50,8 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered zero-configuration">
+                            <table class="table table-striped table-bordered zero-configuration dataTable"
+                                id="inputNilaiTable">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -100,10 +67,8 @@
                                     @forelse ($inputNilai as $nilai)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>
-                                                {{ $nilai->tahunAkademik->semester }}
-                                                {{ $nilai->tahunAkademik->tahun_akademik }}
-                                            </td>
+                                            <td>{{ $nilai->tahunAkademik->semester }}
+                                                {{ $nilai->tahunAkademik->tahun_akademik }}</td>
                                             <td>{{ $nilai->deskripsi }}</td>
                                             <td>{{ \Carbon\Carbon::parse($nilai->tanggal_mulai)->format('d-m-Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($nilai->tanggal_akhir)->format('d-m-Y') }}</td>
@@ -114,20 +79,17 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('input-nilai.edit', $nilai->id) }}"
-                                                    class="btn btn-warning btn-sm">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </a>
-
-                                                <form action="{{ route('input-nilai.destroy', $nilai->id) }}"
-                                                    method="POST" class="d-inline"
-                                                    onsubmit="return confirm('Yakin ingin menghapus data ini?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <i class="bi bi-trash"></i>
+                                                <div class="d-flex justify-content-between" style="gap: 8px;">
+                                                    <a href="{{ route('input-nilai.edit', $nilai->id) }}"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="bi bi-pencil-square"></i> Edit
+                                                    </a>
+                                                    <button type="button" class="btn btn-danger btn-sm btn-hapus"
+                                                        data-url="{{ route('input-nilai.destroy', $nilai->id) }}"
+                                                        data-toggle="modal" data-target="#modalHapus">
+                                                        <i class="bi bi-trash"></i> Hapus
                                                     </button>
-                                                </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @empty
@@ -136,7 +98,6 @@
                                         </tr>
                                     @endforelse
                                 </tbody>
-                                <tfoot>
                             </table>
                         </div>
 
@@ -146,5 +107,56 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal Hapus --}}
+    <div class="modal fade" id="modalHapus" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill"></i> Konfirmasi Hapus</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    Yakin ingin menghapus data ini?<br>
+                    <small class="text-muted">Data tidak dapat dikembalikan.</small>
+                </div>
+                <div class="modal-footer">
+                    <form id="formHapus" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Script --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formHapus = document.getElementById('formHapus');
+
+            document.addEventListener('click', function(e) {
+                const button = e.target.closest('.btn-hapus');
+                if (!button) return;
+                const url = button.getAttribute('data-url');
+                if (!url || !formHapus) return;
+                formHapus.setAttribute('action', url);
+            });
+
+            // Inisialisasi DataTables
+            $('#inputNilaiTable').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "pageLength": 10,
+                "lengthMenu": [10, 25, 50, 100]
+            });
+        });
+    </script>
 
 @endsection

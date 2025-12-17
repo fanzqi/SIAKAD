@@ -12,17 +12,12 @@
             </ol>
         </div>
     </div>
-
     <div class="container mt-3">
         <div class="row">
             <div class="col-12">
-
                 <div class="card shadow-sm">
+
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Edit Semester</h5>
-                        <a href="{{ route('semester.index') }}" class="btn btn-secondary btn-sm">
-                            <i class="bi bi-arrow-left"></i> Kembali
-                        </a>
                     </div>
 
                     <div class="card-body">
@@ -81,9 +76,9 @@
                             {{-- Semester Ke --}}
                             <div class="form-group mb-3">
                                 <label class="form-label">Semester Ke</label>
-                                <input type="number" name="semester_ke"
+                                <input type="number" name="semester_ke" min="1"
                                     class="form-control @error('semester_ke') is-invalid @enderror"
-                                    value="{{ old('semester_ke', $semester->semester_ke) }}" min="1">
+                                    value="{{ old('semester_ke', $semester->semester_ke) }}" placeholder="contoh: 1">
 
                                 @error('semester_ke')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -115,34 +110,34 @@
                             </div>
 
                             {{-- Status --}}
-                            <div class="form-group mb-3">
+                            <div class="mb-3">
                                 <label class="form-label d-block">Status</label>
 
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" name="status" id="status_aktif" class="form-check-input"
-                                        value="Aktif" {{ old('status', $semester->status) == 'Aktif' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="status_aktif">Aktif</label>
+                                    <input type="radio" name="status" id="status_aktif" value="aktif"
+                                        class="form-check-input"
+                                        {{ old('status', $semester->status) == 'aktif' ? 'checked' : '' }}>
+                                    <label for="status_aktif" class="form-check-label">Aktif</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" name="status" id="status_nonaktif" class="form-check-input"
-                                        value="Nonaktif"
-                                        {{ old('status', $semester->status) == 'Nonaktif' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="status_nonaktif">Nonaktif</label>
+                                    <input type="radio" name="status" id="status_nonaktif" value="nonaktif"
+                                        class="form-check-input"
+                                        {{ old('status', $semester->status) == 'nonaktif' ? 'checked' : '' }}>
+                                    <label for="status_nonaktif" class="form-check-label">Nonaktif</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" name="status" id="status_ditutup" class="form-check-input"
-                                        value="Ditutup"
-                                        {{ old('status', $semester->status) == 'Ditutup' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="status_ditutup">Ditutup</label>
+                                    <input type="radio" name="status" id="status_ditutup" value="ditutup"
+                                        class="form-check-input"
+                                        {{ old('status', $semester->status) == 'ditutup' ? 'checked' : '' }}>
+                                    <label for="status_ditutup" class="form-check-label">Ditutup</label>
                                 </div>
 
                                 @error('status')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-
 
                             {{-- Tombol --}}
                             <div class="d-flex gap-2">
@@ -155,9 +150,10 @@
                         </form>
 
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
+
 @endsection

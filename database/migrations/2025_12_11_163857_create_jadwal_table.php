@@ -7,31 +7,23 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     public function up(): void
-    {
-        Schema::create('jadwal', function (Blueprint $table) {
-            $table->id();
+{
+    Schema::table('jadwal', function (Blueprint $table) {
+        $table->unsignedBigInteger('fakultas_id')->nullable()->after('semester');
+        $table->unsignedBigInteger('prodi_id')->nullable()->after('fakultas_id');
 
-            // Foreign key ke tabel mata_kuliah
-            $table->foreignId('mata_kuliah_id')
-                  ->constrained('mata_kuliah')
-                  ->onDelete('cascade');
+        $table->foreign('fakultas_id')->references('id')->on('fakultas')->onDelete('set null');
+        $table->foreign('prodi_id')->references('id')->on('program_studi')->onDelete('set null');
+    });
+}
 
-            // Foreign key ke tabel ruangs
-            $table->foreignId('ruangs_id')
-                  ->constrained('ruangs')
-                  ->onDelete('cascade');
+public function down(): void
+{
+    Schema::table('jadwal', function (Blueprint $table) {
+        $table->dropForeign(['fakultas_id']);
+        $table->dropForeign(['prodi_id']);
+        $table->dropColumn(['fakultas_id', 'prodi_id']);
+    });
+}
 
-            $table->string('semester');      // misal "Ganjil 2025/2026"
-            $table->string('hari');          // misal "Senin"
-            $table->time('jam_mulai');
-            $table->time('jam_selesai');
-
-            $table->timestamps();
-        });
-    }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('jadwal');
-    }
 };

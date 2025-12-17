@@ -6,25 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+   public function up()
 {
     Schema::table('users', function (Blueprint $table) {
-        $table->enum('role', [
-            'akademik',
-            'warek1',
-            'dekan',
-            'kaprodi',
-            'dosen',
-            'mahasiswa'
-        ])->default('mahasiswa')->after('password');
+        if (!Schema::hasColumn('users', 'role')) {
+            $table->enum('role', [
+                'akademik',
+                'warek1',
+                'dekan',
+                'kaprodi',
+                'dosen',
+                'mahasiswa'
+            ])->default('mahasiswa')->after('password');
+        }
     });
 }
 
 public function down()
 {
     Schema::table('users', function (Blueprint $table) {
-        $table->dropColumn('role');
+        if (Schema::hasColumn('users', 'role')) {
+            $table->dropColumn('role');
+        }
     });
 }
-
 };

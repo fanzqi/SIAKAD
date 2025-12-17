@@ -33,22 +33,24 @@
 
                         <h2 class="text-center" style="color:#3d19ff;font-weight:700;">SIAKAD</h2>
                         <p class="text-center mb-4">Sistem Informasi Akademik</p>
-                        @if ($errors->any())
-                            <div style="color:red;">
-                                {{ $errors->first() }}
+
+                        @if (session('error'))
+                            <div class="alert alert-danger text-center">
+                                {{ session('error') }}
                             </div>
                         @endif
+
                         <form method="POST" action="{{ route('login.process') }}">
                             @csrf
 
-                            <div class="form-group d-flex align-items-center bg-light rounded-pill px-3"
+                            <div class="form-group d-flex align-items-center bg-light rounded-pill px-3 mb-3"
                                 style="height:55px;">
                                 <span class="mr-3">&#128100;</span>
                                 <input type="text" class="form-control border-0 bg-light" name="username"
-                                    placeholder="Username" required>
+                                    placeholder="Username / NIDN / NIM" required autofocus>
                             </div>
 
-                            <div class="form-group d-flex align-items-center bg-light rounded-pill px-3"
+                            <div class="form-group d-flex align-items-center bg-light rounded-pill px-3 mb-4"
                                 style="height:55px;">
                                 <span class="mr-3">&#128274;</span>
                                 <input type="password" class="form-control border-0 bg-light" name="password"
@@ -60,6 +62,11 @@
                                 Masuk
                             </button>
                         </form>
+
+                        <p class="text-center mt-3 text-muted" style="font-size:14px;">
+                            Gunakan username sesuai NIDN (dosen), NIM (mahasiswa), atau username administrasi
+                        </p>
+
 
 
 

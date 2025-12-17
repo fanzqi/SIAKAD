@@ -16,10 +16,12 @@ return new class extends Migration
             $table->string('fakultas');
             $table->string('program_studi');
             $table->integer('sks');
+            $table->integer('fakultas_id');
+            $table->integer('progran_studi_id');
             $table->timestamps();
         });
     }
-
+    
     public function down(): void
     {
         Schema::dropIfExists('mata_kuliah');

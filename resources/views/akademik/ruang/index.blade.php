@@ -86,15 +86,10 @@
                                                     <i class="bi bi-pencil-square"></i> Edit
                                                 </a>
 
-                                                <form action="{{ route('ruang.destroy', $ruang->id) }}" method="POST"
-                                                    style="display:inline-block;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('Hapus data?')"
-                                                        class="btn btn-sm btn-danger">
-                                                        Hapus
-                                                    </button>
-                                                </form>
+                                          <button type="button" class="btn btn-sm btn-danger"
+    onclick="bukaModalHapus('{{ route('ruang.destroy', $ruang->id) }}')">
+    Hapus
+</button>
                                             </td>
                                         </tr>
                                     @empty
@@ -116,6 +111,40 @@
     </div>
 
 @endsection
+
+<!-- Modal Hapus -->
+<div class="modal fade" id="modalHapus" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-exclamation-triangle-fill"></i> Konfirmasi Hapus
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus data ini?
+                <br>
+                <small class="text-muted">Data yang sudah dihapus tidak dapat dikembalikan.</small>
+            </div>
+
+            <div class="modal-footer">
+                <form id="formHapus" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <!-- Modal Import Excel -->
 <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -148,3 +177,10 @@
         </div>
     </div>
 </div>
+
+<script>
+function bukaModalHapus(actionUrl) {
+    document.getElementById('formHapus').action = actionUrl;
+    $('#modalHapus').modal('show');
+}
+</script>

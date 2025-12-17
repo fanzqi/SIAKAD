@@ -4,41 +4,12 @@
 
 @section('content')
 
-    @php
-        $segments = request()->segments();
-        if (!empty($segments) && $segments[0] === 'akademik') {
-            array_shift($segments);
-        }
-        $mapping = [
-            'ruang' => 'Ruang',
-            'jadwal-kuliah' => 'Jadwal Kuliah',
-            'monitoring-nilai' => 'Monitoring Nilai',
-            'semester' => 'Semester',
-        ];
-        $base = url('akademik');
-        $cumulative = $base;
-    @endphp
-
     <div class="row page-titles mx-0">
         <div class="col p-md-0">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('akademik/dashboard') }}">Dashboard</a></li>
-
-                @foreach ($segments as $i => $seg)
-                    @php
-                        $cumulative .= '/' . $seg;
-                        $isLast = $i === array_key_last($segments);
-                        $label = $mapping[$seg] ?? ucwords(str_replace(['-', '_'], ' ', $seg));
-                    @endphp
-
-                    <li class="breadcrumb-item {{ $isLast ? 'active' : '' }}">
-                        @if ($isLast)
-                            <a href="javascript:void(0)">{{ $label }}</a>
-                        @else
-                            <a href="{{ $cumulative }}">{{ $label }}</a>
-                        @endif
-                    </li>
-                @endforeach
+                <li class="breadcrumb-item"><a href="{{ route('semester.index') }}">Semester</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Tambah Semester</a></li>
             </ol>
         </div>
     </div>
@@ -50,9 +21,6 @@
 
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Tambah Semester</h5>
-                        <a href="{{ route('semester.index') }}" class="btn btn-secondary btn-sm">
-                            <i class="bi bi-arrow-left"></i> Kembali
-                        </a>
                     </div>
 
                     <div class="card-body">
