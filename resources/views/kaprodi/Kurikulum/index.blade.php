@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Kurikulum')
+@section('title', 'kurikulum')
 
 @section('content')
 
@@ -66,6 +66,7 @@
                             @endfor
                         </select>
                     </div>
+<<<<<<< HEAD
                     <div class="col-md-2">
                         <input type="text" id="kodeMKInput" class="form-control" placeholder="Kode MK">
                     </div>
@@ -80,6 +81,61 @@
                     </div>
                     <div class="col-md-1">
                         <button type="submit" class="btn btn-success btn-sm w-100">Tambah</button>
+=======
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Semester</th>
+                                        <th>Kode MK</th>
+                                        <th>Nama Mata Kuliah</th>
+                                        <th>SKS</th>
+                                        <th>Wajib/Pilihan</th>
+                                        <th>Prasyarat</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($kurikulums as $index => $kurikulum)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $kurikulum->tahunAkademik->semester ?? '-'}}
+                                                {{ $kurikulum->tahunAkademik->tahun_akademik ?? '-' }}</td>
+                                            <td>{{ $kurikulum->kode_mk }}</td>
+                                            <td>{{ $kurikulum->nama_mk }}</td>
+                                            <td>{{ $kurikulum->sks }}</td>
+                                            <td>{{ $kurikulum->wajib_pilihan }}</td>
+                                            <td>{{ $kurikulum->prasyarat ?? '-' }}</td>
+                                            <td>
+                                                <span
+                                                    class="badge {{ $kurikulum->status == 'Aktif' ? 'bg-success' : 'bg-secondary' }}">
+                                                    {{ $kurikulum->status }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('kurikulum.edit', $kurikulum->id) }}"
+                                                    class="btn btn-sm btn-warning">Edit</a>
+                                                <form action="{{ route('kurikulum.destroy', $kurikulum->id) }}"
+                                                    method="POST" style="display:inline-block;"
+                                                    onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="9" class="text-center">Belum ada data.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+>>>>>>> 46828818255cff07ca543d82d18744dfa457ce7b
                     </div>
                 </div>
             </form>
