@@ -58,6 +58,17 @@ class SemesterController extends Controller
             'status' => 'required|in:aktif,nonaktif,ditutup',
         ]);
 
+        // Cek duplikasi semester_ke pada tahun_akademik yang sama
+        $exists = TahunAkademik::where('tahun_akademik', $request->tahun_akademik)
+            ->where('semester_ke', $request->semester_ke)
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['semester_ke' => 'Semester ke yang sama sudah ada pada tahun akademik ini.']);
+        }
+
         $semester = TahunAkademik::create([
             'tahun_akademik' => $request->tahun_akademik,
             'semester' => $request->semester,

@@ -29,7 +29,7 @@
                             {{ optional($mahasiswa->prodi)->nama ?? '-' }}
                         </h6>
                         <h6 class="mb-3">
-                            Semester: {{ $mahasiswa->semester_aktif ?? '-' }}
+                            Semester: {{ optional($mahasiswa->tahunAkademik)->semester_ke ?? '-' }}
                         </h6>
                         <div class="table-responsive">
                             <table id="datatable-jadwal" class="table table-bordered table-striped zero-configuration">

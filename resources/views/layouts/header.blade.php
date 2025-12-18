@@ -26,7 +26,8 @@
                 <li class="icons dropdown">
                     <div class="user-name d-inline-block mr-3">
                         <a href="#" class="text-dark">
-                            {{ \App\Models\Dosen::find(Auth::user()->dosen_id)->nama ?? '-' }}</a>
+                            {{ Auth::user()->name }}
+                        </a>
                     </div>
                     <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                         <span class="activity active"></span>

@@ -50,10 +50,18 @@ class Mahasiswa extends Model
     /**
      * Relasi ke Prodi
      */
-public function prodi()
-{
-    return $this->belongsTo(ProgramStudi::class, 'prodi_id');
-}
+    public function prodi()
+    {
+        return $this->belongsTo(ProgramStudi::class, 'prodi_id');
+    }
+
+    /**
+     * Relasi ke Tahun Akademik
+     */
+    public function tahunAkademik()
+    {
+        return $this->belongsTo(TahunAkademik::class, 'tahun_akademik_id');
+    }
 
 
 
