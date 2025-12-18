@@ -12,7 +12,7 @@
                 <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
                     <i class="icon-grid menu-icon"></i><span class="nav-text">Dosen</span>
                 </a>
-                {{-- <ul aria-expanded="false">
+                <ul aria-expanded="false">
             <li>
                 <a href="{{ url('akademik/semester') }}">
                     <i class="fa fa-book"></i><span class="nav-text">Semester</span>
@@ -28,7 +28,7 @@
                         <i class="icon-chart menu-icon"></i><span class="nav-text">Monitoring Nilai</span>
                     </a>
                 </li>
-                </ul> --}}
+                </ul>
             </li>
         </ul>
     </div>
