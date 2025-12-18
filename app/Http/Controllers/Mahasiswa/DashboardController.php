@@ -17,7 +17,7 @@ public function index()
 {
     $user = Auth::user();
 
-    $mahasiswa = Mahasiswa::with('programStudi')
+    $mahasiswa = Mahasiswa::with('prodi')
         ->where('nama', $user->name)
         ->firstOrFail();
 

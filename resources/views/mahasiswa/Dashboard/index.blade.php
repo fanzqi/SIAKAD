@@ -44,7 +44,7 @@
                 <div class="card-body">
                     <i class="icon-graduation text-success display-6 mb-2"></i>
                     <h6 class="mb-0">
-                        {{ optional($mahasiswa->programStudi)->nama ?? '-' }}
+                        {{ optional($mahasiswa->prodi)->nama ?? '-' }}
                     </h6>
                     <small class="text-muted">Program Studi</small>
                 </div>

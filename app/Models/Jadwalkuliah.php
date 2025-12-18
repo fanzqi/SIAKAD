@@ -42,4 +42,5 @@ class Jadwalkuliah extends Model
             ->groupBy('program_studi_id')
             ->pluck('total', 'program_studi_id');
     }
+
 }

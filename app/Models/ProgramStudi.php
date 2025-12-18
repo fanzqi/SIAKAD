@@ -33,16 +33,13 @@ class ProgramStudi extends Model
         return $this->hasMany(Dosen::class, 'prodi_id');
     }
 
-    /**
-     * Relasi ke Mata Kuliah
-     * Satu program studi bisa memiliki banyak mata kuliah
-     */
-    public function mataKuliahs()
-    {
-        return $this->hasMany(Mata_Kuliah::class, 'prodi_id');
-    }
     public function mahasiswa()
     {
         return $this->hasMany(Mahasiswa::class, 'prodi_id', 'id');
     }
+
+    public function mataKuliahs()
+{
+    return $this->hasMany(mata_kuliah::class, 'program_studi_id', 'id');
+}
 }

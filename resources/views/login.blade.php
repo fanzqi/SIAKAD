@@ -34,11 +34,14 @@
                         <h2 class="text-center" style="color:#3d19ff;font-weight:700;">SIAKAD</h2>
                         <p class="text-center mb-4">Sistem Informasi Akademik</p>
 
-                        @if (session('error'))
+                        @if ($errors->any())
                             <div class="alert alert-danger text-center">
-                                {{ session('error') }}
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }}<br>
+                                @endforeach
                             </div>
                         @endif
+
 
                         <form method="POST" action="{{ route('login.process') }}">
                             @csrf
@@ -50,11 +53,22 @@
                                     placeholder="Username / NIDN / NIM" required autofocus>
                             </div>
 
-                            <div class="form-group d-flex align-items-center bg-light rounded-pill px-3 mb-4"
+                            <div class="form-group d-flex align-items-center bg-light rounded-pill px-3 mb-4 position-relative"
                                 style="height:55px;">
                                 <span class="mr-3">&#128274;</span>
                                 <input type="password" class="form-control border-0 bg-light" name="password"
-                                    placeholder="Password" required>
+                                    placeholder="Password" required id="password-input">
+                                <span class="position-absolute" style="right:20px; cursor:pointer;"
+                                    onclick="togglePassword()">
+                                    <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path id="eye-open" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path id="eye-open2" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </span>
                             </div>
 
                             <button type="submit" class="btn w-100 rounded-pill"
@@ -62,13 +76,6 @@
                                 Masuk
                             </button>
                         </form>
-
-                        <p class="text-center mt-3 text-muted" style="font-size:14px;">
-                            Gunakan username sesuai NIDN (dosen), NIM (mahasiswa), atau username administrasi
-                        </p>
-
-
-
 
                     </div>
 
@@ -83,6 +90,28 @@
     <script src="{{ asset('js/settings.js') }}"></script>
     <script src="{{ asset('js/gleek.js') }}"></script>
     <script src="{{ asset('js/styleSwitcher.js') }}"></script>
+
+    //-- Eye toggle password visibility script -->
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('password-input');
+            const icon = document.getElementById('eye-icon');
+            if (input.type === "password") {
+                input.type = "text";
+                icon.innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.956 9.956 0 012.293-3.95M6.873 6.876A9.956 9.956 0 0112 5c4.478 0 8.268 2.943 9.542 7a9.973 9.973 0 01-4.293 5.07M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18" />
+                `;
+            } else {
+                input.type = "password";
+                icon.innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                `;
+            }
+        }
+    </script>
+
 
 </body>
 

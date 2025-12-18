@@ -5,14 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Kaprodi\KurikulumController;
 use App\Http\Controllers\Kaprodi\MatakuliahController;
 use App\Http\Controllers\Kaprodi\PlotingdosenController;
+use App\Http\Controllers\Kaprodi\DashboardController;
 
+Route::prefix('kaprodi')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('kaprodi.dashboard');
 
-Route::middleware('auth')->prefix('kaprodi')->group(function () {
-
-    // Dashboard
-    Route::get('/dashboard', function () {
-        return view('kaprodi.dashboard.index');
-    })->name('kaprodi.dashboard');
 
     // ===============================
     // Kurikulum

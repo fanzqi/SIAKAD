@@ -1,15 +1,15 @@
 <div class="nav-header">
     <div class="brand-logo">
         <a href="{{ url('#') }}">
-        <div class="d-flex align-items-center" style="transform: translate(-10px, -10px);">
-            <img src="{{ url('images/logo-itsm.png') }}" alt="Logo SIAKAD ITSM" height="48" class="mr-1">
-            <span class="brand-text text-white font-weight-bold" style="line-height:1; color:#fff;">
-                SIAKAD ITSM
-            </span>
-        </div>
+            <div class="d-flex align-items-center" style="transform: translate(-10px, -10px);">
+                <img src="{{ url('images/logo-itsm.png') }}" alt="Logo SIAKAD ITSM" height="48" class="mr-1">
+                <span class="brand-text text-white font-weight-bold" style="line-height:1; color:#fff;">
+                    SIAKAD ITSM
+                </span>
+            </div>
         </a>
-        </div>
-        </div>
+    </div>
+</div>
 
 <div class="header">
     <div class="header-content clearfix">
@@ -25,7 +25,8 @@
                 {{-- User info --}}
                 <li class="icons dropdown">
                     <div class="user-name d-inline-block mr-3">
-                        <a href="#" class="text-dark">{{ Auth::user()->name }}</a>
+                        <a href="#" class="text-dark">
+                            {{ \App\Models\Dosen::find(Auth::user()->dosen_id)->nama ?? '-' }}</a>
                     </div>
                     <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                         <span class="activity active"></span>
@@ -53,11 +54,10 @@
                     @php
                         use App\Models\Notification;
 
-                        $notifications = Notification::where(function($q){
-                                $q->whereNull('user_id')
-                                  ->orWhere('user_id', Auth::id());
-                            })
-                            ->whereDoesntHave('users', function($q){
+                        $notifications = Notification::where(function ($q) {
+                            $q->whereNull('user_id')->orWhere('user_id', Auth::id());
+                        })
+                            ->whereDoesntHave('users', function ($q) {
                                 $q->where('user_id', Auth::id())->where('is_read', 1);
                             })
                             ->latest()
@@ -91,7 +91,8 @@
                                     @endphp
 
                                     <li class="mb-3" id="notification-{{ $n->id }}">
-                                        <div class="alert {{ $alertClass }} alert-dismissible fade show position-relative" role="alert">
+                                        <div class="alert {{ $alertClass }} alert-dismissible fade show position-relative"
+                                            role="alert">
                                             <strong>{{ $n->author_name }}</strong><br>
                                             <span>{{ $n->message }}</span>
 
@@ -131,15 +132,17 @@
 
         // Tandai sebagai dibaca di database per user
         fetch("{{ url('/akademik/notification') }}/" + id, {
-            method: "PATCH",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({ is_read: 1 })
-        })
-        .then(res => res.json())
-        .catch(err => console.error(err));
+                method: "PATCH",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    is_read: 1
+                })
+            })
+            .then(res => res.json())
+            .catch(err => console.error(err));
     }
 </script>

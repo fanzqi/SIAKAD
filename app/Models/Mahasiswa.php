@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use App\Models\MataKuliah;
+
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -48,10 +50,11 @@ class Mahasiswa extends Model
     /**
      * Relasi ke Prodi
      */
-public function programStudi()
+public function prodi()
 {
-    return $this->belongsTo(ProgramStudi::class, 'prodi_id', 'id');
+    return $this->belongsTo(ProgramStudi::class, 'prodi_id');
 }
+
 
 
 

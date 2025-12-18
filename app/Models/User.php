@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\MataKuliah;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -11,14 +12,15 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->belongsToMany(Notification::class, 'notification_user')
-                    ->withPivot('is_read')
-                    ->withTimestamps();
+            ->withPivot('is_read')
+            ->withTimestamps();
     }
 
     use Notifiable;
 
     protected $fillable = [
         'name',
+        'dosen_id',
         'username',
         'password',
         'role',
@@ -34,4 +36,8 @@ class User extends Authenticatable
     {
         return 'username';
     }
+public function prodi() { return $this->belongsTo(ProgramStudi::class, 'prodi_id'); }
+public function fakultas() { return $this->belongsTo(Fakultas::class, 'fakultas_id'); }
+
+public function dosen() { return $this->hasOne(Dosen::class, 'id', 'dosen_id'); }
 }

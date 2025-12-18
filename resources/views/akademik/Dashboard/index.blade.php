@@ -58,9 +58,9 @@
                     <div class="text-center">
                         <span class="display-5"><i class="icon-book-open gradient-5-text"></i></span>
                         <h2 class="mt-3">
-                            {{ $totalMatkul ?? 0 }} Mata Kuliah
+                            {{ $mataKuliah->count() ?? 0 }} Mata Kuliah
                         </h2>
-                        <p>Mata Kuliah yang Anda Ampu</p>
+                        <p>Keseluruhan Mata Kuliah</p>
                     </div>
                 </div>
             </div>
