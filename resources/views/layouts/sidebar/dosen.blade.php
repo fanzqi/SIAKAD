@@ -23,6 +23,11 @@
                     <i class="fa fa-calendar"></i><span class="nav-text">Jadwal Kuliah</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ url('dosen/inputnilaimahasiswa') }}">
+                    <i class="fa fa-check-square"></i><span class="nav-text">Input Nilai Matkul</span>
+                </a>
+            </li>
                 <li>
                     <a href="{{ url('akademik/classes') }}">
                         <i class="icon-chart menu-icon"></i><span class="nav-text">Monitoring Nilai</span>
