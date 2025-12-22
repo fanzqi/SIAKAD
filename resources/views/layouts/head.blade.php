@@ -6,6 +6,10 @@
     <meta name="csrf-token" content="#">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ asset('plugins/pg-calendar/css/pignose.calendar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/morris/morris.css') }}">
+    <link rel="stylesheet" href="{{ asset('/plugins/tables/css/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/plugins/tables/css/datatable/dataTables.bootstrap4.min.css') }}">
+
+</head>

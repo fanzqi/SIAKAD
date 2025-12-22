@@ -1,20 +1,15 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Akademik\DashboardController;
 use App\Http\Controllers\Akademik\SemesterController;
 use App\Http\Controllers\Akademik\JadwalkuliahController;
-
 use App\Http\Controllers\NotificationController;
 
 // ===============================
-// Halaman Welcome
+// Redirect root to login
 // ===============================
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::redirect('/', '/login');
 
 // ===============================
 // Autentikasi
@@ -46,4 +41,4 @@ Route::delete('/akademik/notification/{id}', [NotificationController::class, 'de
 // opsional: buat notifikasi global via route (hanya contoh)
 Route::get('/akademik/notification/global/create', [NotificationController::class, 'createGlobalNotification']);
 
-Route::patch('/akademik/notification/{id}', [NotificationController::class, 'markAsRead']);Route::patch('/akademik/notification/{id}', [NotificationController::class, 'markAsRead']);
+Route::patch('/akademik/notification/{id}', [NotificationController::class, 'markAsRead']);

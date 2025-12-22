@@ -109,9 +109,6 @@
         </div>
 
     </div>
-
-@endsection
-
 <!-- Modal Hapus -->
 <div class="modal fade" id="modalHapus" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -184,3 +181,8 @@ function bukaModalHapus(actionUrl) {
     $('#modalHapus').modal('show');
 }
 </script>
+
+@endsection
+
+
+

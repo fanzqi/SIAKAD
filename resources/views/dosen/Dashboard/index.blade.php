@@ -9,7 +9,7 @@
         <div class="col p-md-0">
             <h4 class="mb-0">Dashboard Dosen</h4>
             <small class="text-muted">
-                Selamat datang  {{ Auth::user()->name }}
+                Selamat datang   {{ Auth::user()->dosen?->nama ?? (Auth::user()->mahasiswa?->nama ?? Auth::user()->name) }}
             </small>
         </div>
     </div>
@@ -20,7 +20,7 @@
             <div class="card text-center">
                 <div class="card-body">
                     <i class="icon-user text-primary display-5"></i>
-                    <h5 class="mt-2">{{ Auth::user()->name }}</h5>
+                    <h5 class="mt-2"> {{ Auth::user()->dosen?->nama ?? (Auth::user()->mahasiswa?->nama ?? Auth::user()->name) }}</h5>
                     <small>Nama Dosen</small>
                 </div>
             </div>

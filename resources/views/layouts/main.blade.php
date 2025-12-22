@@ -4,15 +4,14 @@
 @include('layouts.head')
 
 <body>
-    <!-- Preloader -->
     <div id="preloader">
         <div class="loader">
             <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3"
+                    stroke-miterlimit="10" />
             </svg>
         </div>
     </div>
-
     <!-- Main Wrapper -->
     <div id="main-wrapper">
 
@@ -27,27 +26,27 @@
         @switch($role)
             @case('akademik')
                 @include('layouts.sidebar.akademik')
-                @break
+            @break
 
             @case('warek1')
                 @include('layouts.sidebar.warek1')
-                @break
+            @break
 
             @case('dekan')
                 @include('layouts.sidebar.dekan')
-                @break
+            @break
 
             @case('kaprodi')
                 @include('layouts.sidebar.kaprodi')
-                @break
+            @break
 
             @case('dosen')
                 @include('layouts.sidebar.dosen')
-                @break
+            @break
 
             @case('mahasiswa')
                 @include('layouts.sidebar.mahasiswa')
-                @break
+            @break
         @endswitch
 
         <!-- Content -->
@@ -59,25 +58,22 @@
         @include('layouts.footer')
 
     </div>
+<script src="{{ asset('plugins/common/common.min.js') }}"></script>
 
-    <!-- Scripts -->
-    <script src="{{ asset('plugins/common/common.min.js') }}"></script>
-    <script src="{{ asset('js/custom.min.js') }}"></script>
-    <script src="{{ asset('js/settings.js') }}"></script>
-    <script src="{{ asset('js/gleek.js') }}"></script>
-    <script src="{{ asset('js/styleSwitcher.js') }}"></script>
+<script src="{{ asset('js/custom.min.js') }}"></script>
+<script src="{{ asset('js/settings.js') }}"></script>
+<script src="{{ asset('js/gleek.js') }}"></script>
+<script src="{{ asset('js/styleSwitcher.js') }}"></script>
 
-    <script src="{{ asset('/plugins/tables/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('/plugins/tables/js/datatable/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('/plugins/tables/js/datatable-init/datatable-basic.min.js') }}"></script>
-
-    <!-- CSS -->
-
-
-<!-- JS -->
 <script src="{{ asset('plugins/raphael/raphael.min.js') }}"></script>
 <script src="{{ asset('plugins/morris/morris.min.js') }}"></script>
 
+<script src="{{ asset('plugins/tables/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plugins/tables/js/datatable/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/tables/js/datatable-init/datatable-basic.min.js') }}"></script>
 
-</body>
+@stack('scripts')
+
+
+
 </html>

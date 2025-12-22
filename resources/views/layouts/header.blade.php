@@ -1,3 +1,4 @@
+
 <div class="nav-header">
     <div class="brand-logo">
         <a href="{{ url('#') }}">
@@ -21,12 +22,12 @@
 
         <div class="header-right">
             <ul class="clearfix">
-
-                {{-- User info --}}
                 <li class="icons dropdown">
                     <div class="user-name d-inline-block mr-3">
                         <a href="#" class="text-dark">
-                            {{ Auth::user()->name }}
+                            <span class="text-capitalize">
+                                {{ Auth::user()->dosen?->nama ?? (Auth::user()->mahasiswa?->nama ?? Auth::user()->name) }}
+                            </span>
                         </a>
                     </div>
                     <div class="user-img c-pointer position-relative" data-toggle="dropdown">

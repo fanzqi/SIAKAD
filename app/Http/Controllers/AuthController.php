@@ -64,7 +64,7 @@ class AuthController extends Controller
                     return redirect()->route('akademik.dashboard');
                 default:
                     Auth::logout();
-                    return back()->withErrors(['username' => 'Role tidak dikenali']);
+                    return back()->withErrors(['username' => 'Maaf Anda Tidak Terdaftar']);
             }
         }
 

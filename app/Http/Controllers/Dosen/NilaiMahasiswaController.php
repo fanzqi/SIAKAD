@@ -4,200 +4,128 @@ namespace App\Http\Controllers\Dosen;
 
 use App\Http\Controllers\Controller;
 use App\Models\NilaiMahasiswa;
+use App\Models\Mata_kuliah;
 use App\Models\Mahasiswa;
+use App\Models\Dosen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Imports\NilaiMahasiswaImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class NilaiMahasiswaController extends Controller
 {
-    /**
-     * READ
-     * Tampilkan tabel nilai mahasiswa + NIM & Nama
-     */
     public function index()
     {
-        $nilaiMahasiswa = NilaiMahasiswa::select(
-                'nilai_mahasiswa.id_nilaiMahasiswa',
-                'mahasiswa.nim',
-                'mahasiswa.nama',
-                'nilai_mahasiswa.nilai_angka_absen',
-                'nilai_mahasiswa.nilai_angka_tugas',
-                'nilai_mahasiswa.nilai_angka_uts',
-                'nilai_mahasiswa.nilai_angka_uas',
-                'nilai_mahasiswa.nilai_angka_akhir',
-                'nilai_mahasiswa.nilai_huruf',
-                'nilai_mahasiswa.bobot'
-            )
-            ->join('mahasiswa', 'nilai_mahasiswa.id_mahasiswa', '=', 'mahasiswa.id')
-            ->orderBy('nilai_mahasiswa.id_nilaiMahasiswa', 'asc')
+        $dosen = Dosen::where('nidn', Auth::user()->username)->firstOrFail();
+        $mataKuliah = Mata_kuliah::where('dosen_id', $dosen->id)->get();
+        $mataKuliahIds = $mataKuliah->pluck('id');
+
+        $nilaiMahasiswa = NilaiMahasiswa::with('mahasiswa', 'mata_kuliah')
+            ->where('dosen_id', $dosen->id)
+            ->whereIn('mata_kuliah_id', $mataKuliahIds)
             ->get();
 
-        return view('dosen.inputnilaimahasiswa.index', compact('nilaiMahasiswa'));
+        $mahasiswa = Mahasiswa::where('prodi_id', $dosen->prodi_id)
+            ->orderBy('nama')
+            ->get();
+
+        return view('dosen.inputnilai.index', compact('nilaiMahasiswa', 'mahasiswa', 'mataKuliah'));
     }
 
-    /**
-     * CREATE (FORM)
-     */
-    public function create()
+    // Import Excel
+    public function import(Request $request)
     {
-        $mahasiswa = Mahasiswa::orderBy('nama')->get();
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv'
+        ]);
 
-        return view('dosen.inputnilaimahasiswa.create', compact('mahasiswa'));
+        Excel::import(new NilaiMahasiswaImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Nilai mahasiswa berhasil diimpor!');
     }
 
-    /**
-     * STORE
-     */
+    // Input manual
     public function store(Request $request)
-{
-    $request->validate([
-        'id_mahasiswa'       => 'required|exists:mahasiswa,id',
-        'nilai_angka_absen'  => 'required|numeric|min:0|max:100',
-        'nilai_angka_tugas'  => 'required|numeric|min:0|max:100',
-        'nilai_angka_uts'    => 'required|numeric|min:0|max:100',
-        'nilai_angka_uas'    => 'required|numeric|min:0|max:100',
-    ]);
+    {
+        $request->validate([
+            'mahasiswa_id' => 'required|exists:mahasiswa,id',
+            'mata_kuliah_id' => 'required|exists:mata_kuliah,id',
+            'kehadiran' => 'required|numeric|min:0|max:100',
+            'tugas' => 'required|numeric|min:0|max:100',
+            'uts' => 'required|numeric|min:0|max:100',
+            'uas' => 'required|numeric|min:0|max:100',
+        ]);
 
-    // nilai akhir
-    $nilaiAkhir = (
-        $request->nilai_angka_absen +
-        $request->nilai_angka_tugas +
-        $request->nilai_angka_uts +
-        $request->nilai_angka_uas
-    ) / 4;
+        $dosen_id = Auth::user()->dosen->id;
 
-    // Konversi huruf & bobot
-    if ($nilaiAkhir >= 90 && $nilaiAkhir <= 100) {
-        $nilaiHuruf = 'A';
-        $bobot = 4.00;
-    } elseif ($nilaiAkhir >= 80 && $nilaiAkhir <= 89) {
-        $nilaiHuruf = 'A-';
-        $bobot = 3.75;
-    } elseif ($nilaiAkhir >= 75 && $nilaiAkhir <= 79) {
-        $nilaiHuruf = 'B+';
-        $bobot = 3.25;
-    } elseif ($nilaiAkhir >= 70 && $nilaiAkhir <= 74) {
-        $nilaiHuruf = 'B';
-        $bobot = 3.00;
-    } elseif ($nilaiAkhir >= 65 && $nilaiAkhir <= 69) {
-        $nilaiHuruf = 'B-';
-        $bobot = 2.75;
-    } elseif ($nilaiAkhir >= 60 && $nilaiAkhir <= 64) {
-        $nilaiHuruf = 'C+';
-        $bobot = 2.25;
-    } elseif ($nilaiAkhir >= 55 && $nilaiAkhir <= 59) {
-        $nilaiHuruf = 'C';
-        $bobot = 2.00;
-    } elseif ($nilaiAkhir >= 50 && $nilaiAkhir <= 54) {
-        $nilaiHuruf = 'C-';
-        $bobot = 1.75;
-    } elseif ($nilaiAkhir >= 40 && $nilaiAkhir <= 49) {
-        $nilaiHuruf = 'D';
-        $bobot = 1.00;
-    } else {
-        $nilaiHuruf = 'E';
-        $bobot = 0.00;
+        $nilaiAkhir = ($request->kehadiran * 0.1) +
+                      ($request->tugas * 0.2) +
+                      ($request->uts * 0.3) +
+                      ($request->uas * 0.4);
+
+        if ($nilaiAkhir >= 85) {
+            $grade = 'A'; $bobot = 4.00;
+        } elseif ($nilaiAkhir >= 75) {
+            $grade = 'B'; $bobot = 3.00;
+        } elseif ($nilaiAkhir >= 65) {
+            $grade = 'C'; $bobot = 2.00;
+        } else {
+            $grade = 'D'; $bobot = 1.00;
+        }
+
+        NilaiMahasiswa::create([
+            'mahasiswa_id' => $request->mahasiswa_id,
+            'dosen_id' => $dosen_id,
+            'mata_kuliah_id' => $request->mata_kuliah_id,
+            'kehadiran' => $request->kehadiran,
+            'tugas' => $request->tugas,
+            'uts' => $request->uts,
+            'uas' => $request->uas,
+            'nilai_akhir' => $nilaiAkhir,
+            'grade' => $grade,
+            'bobot' => $bobot,
+        ]);
+
+        return back()->with('success', 'Nilai mahasiswa berhasil ditambahkan!');
     }
 
-    NilaiMahasiswa::create([
-        'id_mahasiswa'        => $request->id_mahasiswa,
-        'nilai_angka_absen'   => $request->nilai_angka_absen,
-        'nilai_angka_tugas'   => $request->nilai_angka_tugas,
-        'nilai_angka_uts'     => $request->nilai_angka_uts,
-        'nilai_angka_uas'     => $request->nilai_angka_uas,
-        'nilai_angka_akhir'   => $nilaiAkhir,
-        'nilai_huruf'         => $nilaiHuruf,
-        'bobot'               => $bobot,
-    ]);
-
-    return redirect()->route('inputnilaimahasiswa.index')
-        ->with('success', 'Nilai mahasiswa berhasil ditambahkan');
-}
-
-
-    /**
-     * EDIT (FORM)
-     */
-    public function edit($id)
-{
-    $nilai = NilaiMahasiswa::select(
-            'nilai_mahasiswa.*',
-            'mahasiswa.nim',
-            'mahasiswa.nama'
-        )
-        ->join('mahasiswa', 'nilai_mahasiswa.id_mahasiswa', '=', 'mahasiswa.id')
-        ->where('nilai_mahasiswa.id_nilaiMahasiswa', $id)
-        ->firstOrFail();
-
-    return view('dosen.inputnilaimahasiswa.edit', compact('nilai'));
-}
-
-    /**
-     * UPDATE
-     */
+    // Update nilai
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nilai_angka_absen'  => 'required|numeric|min:0|max:100',
-            'nilai_angka_tugas'  => 'required|numeric|min:0|max:100',
-            'nilai_angka_uts'    => 'required|numeric|min:0|max:100',
-            'nilai_angka_uas'    => 'required|numeric|min:0|max:100',
+            'kehadiran' => 'required|numeric|min:0|max:100',
+            'tugas' => 'required|numeric|min:0|max:100',
+            'uts' => 'required|numeric|min:0|max:100',
+            'uas' => 'required|numeric|min:0|max:100',
         ]);
 
-        // Hitung nilai akhir (rata-rata)
-        $nilaiAkhir = (
-        $request->nilai_angka_absen +
-        $request->nilai_angka_tugas +
-        $request->nilai_angka_uts +
-        $request->nilai_angka_uas
-        ) / 4;
+        $nilai = NilaiMahasiswa::findOrFail($id);
 
-        // KONVERSI NILAI HURUF + BOBOT
-    if ($nilaiAkhir >= 90 && $nilaiAkhir <= 100) {
-        $nilaiHuruf = 'A';
-        $bobot = 4.00;
-    } elseif ($nilaiAkhir >= 80 && $nilaiAkhir <= 89) {
-        $nilaiHuruf = 'A-';
-        $bobot = 3.75;
-    } elseif ($nilaiAkhir >= 75 && $nilaiAkhir <= 79) {
-        $nilaiHuruf = 'B+';
-        $bobot = 3.25;
-    } elseif ($nilaiAkhir >= 70 && $nilaiAkhir <= 74) {
-        $nilaiHuruf = 'B';
-        $bobot = 3.00;
-    } elseif ($nilaiAkhir >= 65 && $nilaiAkhir <= 69) {
-        $nilaiHuruf = 'B-';
-        $bobot = 2.75;
-    } elseif ($nilaiAkhir >= 60 && $nilaiAkhir <= 64) {
-        $nilaiHuruf = 'C+';
-        $bobot = 2.25;
-    } elseif ($nilaiAkhir >= 55 && $nilaiAkhir <= 59) {
-        $nilaiHuruf = 'C';
-        $bobot = 2.00;
-    } elseif ($nilaiAkhir >= 50 && $nilaiAkhir <= 54) {
-        $nilaiHuruf = 'C-';
-        $bobot = 1.75;
-    } elseif ($nilaiAkhir >= 40 && $nilaiAkhir <= 49) {
-        $nilaiHuruf = 'D';
-        $bobot = 1.00;
-    } else {
-        $nilaiHuruf = 'E';
-        $bobot = 0.00;
+        $nilaiAkhir = ($request->kehadiran * 0.1) +
+                      ($request->tugas * 0.2) +
+                      ($request->uts * 0.3) +
+                      ($request->uas * 0.4);
+
+        if ($nilaiAkhir >= 85) {
+            $grade = 'A'; $bobot = 4.00;
+        } elseif ($nilaiAkhir >= 75) {
+            $grade = 'B'; $bobot = 3.00;
+        } elseif ($nilaiAkhir >= 65) {
+            $grade = 'C'; $bobot = 2.00;
+        } else {
+            $grade = 'D'; $bobot = 1.00;
+        }
+
+        $nilai->update([
+            'kehadiran' => $request->kehadiran,
+            'tugas' => $request->tugas,
+            'uts' => $request->uts,
+            'uas' => $request->uas,
+            'nilai_akhir' => $nilaiAkhir,
+            'grade' => $grade,
+            'bobot' => $bobot,
+        ]);
+
+        return back()->with('success', 'Nilai mahasiswa berhasil diperbarui!');
     }
-
-        // UPDATE DATABASE
-    $nilai = NilaiMahasiswa::findOrFail($id);
-    $nilai->update([
-        'nilai_angka_absen' => $request->nilai_angka_absen,
-        'nilai_angka_tugas' => $request->nilai_angka_tugas,
-        'nilai_angka_uts'   => $request->nilai_angka_uts,
-        'nilai_angka_uas'   => $request->nilai_angka_uas,
-        'nilai_angka_akhir' => $nilaiAkhir,
-        'nilai_huruf'       => $nilaiHuruf,
-        'bobot'             => $bobot,
-    ]);
-
-    return redirect()->route('inputnilaimahasiswa.index')
-        ->with('edit', 'Nilai mahasiswa berhasil diperbarui');
-}
-
 }

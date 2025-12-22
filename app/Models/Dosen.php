@@ -45,8 +45,12 @@ class Dosen extends Model
     /**
      * Relasi ke Prodi
      */
-public function prodi()
-{
-    return $this->belongsTo(ProgramStudi::class, 'prodi_id');
-}
+    public function prodi()
+    {
+        return $this->belongsTo(ProgramStudi::class, 'prodi_id');
+    }
+    public function user()
+    {
+        return $this->hasOne(User::class, 'dosen_id');
+    }
 }

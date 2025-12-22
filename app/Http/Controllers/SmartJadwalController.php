@@ -18,71 +18,75 @@ class SmartJadwalController extends Controller
         6 => ['Kamis', 'Jumat'],
     ];
 
-   public function generate()
-{
-    $mataKuliah = Mata_kuliah::orderByDesc('sks')->get();
-    $ruang = Ruang::all();
-    $hariDefault = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
+    public function generate()
+    {
+        $mataKuliah = Mata_kuliah::orderByDesc('sks')->get();
+        $ruang = Ruang::all();
+        $hariDefault = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
 
-    foreach ($mataKuliah as $mk) {
+        foreach ($mataKuliah as $mk) {
 
-        // ✅ SEMESTER DITENTUKAN DARI GROUP
-        $semesterDipilih = (int) substr($mk->group, 0, 1);
+            // ✅ SEMESTER DARI GROUP
+            $semesterDipilih = (int) substr($mk->group, 0, 1);
 
-        // Preferensi hari per semester
-        $hariPilihan = $this->hariPreferensi[$semesterDipilih] ?? $hariDefault;
-        $assigned = false;
+            // Preferensi hari
+            $hariPilihan = $this->hariPreferensi[$semesterDipilih] ?? $hariDefault;
+            $assigned = false;
 
-        foreach ($hariPilihan as $hari) {
-            foreach ($ruang as $r) {
+            foreach ($hariPilihan as $hari) {
+                foreach ($ruang as $r) {
 
-                $jamMulai = $r->jam_mulai;
-                $jamSelesai = $r->jam_selesai;
+                    $jamMulai = $r->jam_mulai;
+                    $jamSelesai = $r->jam_selesai;
+                    // CEK BENTROK RUANG (PER FAKULTAS & PRODI)
+                    $bentrokRuang = jadwalkuliah::where('hari', $hari)
+                        ->where('ruangs_id', $r->id)
+                        ->where('semester', $semesterDipilih)
+                        ->where('fakultas_id', $mk->fakultas_id)
+                        ->where('program_studi_id', $mk->program_studi_id)
+                        ->where(function ($q) use ($jamMulai, $jamSelesai) {
+                            $q->whereBetween('jam_mulai', [$jamMulai, $jamSelesai])
+                              ->orWhereBetween('jam_selesai', [$jamMulai, $jamSelesai]);
+                        })
+                        ->exists();
 
-                // ❌ CEK BENTROK RUANG
-                $bentrokRuang = jadwalkuliah::where('hari', $hari)
-                    ->where('ruangs_id', $r->id)
-                    ->where('semester', $semesterDipilih)
-                    ->where(function ($q) use ($jamMulai, $jamSelesai) {
-                        $q->whereBetween('jam_mulai', [$jamMulai, $jamSelesai])
-                          ->orWhereBetween('jam_selesai', [$jamMulai, $jamSelesai]);
-                    })
-                    ->exists();
+                    // CEK BENTROK GROUP (PER FAKULTAS & PRODI)
+                    $bentrokGroup = jadwalkuliah::where('hari', $hari)
+                        ->where('semester', $semesterDipilih)
+                        ->where('fakultas_id', $mk->fakultas_id)
+                        ->where('program_studi_id', $mk->program_studi_id)
+                        ->whereHas('mata_kuliah', function ($q) use ($mk) {
+                            $q->where('group', $mk->group);
+                        })
+                        ->where(function ($q) use ($jamMulai, $jamSelesai) {
+                            $q->whereBetween('jam_mulai', [$jamMulai, $jamSelesai])
+                              ->orWhereBetween('jam_selesai', [$jamMulai, $jamSelesai]);
+                        })
+                        ->exists();
 
-                // ❌ CEK BENTROK GROUP
-                $bentrokGroup = jadwalkuliah::where('hari', $hari)
-                    ->where('semester', $semesterDipilih)
-                    ->whereHas('mata_kuliah', function ($q) use ($mk) {
-                        $q->where('group', $mk->group);
-                    })
-                    ->where(function ($q) use ($jamMulai, $jamSelesai) {
-                        $q->whereBetween('jam_mulai', [$jamMulai, $jamSelesai])
-                          ->orWhereBetween('jam_selesai', [$jamMulai, $jamSelesai]);
-                    })
-                    ->exists();
+                    if ($bentrokRuang || $bentrokGroup) continue;
 
-                if ($bentrokRuang || $bentrokGroup) continue;
 
-                // ✅ SIMPAN
-                jadwalkuliah::create([
-                    'mata_kuliah_id' => $mk->id,
-                    'ruangs_id' => $r->id,
-                    'semester' => $semesterDipilih,
-                    'hari' => $hari,
-                    'jam_mulai' => $jamMulai,
-                    'jam_selesai' => $jamSelesai,
-                    
-                ]);
+                    jadwalkuliah::create([
+                        'mata_kuliah_id'   => $mk->id,
+                        'ruangs_id'        => $r->id,
+                        'semester'         => $semesterDipilih,
+                        'group'            => $mk->group,
+                        'hari'             => $hari,
+                        'jam_mulai'        => $jamMulai,
+                        'jam_selesai'      => $jamSelesai,
+                        'fakultas_id'      => $mk->fakultas_id,
+                        'program_studi_id' => $mk->program_studi_id,
+                    ]);
 
-                $assigned = true;
-                break;
+                    $assigned = true;
+                    break;
+                }
+                if ($assigned) break;
             }
-            if ($assigned) break;
         }
-    }
-
 
         return redirect('/akademik/jadwalkuliah')
-            ->with('success', 'Jadwal otomatis berhasil digenerate untuk semua semester aktif!');
+            ->with('success', 'Jadwal otomatis berhasil digenerate per fakultas & program studi!');
     }
 }

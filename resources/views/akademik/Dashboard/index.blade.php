@@ -45,7 +45,7 @@
                         <h2 class="mt-3">
                             {{ $totalMahasiswa ?? 0 }} Mahasiswa
                         </h2>
-                        <p>Terdaftar di Prodi Anda</p>
+                        <p>Terdaftar dari Semua Fakultas</p>
                     </div>
                 </div>
             </div>
@@ -115,9 +115,22 @@ document.addEventListener("DOMContentLoaded", function() {
         ykeys: ['jumlah'],
         labels: ['Jumlah Mahasiswa'],
         resize: true,
-        barColors: ['#7571f9'],
-        hideHover: 'auto'
+        hideHover: 'auto',
+
+        // WARNA PER PRODI
+        barColors: function (row, series, type) {
+            if (row.label === "Manajemen") return "#00A40E";
+            if (row.label === "Akuntansi") return "#E6FF00";
+            if (row.label === "Ekonomi Pembangunan") return "#D50000";
+            if (row.label === "D3 Keuangan Perbankan") return "#FFFFFF";
+            if (row.label === "Sistem dan Teknologi Informasi") return "#3A0EE9";
+            if (row.label === "Rekayasa Perangkat Lunak") return "#030180";
+
+            // warna default kalau prodi baru
+            return "#7571f9";
+        }
     });
 });
 </script>
+
 @endsection
