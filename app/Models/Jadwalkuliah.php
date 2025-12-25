@@ -18,29 +18,27 @@ class Jadwalkuliah extends Model
         'group_kelas',
         'fakultas_id',
         'program_studi_id',
+        'status',
     ];
 
-    // RELASI MATA KULIAH
     public function mata_kuliah()
     {
         return $this->belongsTo(Mata_kuliah::class, 'mata_kuliah_id');
     }
 
-    // RELASI RUANG
     public function ruang()
     {
         return $this->belongsTo(Ruang::class, 'ruangs_id');
     }
-    // Menghitung jumlah mahasiswa per program studi
+
     public function prodi()
     {
         return $this->belongsTo(ProgramStudi::class, 'program_studi_id');
     }
-    public static function getJumlahMahasiswaPerProdi()
+
+     public function dosen()
     {
-        return \App\Models\Mahasiswa::selectRaw('program_studi_id, COUNT(*) as total')
-            ->groupBy('program_studi_id')
-            ->pluck('total', 'program_studi_id');
+        return $this->belongsTo(Dosen::class, 'dosen_id');
     }
 
 }

@@ -25,16 +25,20 @@ class DashboardController extends Controller
 
         // Sebaran mahasiswa per semester
         $sebaranMahasiswaPerSemester = $prodi ? $prodi->mahasiswa()
-            ->selectRaw('semester_aktif as semester, COUNT(*) as jumlah')
-            ->groupBy('semester_aktif')
-            ->orderBy('semester_aktif')
+            ->join('tahun_akademik', 'mahasiswa.semester_aktif_id', '=', 'tahun_akademik.id')
+            ->whereIn('tahun_akademik.semester_ke', [1, 3, 5, 7])
+            ->selectRaw('tahun_akademik.semester_ke as semester, COUNT(mahasiswa.id) as jumlah')
+            ->groupBy('tahun_akademik.semester_ke')
+            ->orderBy('tahun_akademik.semester_ke')
             ->get()
-            ->map(function($item) {
+            ->map(function ($item) {
                 return [
                     'semester' => 'Semester ' . $item->semester,
                     'jumlah' => $item->jumlah
                 ];
-            }) : [];
+            })
+            : [];
+
 
         return view('kaprodi.dashboard.index', [
             'namaKaprodi' => $dosen->nama ?? 'Belum diatur',

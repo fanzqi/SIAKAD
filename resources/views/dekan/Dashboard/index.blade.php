@@ -68,36 +68,34 @@
         </div>
     </div>
 
-    <!-- GRAFIK -->
-    <div class="row">
-        <div class="col-xl-10 col-lg-11 mx-auto">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title mb-3">
-                        Sebaran Mahasiswa per Fakultas
-                    </h4>
-                    <div id="chart-fakultas" style="height:320px;"></div>
-                </div>
+   <!-- GRAFIK -->
+<div class="row">
+    <div class="col-xl-10 col-lg-11 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-3">
+                    Sebaran Mahasiswa per Prodi
+                </h4>
+                <div id="chart-prodi" style="height:320px;"></div>
             </div>
         </div>
     </div>
-
 </div>
 
 <!-- SCRIPT GRAFIK -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     new Morris.Bar({
-        element: 'chart-fakultas',
+        element: 'chart-prodi',
         data: [
-            @foreach ($sebaranFakultas as $item)
+            @foreach ($sebaranProdi as $item)
             {
-                fakultas: "{{ $item->fakultas }}",
+                prodi: "{{ $item->prodi }}",
                 jumlah: {{ $item->jumlah }}
             },
             @endforeach
         ],
-        xkey: 'fakultas',
+        xkey: 'prodi',
         ykeys: ['jumlah'],
         labels: ['Jumlah Mahasiswa'],
         resize: true,

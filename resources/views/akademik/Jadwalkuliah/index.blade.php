@@ -38,13 +38,23 @@
                                 <a href="{{ route('jadwal.pdf.all') }}" class="btn btn-danger btn-sm">
                                     <i class="bi bi-file-earmark-pdf"></i> Export PDF
                                 </a>
-                                <!-- Submit Jadwal -->
-                                <button type="button" class="btn btn-info btn-sm">
-                                    <i class="bi bi-send"></i> Kirim ke Warek 1
-                                </button>
-                                <button type="button" class="btn btn-info btn-sm">
-                                    <i class="bi bi-send"></i> Distribusikan Jadwal
-                                </button>
+                                <form action="{{ route('jadwalkuliah.kirim.warek') }}" method="POST"
+                                    onsubmit="return confirm('Kirim semua jadwal ke Warek 1?')">
+                                    @csrf
+                                    <button type="submit" class="btn btn-info btn-sm">
+                                        <i class="bi bi-send"></i> Kirim ke Warek 1
+                                    </button>
+                                </form>
+
+                                <form action="{{ route('jadwalkuliah.kirim.warek') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-info btn-sm">
+                                        <i class="bi bi-send"></i> Distribusikan Jadwal
+                                    </button>
+                                </form>
+
+
+
                             </div>
                         </div>
                     </div>
@@ -84,6 +94,7 @@
                                     <th>Hari</th>
                                     <th>Jam</th>
                                     <th>Ruangan</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -93,25 +104,38 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $jadwals->mata_kuliah->nama_mata_kuliah }}</td>
-                                        <td>{{ $jadwals->mata_kuliah->dosen ? $jadwals->mata_kuliah->dosen->nama : '-' }}</td>
-                                        <td>{{ $jadwals->mata_kuliah->program_studi ? $jadwals->mata_kuliah->program_studi->nama : '-' }}</td>
+                                        <td>{{ $jadwals->mata_kuliah->dosen ? $jadwals->mata_kuliah->dosen->nama : '-' }}
+                                        </td>
+                                        <td>{{ $jadwals->mata_kuliah->program_studi ? $jadwals->mata_kuliah->program_studi->nama : '-' }}
+                                        </td>
                                         <td>{{ $jadwals->semester }}</td>
                                         <td>{{ $jadwals->mata_kuliah->group }}</td>
                                         <td>{{ $jadwals->hari }}</td>
                                         <td>{{ $jadwals->jam_mulai }} - {{ $jadwals->jam_selesai }}</td>
                                         <td>{{ $jadwals->ruang->nama_ruang }}</td>
                                         <td>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="{{ route('jadwalkuliah.edit', $jadwals->id) }}"
-                                                    class="btn btn-sm btn-warning me-1">
-                                                    <i class="bi bi-pencil-square"></i> Edit
-                                                </a>
-                                                <button type="button" class="btn btn-sm btn-danger"
-                                                    onclick="bukaModalHapus('{{ route('jadwalkuliah.destroy', $jadwals->id) }}')">
-                                                    <i class="bi bi-trash"></i> Hapus
-                                                </button>
-                                            </div>
+                                            @if ($jadwals->status == 'draft')
+                                                <span class="badge bg-warning">Draft</span>
+                                            @elseif($jadwals->status == 'diajukan')
+                                                <span class="badge bg-info">Diajukan</span>
+                                            @elseif($jadwals->status == 'disetujui')
+                                                <span class="badge bg-success">Disetujui</span>
+                                            @elseif($jadwals->status == 'revisi')
+                                                <span class="badge bg-danger">Revisi</span>
+                                            @endif
                                         </td>
+
+                                        <td>
+                                            <a href="{{ route('jadwalkuliah.edit', $jadwals->id) }}"
+                                                class="btn btn-warning btn-sm">
+                                                Edit
+                                            </a>
+                                            <button class="btn btn-danger btn-sm"
+                                                onclick="bukaModalHapus('{{ route('jadwalkuliah.destroy', $jadwals->id) }}')">
+                                                Hapus
+                                            </button>
+                                        </td>
+
                                     </tr>
                                 @empty
                                     <tr>

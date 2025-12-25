@@ -1,132 +1,67 @@
-<?php
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jadwal Kuliah</title>
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 12px; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 10px; }
+        table, th, td { border: 1px solid black; }
+        th, td { padding: 5px; text-align: center; }
+        h2, h3, h4 { margin: 0; padding: 0; text-align: center; }
+    </style>
+</head>
+<body>
+    <h2>JADWAL KULIAH</h2>
+    <h3>INSTITUT TEKNOLOGI DAN SAINS MANDALA</h3>
+    <br>
 
-namespace App\Exports;
+    @foreach($jadwal as $prodi => $semesterGroup)
+        <h3>Program Studi: {{ $prodi }}</h3>
+        @foreach($semesterGroup as $semester => $jadwals)
+            <h4>Semester: {{ $semester }}</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Hari</th>
+                        <th>Jam</th>
+                        <th>Mata Kuliah</th>
+                        <th>Dosen</th>
+                        <th>Program Studi</th>
+                        <th>Semester</th>
+                        <th>Group</th>
+                        <th>Ruangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($jadwals as $index => $item)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $item->hari }}</td>
+                            <td>{{ $item->jam_mulai }} - {{ $item->jam_selesai }}</td>
+                            <td>{{ $item->mata_kuliah?->nama_mata_kuliah ?? '-' }}</td>
+                            <td>{{ $item->mata_kuliah?->dosen?->nama ?? '-' }}</td>
+                            <td>{{ $item->mata_kuliah?->program_studi?->nama ?? '-' }}</td>
+                            <td>{{ $item->semester }}</td>
+                            <td>{{ $item->mata_kuliah?->group ?? '-' }}</td>
+                            <td>{{ $item->ruang?->nama_ruang ?? '-' }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endforeach
+    @endforeach
 
-use App\Models\Jadwalkuliah;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\AfterSheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use PhpOffice\PhpSpreadsheet\Style\Border;
-
-class JadwalKuliahExport implements FromCollection, WithHeadings, WithMapping, WithEvents
-{
-    private int $index = 0;
-    private string $judulSemester = '';
-    private string $judulProdi = '';
-    private string $judulFakultas = '';
-
-    public function __construct()
-    {
-        $first = Jadwalkuliah::with([
-            'mata_kuliah.program_studi',
-            'mata_kuliah.fakultas'
-        ])->first();
-
-        $this->judulSemester = $first->semester ?? '-';
-        $this->judulProdi    = $first->mata_kuliah->program_studi->nama ?? 'SEMUA PROGRAM STUDI';
-        $this->judulFakultas = $first->mata_kuliah->fakultas->nama ?? 'SEMUA FAKULTAS';
-    }
-
-    public function collection()
-    {
-        return Jadwalkuliah::with([
-            'mata_kuliah.dosen',
-            'mata_kuliah.program_studi',
-            'mata_kuliah.fakultas',
-            'ruang'
-        ])
-        ->orderBy('semester')
-        ->orderBy('hari')
-        ->orderBy('jam_mulai')
-        ->get();
-    }
-
-    public function headings(): array
-    {
-        return [
-            ['JADWAL KULIAH'],
-            ['FAKULTAS ' . strtoupper($this->judulFakultas)],
-            ['PROGRAM STUDI ' . strtoupper($this->judulProdi)],
-            ['SEMESTER ' . $this->judulSemester],
-            ['INSTITUT TEKNOLOGI DAN SAINS MANDALA'],
-            [],
-            [
-                'No',
-                'Hari',
-                'Jam',
-                'Mata Kuliah',
-                'Dosen',
-                'Group',
-                'Ruangan',
-            ]
-        ];
-    }
-
-    public function map($row): array
-    {
-        return [
-            ++$this->index,
-            $row->hari,
-            $row->jam_mulai . ' - ' . $row->jam_selesai,
-            $row->mata_kuliah->nama_mata_kuliah ?? '-',
-            $row->mata_kuliah->dosen->nama ?? '-',
-            $row->mata_kuliah->group ?? '-',
-            $row->ruang->nama_ruang ?? '-',
-        ];
-    }
-
-    public function registerEvents(): array
-    {
-        return [
-            AfterSheet::class => function (AfterSheet $event) {
-
-                // KERTAS F4
-                $event->sheet->getPageSetup()
-                    ->setPaperSize(PageSetup::PAPERSIZE_FOLIO);
-
-                // MERGE JUDUL
-                $event->sheet->mergeCells('A1:G1');
-                $event->sheet->mergeCells('A2:G2');
-                $event->sheet->mergeCells('A3:G3');
-                $event->sheet->mergeCells('A4:G4');
-                $event->sheet->mergeCells('A5:G5');
-
-                // STYLE JUDUL
-                $event->sheet->getStyle('A1:A5')->applyFromArray([
-                    'font' => ['bold' => true],
-                    'alignment' => ['horizontal' => 'center'],
-                ]);
-
-                // HEADER TABEL
-                $event->sheet->getStyle('A7:G7')->applyFromArray([
-                    'font' => ['bold' => true],
-                    'alignment' => ['horizontal' => 'center'],
-                    'borders' => [
-                        'allBorders' => [
-                            'borderStyle' => Border::BORDER_THIN,
-                        ],
-                    ],
-                ]);
-
-                // AUTO WIDTH
-                foreach (range('A', 'G') as $col) {
-                    $event->sheet->getColumnDimension($col)->setAutoSize(true);
-                }
-
-                // TTD
-                $lastRow = $event->sheet->getHighestRow() + 3;
-                $event->sheet->setCellValue("E{$lastRow}", 'Jember, ' . date('d F Y'));
-                $event->sheet->setCellValue("E" . ($lastRow + 1), 'Bagian Akademik');
-                $event->sheet->setCellValue("E" . ($lastRow + 5), '( ____________________ )');
-
-                $event->sheet->getStyle("E{$lastRow}:G" . ($lastRow + 5))->applyFromArray([
-                    'alignment' => ['horizontal' => 'center'],
-                    'font' => ['bold' => true],
-                ]);
-            }
-        ];
-    }
-}
+    <br><br>
+    <table style="width: 100%; border: none;">
+        <tr>
+            <td></td>
+            <td style="text-align: center;">
+                Jember, {{ date('d F Y') }}<br>
+                Wakil Rektor I<br><br><br><br>
+                ________________________
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

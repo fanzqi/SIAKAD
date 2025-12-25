@@ -5,43 +5,41 @@ namespace App\Http\Controllers\Mahasiswa;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Mahasiswa;
-use App\Models\mata_kuliah;
+use App\Models\Kurikulum;
 use App\Models\Notification;
- use App\Models\Kurikulum;
-
 
 class DashboardController extends Controller
 {
+    public function index()
+    {
+        $user = Auth::user();
 
-public function index()
-{
-    $user = Auth::user();
+        // Ambil mahasiswa berdasarkan username (nim)
+        $mahasiswa = Mahasiswa::with('prodi')
+            ->where('nim', $user->username)  // username di users = nim mahasiswa
+            ->first();
 
-    $mahasiswa = Mahasiswa::with('prodi')
-        ->where('nama', $user->name)
-        ->firstOrFail();
+        if (!$mahasiswa) {
+            abort(404, 'Mahasiswa tidak ditemukan');
+        }
 
-    $kurikulumId = $mahasiswa->kurikulum_id;
+        $kurikulumId = $mahasiswa->kurikulum_id;
 
-    // ===============================
-    // HITUNG BERDASARKAN TABEL KURIKULUMS
-    // ===============================
+        // Hitung total mata kuliah dan total SKS di kurikulum
+        $totalMatkul = Kurikulum::where('id', $kurikulumId)->count();
+        $totalSks = Kurikulum::where('id', $kurikulumId)->sum('sks');
 
-    $totalMatkul = Kurikulum::where('id', $kurikulumId)->count();
+        // Ambil 5 notifikasi terbaru
+        $notifications = Notification::latest()
+            ->limit(5)
+            ->get();
 
-    $totalSks = Kurikulum::where('id', $kurikulumId)->sum('sks');
-
-    $notifications = Notification::latest()
-        ->limit(5)
-        ->get();
-
-    return view('mahasiswa.dashboard.index', compact(
-        'user',
-        'mahasiswa',
-        'totalMatkul',
-        'totalSks',
-        'notifications'
-    ));
-}
-
+        return view('mahasiswa.dashboard.index', compact(
+            'user',
+            'mahasiswa',
+            'totalMatkul',
+            'totalSks',
+            'notifications'
+        ));
+    }
 }

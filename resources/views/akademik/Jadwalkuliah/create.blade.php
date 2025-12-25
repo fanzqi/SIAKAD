@@ -22,43 +22,84 @@
                     <h5 class="mb-0">Form Tambah Jadwal Kuliah</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('jadwalkuliah.store') }}" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label for="nama_mata_kuliah">Mata Kuliah</label>
-                            <input type="text" class="form-control" id="nama_mata_kuliah" name="nama_mata_kuliah" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="dosen">Dosen</label>
-                            <input type="text" class="form-control" id="dosen" name="dosen" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="program_studi">Program Studi</label>
-                            <input type="text" class="form-control" id="program_studi" name="program_studi" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="semester">Semester</label>
-                            <input type="text" class="form-control" id="semester" name="semester" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="hari">Hari</label>
-                            <input type="text" class="form-control" id="hari" name="hari" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="jam">Jam</label>
-                            <input type="text" class="form-control" id="jam" name="jam" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ruangan">Ruangan</label>
-                            <input type="text" class="form-control" id="ruangan" name="ruangan" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="{{ route('jadwalkuliah.index') }}" class="btn btn-secondary">Batal</a>
-                    </form>
-                </div>
-            </div>
+                    <form action="{{ route('jadwalkuliah.update', $jadwal->id) }}" method="POST">
+    @csrf
+    @method('PUT')
+
+    <!-- Mata Kuliah -->
+    <div class="form-group mb-3">
+        <label>Mata Kuliah</label>
+        <input type="text" class="form-control"
+            value="{{ $jadwal->mata_kuliah->nama_mata_kuliah }}" readonly>
+        <input type="hidden" name="mata_kuliah_id" value="{{ $jadwal->mata_kuliah_id }}">
+    </div>
+
+    <!-- Program Studi -->
+    <div class="form-group mb-3">
+        <label>Program Studi</label>
+        <input type="text" class="form-control"
+            value="{{ $jadwal->mata_kuliah->program_studi->nama ?? '-' }}" readonly>
+    </div>
+
+    <!-- Semester -->
+    <div class="form-group mb-3">
+        <label>Semester</label>
+        <input type="number" class="form-control" value="{{ $jadwal->semester }}" readonly>
+        <input type="hidden" name="semester" value="{{ $jadwal->semester }}">
+    </div>
+
+    <!-- Group Kelas -->
+    <div class="form-group mb-3">
+        <label>Group Kelas</label>
+        <input type="text" class="form-control" value="{{ $jadwal->group_kelas }}" readonly>
+        <input type="hidden" name="group_kelas" value="{{ $jadwal->group_kelas }}">
+    </div>
+
+    <!-- Hari -->
+    <div class="form-group mb-3">
+        <label>Hari</label>
+        <select name="hari" class="form-control" required>
+            @foreach (['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'] as $hari)
+                <option value="{{ $hari }}" {{ $jadwal->hari == $hari ? 'selected' : '' }}>
+                    {{ $hari }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <!-- Jam -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label>Jam Mulai</label>
+            <input type="time" name="jam_mulai" class="form-control"
+                value="{{ $jadwal->jam_mulai }}" required>
+        </div>
+        <div class="col-md-6">
+            <label>Jam Selesai</label>
+            <input type="time" name="jam_selesai" class="form-control"
+                value="{{ $jadwal->jam_selesai }}" required>
         </div>
     </div>
-</div>
+
+    <!-- Ruangan -->
+    <div class="form-group mb-4">
+        <label>Ruangan</label>
+        <select name="ruangs_id" class="form-control" required>
+            @foreach ($ruangs as $ruang)
+                <option value="{{ $ruang->id }}"
+                    {{ $jadwal->ruangs_id == $ruang->id ? 'selected' : '' }}>
+                    {{ $ruang->nama_ruang }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <!-- Tombol -->
+    <div class="d-flex justify-content-end">
+        <a href="{{ route('jadwalkuliah.index') }}" class="btn btn-secondary me-2">Batal</a>
+        <button type="submit" class="btn btn-primary">Update Jadwal</button>
+    </div>
+</form>
+
 
 @endsection

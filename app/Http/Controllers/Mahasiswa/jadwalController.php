@@ -24,25 +24,29 @@ class JadwalController extends Controller
             ->unique()
             ->values();
 
-        $kodeGrup = $daftarGrup[$mahasiswa->grup_id - 1] ?? null;
+        $kodeGrup = $daftarGrup[$mahasiswa->grup_id - 1] ?? $daftarGrup->first();
 
         if (!$kodeGrup) {
-            abort(404, 'Grup mahasiswa tidak ditemukan');
+            return view('mahasiswa.jadwalkuliah.index', [
+                'jadwal' => collect(),
+                'mahasiswa' => $mahasiswa
+            ])->with('error', 'Grup mahasiswa tidak ditemukan, jadwal kosong');
         }
 
         $jadwal = Jadwalkuliah::with([
-                'mata_kuliah',
-                'mata_kuliah.dosen',
-                'ruang'
-            ])
-            ->where('semester', $mahasiswa->tahunAkademik->semester_ke)
-            ->whereHas('mata_kuliah', function ($q) use ($mahasiswa, $kodeGrup) {
-                $q->where('program_studi_id', $mahasiswa->prodi_id)
-                  ->where('group', $kodeGrup);
-            })
-            ->orderByRaw("FIELD(hari,'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu')")
-            ->orderBy('jam_mulai')
-            ->get();
+            'mata_kuliah',
+            'mata_kuliah.dosen',
+            'ruang'
+        ])
+        ->where('is_published', true) // 🔐 HANYA JADWAL SUDAH DIDISTRIBUSIKAN
+        ->where('semester', $mahasiswa->tahunAkademik->semester_ke)
+        ->whereHas('mata_kuliah', function ($q) use ($mahasiswa, $kodeGrup) {
+            $q->where('program_studi_id', $mahasiswa->prodi_id)
+              ->where('group', $kodeGrup);
+        })
+        ->orderByRaw("FIELD(hari,'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu')")
+        ->orderBy('jam_mulai')
+        ->get();
 
         return view('mahasiswa.jadwalkuliah.index', compact('jadwal', 'mahasiswa'));
     }

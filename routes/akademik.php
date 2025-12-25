@@ -10,6 +10,7 @@ use App\Http\Controllers\SmartJadwalController;
 use App\Http\Controllers\Akademik\JadwalPdfController;
  use App\Http\Controllers\Akademik\DashboardController;
 
+
 Route::middleware('auth')->prefix('akademik')->group(function () {
 
     // Dashboard
@@ -59,9 +60,9 @@ Route::middleware('auth')->prefix('akademik')->group(function () {
     Route::get('/jadwalkuliah', [JadwalkuliahController::class, 'index'])->name('jadwalkuliah.index');
     Route::get('/jadwalkuliah/create', [JadwalkuliahController::class, 'create'])->name('jadwalkuliah.create');
     Route::post('/jadwalkuliah', [JadwalkuliahController::class, 'store'])->name('jadwalkuliah.store');
-    Route::get('/jadwalkuliah/{id}/edit', [JadwalkuliahController::class, 'edit'])->name('jadwalkuliah.edit');
-    Route::put('/jadwalkuliah/{id}', [JadwalkuliahController::class, 'update'])->name('jadwalkuliah.update');
-    Route::delete('/jadwalkuliah/{id}', [JadwalkuliahController::class, 'destroy'])->name('jadwalkuliah.destroy');
+    Route::get('/jadwalkuliah/{jadwal}/edit', [JadwalkuliahController::class, 'edit'])->name('jadwalkuliah.edit');
+    Route::put('/jadwalkuliah/{jadwal}', [JadwalkuliahController::class, 'update'])->name('jadwalkuliah.update');
+    Route::delete('/jadwalkuliah/{jadwal}', [JadwalkuliahController::class, 'destroy'])->name('jadwalkuliah.destroy');
     Route::post(
         'matakuliah/generate-jadwal-smart',
         [SmartJadwalController::class, 'generate']
@@ -82,6 +83,9 @@ Route::middleware('auth')->prefix('akademik')->group(function () {
         ->name('jadwal.pdf.all');
 
 
+
+    Route::post('/jadwalkuliah/publish', [JadwalkuliahController::class, 'publish'])
+        ->name('jadwalkuliah.kirim.warek');
 
 
 });

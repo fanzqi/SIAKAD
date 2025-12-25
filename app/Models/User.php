@@ -55,12 +55,21 @@ class User extends Authenticatable
         return $this->belongsTo(Mahasiswa::class, 'mahasiswa_id');
     }
 
-    public function getNamaAttribute(): string
-    {
-        return match ($this->role) {
-            'dosen' => $this->dosen?->nama_dosen ?? $this->name,
-            'mahasiswa' => $this->mahasiswa?->nama_mahasiswa ?? $this->name,
-            default => $this->name,
-        };
+public function getNamaAttribute(): string
+{
+    if ($this->role === 'dosen') {
+        return $this->dosen?->nama_dosen ?? $this->name;
     }
+
+    if ($this->role === 'mahasiswa') {
+        return $this->mahasiswa?->nama_mahasiswa ?? $this->name;
+    }
+
+    if ($this->role === 'kaprodi') {
+        return $this->prodi?->nama ?? $this->name ?? 'Kaprodi';
+    }
+
+    return $this->name ?? 'User';
+}
+
 }

@@ -12,6 +12,13 @@
                 <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
                     <i class="icon-grid menu-icon"></i><span class="nav-text">Warek 1</span>
                 </a>
+          <li class="nav-item">
+    <a href="{{ url('warek1/jadwal') }}"
+       class="nav-link {{ request()->is('warek1/jadwal*') ? 'active' : '' }}">
+        <i class="bi bi-calendar-week"></i>
+        <span>Persetujuan Jadwal</span>
+    </a>
+</li>
                 {{-- <ul aria-expanded="false">
             <li>
                 <a href="{{ url('akademik/semester') }}">

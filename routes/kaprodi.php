@@ -6,6 +6,7 @@ use App\Http\Controllers\Kaprodi\KurikulumController;
 use App\Http\Controllers\Kaprodi\MatakuliahController;
 use App\Http\Controllers\Kaprodi\PlotingdosenController;
 use App\Http\Controllers\Kaprodi\DashboardController;
+use App\Http\Controllers\Kaprodi\JadwalController;
 
 Route::prefix('kaprodi')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('kaprodi.dashboard');
@@ -42,4 +43,8 @@ Route::prefix('kaprodi')->middleware('auth')->group(function () {
     Route::get('/plotingdosen/{id}/edit', [PlotingdosenController::class, 'edit'])->name('plotingdosen.edit');
     Route::put('/plotingdosen/{id}', [PlotingdosenController::class, 'update'])->name('plotingdosen.update');
     Route::delete('/plotingdosen/{id}', [PlotingdosenController::class, 'destroy'])->name('plotingdosen.destroy');
+
+
+   Route::get('/jadwalkuliah', [JadwalController::class, 'index'])
+        ->name('kaprodi.jadwalkuliah.index');;
 });

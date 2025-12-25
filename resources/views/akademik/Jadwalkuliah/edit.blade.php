@@ -3,62 +3,111 @@
 @section('title', 'Edit Jadwal Kuliah')
 
 @section('content')
-
-<div class="row page-titles mx-0">
-    <div class="col p-md-0">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('akademik/dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('jadwalkuliah.index') }}">Jadwal Kuliah</a></li>
-            <li class="breadcrumb-item active"><a href="javascript:void(0)">Edit Jadwal Kuliah</a></li>
-        </ol>
+    <div class="row page-titles mx-0">
+        <div class="col p-md-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('akademik/dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('jadwalkuliah.index') }}">Jadwal Kuliah</a></li>
+                <li class="breadcrumb-item active">Edit Jadwal Kuliah</li>
+            </ol>
+        </div>
     </div>
+
+    <div class="container-fluid mt-4">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Edit Jadwal Kuliah</h5>
+            </div>
+            <div class="card-body">
+
+                <form action="{{ route('jadwalkuliah.update', $jadwal->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <!-- Mata Kuliah -->
+                    <div class="form-group mb-3">
+                        <label>Mata Kuliah</label>
+                        <input type="text" class="form-control" value="{{ $jadwal->mata_kuliah->nama_mata_kuliah }}"
+                            readonly>
+                        <input type="hidden" name="mata_kuliah_id" value="{{ $jadwal->mata_kuliah_id }}">
+                    </div>
+
+                    <!-- Program Studi -->
+                    <div class="form-group mb-3">
+                        <label>Program Studi</label>
+                        <input type="text" class="form-control"
+                            value="{{ $jadwal->mata_kuliah->program_studi->nama ?? '-' }}" readonly>
+                    </div>
+
+                    <!-- Semester -->
+                    <div class="form-group mb-3">
+                        <label>Semester</label>
+                        <input type="number" class="form-control" value="{{ $jadwal->semester }}" readonly>
+                        <input type="hidden" name="semester" value="{{ $jadwal->semester }}">
+                    </div>
+
+                    <!-- Group -->
+                    <div class="form-group mb-3">
+                        <label>Group Kelas</label>
+                        <input type="text" class="form-control" value="{{ $jadwal->mata_kuliah->group }}" readonly>
+                        <input type="hidden" name="group_kelas" value="{{ $jadwal->mata_kuliah->group }}">
+                    </div>
+
+                    <!-- Hari -->
+                    <div class="form-group mb-3">
+                        <label>Hari</label>
+                        <select name="hari" class="form-control">
+                            @foreach (['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'] as $hari)
+                                <option value="{{ $hari }}" {{ $jadwal->hari == $hari ? 'selected' : '' }}>
+                                    {{ $hari }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Jam -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Jam Mulai</label>
+                            <input type="time" name="jam_mulai" class="form-control" value="{{ $jadwal->jam_mulai }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Jam Selesai</label>
+                            <input type="time" name="jam_selesai" class="form-control"
+                                value="{{ $jadwal->jam_selesai }}">
+                        </div>
+                    </div>
+
+                    <!-- Ruangan -->
+                    <div class="form-group mb-4">
+                        <label>Ruangan</label>
+                        <select name="ruangs_id" class="form-control">
+                            @foreach ($ruangs as $ruang)
+                                <option value="{{ $ruang->id }}"
+                                    {{ $jadwal->ruangs_id == $ruang->id ? 'selected' : '' }}>
+                                    {{ $ruang->nama_ruang }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+<div class="mb-3">
+    <label>Status</label>
+   <input type="text" class="form-control" value="{{ $jadwal->status }}" disabled>
+
 </div>
 
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    <h5 class="mb-0">Edit Jadwal Kuliah</h5>
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('jadwalkuliah.update', $jadwal->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="form-group">
-                            <label for="nama_mata_kuliah">Mata Kuliah</label>
-                            <input type="text" class="form-control" id="nama_mata_kuliah" name="nama_mata_kuliah" value="{{ $jadwal->nama_mata_kuliah }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="dosen">Dosen</label>
-                            <input type="text" class="form-control" id="dosen" name="dosen" value="{{ $jadwal->dosen }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="program_studi">Program Studi</label>
-                            <input type="text" class="form-control" id="program_studi" name="program_studi" value="{{ $jadwal->program_studi }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="semester">Semester</label>
-                            <input type="text" class="form-control" id="semester" name="semester" value="{{ $jadwal->semester }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="hari">Hari</label>
-                            <input type="text" class="form-control" id="hari" name="hari" value="{{ $jadwal->hari }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="jam">Jam</label>
-                            <input type="text" class="form-control" id="jam" name="jam" value="{{ $jadwal->jam }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ruangan">Ruangan</label>
-                            <input type="text" class="form-control" id="ruangan" name="ruangan" value="{{ $jadwal->ruangan }}" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update Jadwal Kuliah</button>
-                    </form>
-                </div>
+
+                    </div>
+                    <!-- TOMBOL (HARUS DI DALAM FORM) -->
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('jadwalkuliah.index') }}" class="btn btn-secondary me-2">Batal</a>
+                        <button type="submit" class="btn btn-primary">
+                            Update Jadwal
+                        </button>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
-</div>
-
 @endsection

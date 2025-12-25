@@ -24,7 +24,7 @@
                 </a>
             </li>
                 <li>
-                    <a href="">
+                    <a href="#">
                         <i class="fa fa-book"></i><span class="nav-text">Hasil Studi</span>
                     </a>
                 </li>
