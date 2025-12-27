@@ -68,7 +68,7 @@
                             <th>Program Studi</th>
                             <th>SKS</th>
                             <th>Group</th>
-                            <th>Aksi</th>
+                            {{-- <th>Aksi</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -82,7 +82,7 @@
                                 <td>{{ $mk->program_studi ? $mk->program_studi->nama : '-' }}</td>
                                 <td>{{ $mk->sks }}</td>
                                 <td>{{ $mk->group }}</td>
-                                <td>
+                                {{-- <td>
                                     <div class="d-flex justify-content-between">
                                         <a href="{{ route('matakuliah.edit', $mk->id) }}" class="btn btn-sm btn-warning"
                                             title="Edit">
@@ -93,7 +93,7 @@
                                             <i class="bi bi-trash"></i> Hapus
                                         </button>
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>

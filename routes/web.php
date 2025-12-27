@@ -34,13 +34,7 @@ include 'mahasiswa.php';
 // ===============================
 // Notifikasi
 // ===============================
-
-// Tandai notifikasi sebagai sudah dibaca (POST/PATCH, pilih salah satu, biasanya PATCH)
-Route::patch('/akademik/notification/{id}/read', [NotificationController::class, 'markAsRead'])
-    ->name('notification.read')
-    ->middleware('auth');
-
-// Hapus notifikasi (gunakan satu endpoint saja, konsisten)
-Route::delete('/akademik/notification/{id}', [NotificationController::class, 'destroy'])
-    ->name('notification.delete')
-    ->middleware('auth');
+Route::middleware('auth')->post('/notifications/global', [NotificationController::class, 'createGlobalNotification']);
+Route::patch('/akademik/notification/{id}', [NotificationController::class, 'markAsRead']);
+    Route::delete('/notifikasi/{id}', [NotificationController::class, 'destroy']);
+Route::post('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead']);

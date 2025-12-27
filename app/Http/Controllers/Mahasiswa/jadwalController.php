@@ -50,4 +50,11 @@ class JadwalController extends Controller
 
         return view('mahasiswa.jadwalkuliah.index', compact('jadwal', 'mahasiswa'));
     }
+
+    //tampilkan notifikasi dostribusi jadwal
+    public function showNotification()
+    {
+        return view('mahasiswa.jadwalkuliah.notification');
+    }
+
 }

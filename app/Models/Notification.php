@@ -8,14 +8,14 @@ use App\Models\User;
 
 class Notification extends Model
 {
-    use HasFactory;
+    protected $fillable = ['author_name', 'type', 'message', 'user_id'];
 
-    protected $fillable = ['user_id','author_name','type','message'];
+    // app/Models/Notification.php
+public function users()
+{
+    return $this->belongsToMany(\App\Models\User::class, 'notification_user')
+        ->withPivot('is_read', 'created_at', 'updated_at');
+}
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'notification_user')
-                    ->withPivot('is_read')
-                    ->withTimestamps();
-    }
+
 }

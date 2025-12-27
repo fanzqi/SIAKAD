@@ -6,20 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jadwalkuliah extends Model
 {
+
+
     protected $table = 'jadwal';
 
     protected $fillable = [
-        'mata_kuliah_id',
-        'ruangs_id',
-        'hari',
-        'jam_mulai',
-        'jam_selesai',
-        'semester',
-        'group_kelas',
-        'fakultas_id',
-        'program_studi_id',
-        'status',
-    ];
+    'mata_kuliah_id',
+    'ruangs_id',
+    'semester',
+    'hari',
+    'jam_mulai',
+    'jam_selesai',
+    'fakultas_id',
+    'program_studi_id',
+    'status',
+    'catatan_warek',
+    'tanggal_persetujuan',
+    'is_published'
+];
+
+
 
     public function mata_kuliah()
     {
@@ -36,7 +42,7 @@ class Jadwalkuliah extends Model
         return $this->belongsTo(ProgramStudi::class, 'program_studi_id');
     }
 
-     public function dosen()
+    public function dosen()
     {
         return $this->belongsTo(Dosen::class, 'dosen_id');
     }

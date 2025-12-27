@@ -4,186 +4,194 @@ namespace App\Http\Controllers\Akademik;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Jadwalkuliah;
+use App\Models\JadwalKuliah;
 use App\Models\mata_kuliah;
 use App\Models\Ruang;
 use App\Models\Notification;
 use App\Models\User;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\JadwalKuliahExport;
+use Illuminate\Support\Facades\Auth;
 
-class JadwalkuliahController extends Controller
+class JadwalKuliahController extends Controller
 {
-    // ===============================
-    // INDEX
-    // ===============================
     public function index()
     {
-        $jadwal = Jadwalkuliah::with([
+        $jadwal = JadwalKuliah::with([
             'mata_kuliah.fakultas',
             'mata_kuliah.program_studi',
             'mata_kuliah.dosen',
             'ruang'
         ])->get();
-
         return view('akademik.jadwalkuliah.index', compact('jadwal'));
     }
 
-    // ===============================
-    // CREATE
-    // ===============================
     public function create()
     {
         $mata_kuliah = mata_kuliah::with(['fakultas', 'program_studi', 'dosen'])->get();
         $ruang = Ruang::all();
-
         return view('akademik.jadwalkuliah.create', compact('mata_kuliah', 'ruang'));
     }
 
-    // ===============================
-    // STORE
-    // ===============================
     public function store(Request $request)
     {
         $request->validate([
-            'mata_kuliah_id' => 'required|exists:mata_kuliah,id',
-            'ruang_id'       => 'required|exists:ruangs,id',
-            'hari'           => 'required|string',
-            'jam_mulai'      => 'required',
-            'jam_selesai'    => 'required',
+            'mata_kuliah_id' => 'required|exists:mata_kuliahs,id',
+            'ruang_id' => 'required|exists:ruangs,id',
+            'hari' => 'required|string',
+            'jam_mulai' => 'required',
+            'jam_selesai' => 'required',
         ]);
 
         $mata_kuliah = mata_kuliah::findOrFail($request->mata_kuliah_id);
 
-        Jadwalkuliah::create([
+        JadwalKuliah::create([
             'mata_kuliah_id' => $mata_kuliah->id,
-            'ruang_id'       => $request->ruang_id,
-            'hari'           => $request->hari,
-            'jam_mulai'      => $request->jam_mulai,
-            'jam_selesai'    => $request->jam_selesai,
-            'group_kelas'    => $mata_kuliah->group,
-            'status'         => 'draft',
+            'ruang_id' => $request->ruang_id,
+            'hari' => $request->hari,
+            'jam_mulai' => $request->jam_mulai,
+            'jam_selesai' => $request->jam_selesai,
+            'group_kelas' => $mata_kuliah->group,
+            'status' => 'draft',
         ]);
 
-        return redirect()->route('jadwalkuliah.index')
-            ->with('success', 'Jadwal berhasil ditambahkan');
+        return redirect()->route('jadwalkuliah.index')->with('success', 'Jadwal berhasil ditambahkan');
     }
 
-    // ===============================
-    // EDIT
-    // ===============================
     public function edit($id)
     {
-        $jadwal = Jadwalkuliah::with(['mata_kuliah.program_studi'])->findOrFail($id);
+        $jadwal = JadwalKuliah::with(['mata_kuliah.program_studi'])->findOrFail($id);
         $ruangs = Ruang::all();
-
         return view('akademik.jadwalkuliah.edit', compact('jadwal', 'ruangs'));
     }
 
-    // ===============================
-    // UPDATE + NOTIFIKASI WAREK
-    // ===============================
     public function update(Request $request, $id)
     {
-        $jadwal = Jadwalkuliah::findOrFail($id);
-
-        $statusBaru = $jadwal->status;
-
-        if ($jadwal->status === 'revisi') {
-            $statusBaru = 'diajukan';
-        }
+        $jadwal = JadwalKuliah::findOrFail($id);
+        $statusBaru = $jadwal->status === 'revisi' ? 'diajukan' : $jadwal->status;
 
         $jadwal->update([
-            'hari'        => $request->hari,
-            'jam_mulai'   => $request->jam_mulai,
+            'hari' => $request->hari,
+            'jam_mulai' => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
-            'ruang_id'    => $request->ruang_id,
-            'status'      => $statusBaru,
+            'ruang_id' => $request->ruang_id,
+            'status' => $statusBaru
         ]);
 
-        if ($statusBaru === 'diajukan') {
-            $warek = User::where('role', 'warek1')->first();
+        $namaMk = $jadwal->mata_kuliah->nama_mata_kuliah;
+        $nimk = $jadwal->mata_kuliah->kode ?? '-';
 
-            if ($warek) {
-                Notification::create([
-                    'user_id'     => $warek->id,
-                    'author_name' => 'Akademik',
-                    'type'        => 'revisi_selesai',
-                    'message'     => 'Hasil revisi jadwal telah diperbarui oleh akademik',
-                ]);
-            }
+        if ($statusBaru === 'diajukan') {
+            $pesan = "Jadwal {$namaMk} [Kode: {$nimk}] telah diajukan ke Warek 1 dan menunggu persetujuan.";
+            $this->sendNotifToRoles(['warek1'], 'pengajuan', $pesan);
         }
 
-        return redirect()->route('jadwalkuliah.index')
-            ->with('edit', 'Jadwal berhasil diperbarui');
+        return redirect()->route('jadwalkuliah.index')->with('success', 'Jadwal berhasil diperbarui');
     }
 
-    // ===============================
-    // DELETE
-    // ===============================
-    public function destroy(Jadwalkuliah $jadwal)
+    public function destroy(JadwalKuliah $jadwal)
     {
         $jadwal->delete();
-
-        return redirect()->route('jadwalkuliah.index')
-            ->with('delete', 'Jadwal berhasil dihapus');
+        return redirect()->route('jadwalkuliah.index')->with('success', 'Jadwal berhasil dihapus');
     }
 
-    // ===============================
-    // EXPORT
-    // ===============================
     public function exportExcel()
     {
         return Excel::download(new JadwalKuliahExport, 'jadwal_kuliah.xlsx');
     }
 
-    // ===============================
-    // KIRIM KE WAREK
-    // ===============================
-    public function kirimWarek(Request $request)
+    /**
+     * Diajukan ke Warek 1 (seluruh draft dimasukkan ke pengajuan)
+     */
+    public function kirimWarek()
     {
-        $jadwal = Jadwalkuliah::where('status', 'draft')->get();
+        $draft = JadwalKuliah::where('status', 'draft')->get();
 
-        if ($jadwal->count() == 0) {
-            return back()->with('warning', 'Tidak ada jadwal draft untuk dikirim');
+        if ($draft->isEmpty()) {
+            return back()->with('warning', 'Tidak ada jadwal draft');
         }
 
-        Jadwalkuliah::where('status', 'draft')->update([
-            'status' => 'diajukan'
-        ]);
+        // Jadikan semua status draft menjadi diajukan
+        JadwalKuliah::where('status', 'draft')->update(['status' => 'diajukan']);
 
-        return back()->with('success', 'Jadwal berhasil dikirim ke Warek 1');
+        $pesan = "Tolong koreksi seluruh jadwal draft sebelum disetujui Warek 1.";
+
+        // Kirim notifikasi ke warek1 saja (tidak ke pengirim yang login)
+        $this->sendNotifToRoles(['warek1'], 'pengajuan', $pesan);
+
+        return back()->with('success', 'Jadwal berhasil diajukan ke Warek 1');
     }
 
-    // ===============================
-    // DISTRIBUSI + NOTIFIKASI
-    // ===============================
-    public function publish()
+
+    /**
+     * Warek1 menyetujui, notifikasi ke akademik
+     */
+    public function setujui(Request $request, $id)
     {
-        // 1️⃣ Publish semua jadwal
-        Jadwalkuliah::query()->update([
-            'is_published' => 1
+        $jadwal = JadwalKuliah::whereIn('status', ['diajukan', 'revisi'])->findOrFail($id);
+        $jadwal->update([
+            'status' => 'disetujui',
+            'tanggal_persetujuan' => now(),
+            'catatan_warek' => null
         ]);
 
-        // 2️⃣ Ambil user target
-        $users = User::whereIn('role', [
-            'dekan','kaprodi','dosen','mahasiswa'
-        ])->get();
+        $namaMk = $jadwal->mata_kuliah->nama_mata_kuliah;
+        $nimk = $jadwal->mata_kuliah->kode ?? '-';
+        $pesan = "Jadwal {$namaMk} [Kode: {$nimk}] telah disetujui oleh Anda Wakil Rektor I.";
+        // Notifikasi ke Akademik (tidak ke pengirim, misal warek1)
+        $this->sendNotifToRoles(['akademik'], 'disetujui', $pesan);
 
-        // 3️⃣ Buat notifikasi untuk masing-masing user
-        foreach ($users as $user) {
-            Notification::create([
-                'user_id'     => $user->id,
-                'author_name' => 'Akademik',
-                'type'        => 'jadwal',
-                'message'     => 'Jadwal kuliah telah didistribusikan dan dapat diakses',
-                'is_read'     => 0,
-            ]);
+        return back()->with('success', 'Jadwal berhasil disetujui (notifikasi dikirim ke Akademik)');
+    }
+
+
+    /**
+     * Distribusi hasil ke civitas (mahasiswa, dosen, kaprodi, warek1, dekan)
+     */
+    public function publish(Request $request)
+    {
+        $jadwalSiap = JadwalKuliah::where('status', 'disetujui')->get();
+
+        if ($jadwalSiap->isEmpty()) {
+            return back()->with('warning', 'Belum ada jadwal disetujui untuk didistribusi');
         }
 
-        return redirect()
-            ->route('jadwalkuliah.index')
-            ->with('success', 'Jadwal berhasil didistribusikan dan notifikasi terkirim');
+        $pesan = "Seluruh jadwal kuliah yang telah disetujui telah didistribusikan ke seluruh civitas akademika.";
+        $this->sendNotifToRoles(
+            ['mahasiswa', 'dosen', 'kaprodi', 'warek1', 'dekan'],
+            'distribusi',
+            $pesan
+        );
+        return back()->with('success', 'Jadwal berhasil didistribusikan (notifikasi dikirim ke civitas)');
+    }
+
+    /**
+     * NOTIFIKASI KHUSUS: Kirim ke hanya ke $roles (tidak ke pengirim)
+     */
+    private function sendNotifToRoles(array $roles, string $type, string $pesan)
+    {
+        $userIds = User::whereIn('role', $roles)
+            ->where('id', '!=', Auth::id())
+            ->pluck('id')
+            ->toArray();
+
+        if (empty($userIds)) return;
+
+        $notif = Notification::create([
+            // Bisa diganti sesuai Auth, contoh: ucfirst(Auth::user()->role)
+            'author_name' => ucfirst(Auth::user()->role),
+            'type'        => $type,
+            'message'     => $pesan
+        ]);
+        $attachData = [];
+        foreach ($userIds as $id) {
+            $attachData[$id] = [
+                'is_read'    => 0,
+                'created_at' => now(),
+                'updated_at' => now()
+            ];
+        }
+        $notif->users()->syncWithoutDetaching($attachData);
     }
 
 }

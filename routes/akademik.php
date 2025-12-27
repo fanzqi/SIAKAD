@@ -81,11 +81,23 @@ Route::middleware('auth')->prefix('akademik')->group(function () {
 
     Route::get('/jadwal/pdf-all', [JadwalPdfController::class, 'exportAll'])
         ->name('jadwal.pdf.all');
+Route::post('/jadwalkuliah/kirim-warek', [JadwalkuliahController::class, 'kirimWarek'])
+    ->name('jadwalkuliah.kirim.warek');
 
 
 
-    Route::post('/jadwalkuliah/publish', [JadwalkuliahController::class, 'publish'])
-        ->name('jadwalkuliah.kirim.warek');
+Route::post('/akademik/jadwalkuliah/distribusikan', [JadwalkuliahController::class, 'publish'])
+    ->name('jadwalkuliah.distribusikan')
+    ->middleware('auth');
+
+
+// routes/web.php
+Route::get('/check-warek1-approval', [JadwalKuliahController::class, 'checkWarek1Approval']);
+
+Route::get('/debug-notif-warek1', function() {
+    $user = \App\Models\User::find(2); // warek1
+    return $user->notifications()->orderByPivot('created_at', 'desc')->get();
+});
 
 
 });

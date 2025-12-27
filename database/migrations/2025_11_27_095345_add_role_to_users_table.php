@@ -24,10 +24,14 @@ return new class extends Migration
 
 public function down()
 {
-    Schema::table('users', function (Blueprint $table) {
-        if (Schema::hasColumn('users', 'role')) {
-            $table->dropColumn('role');
-        }
-    });
+    Schema::create('notification_user', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('notification_id')->constrained('notifications')->onDelete('cascade');
+    $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+    $table->boolean('is_read')->default(0);
+    $table->timestamps();
+});
+
+
 }
 };

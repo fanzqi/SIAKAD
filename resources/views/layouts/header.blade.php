@@ -1,4 +1,3 @@
-
 <div class="nav-header">
     <div class="brand-logo">
         <a href="{{ url('#') }}">
@@ -51,24 +50,16 @@
                     </div>
                 </li>
 
-                {{-- Notifikasi --}}
+                @php
+                    $notifications = Auth::user()
+                        ->notifications()
+                        ->wherePivot('is_read', 0)
+                        ->orderByPivot('created_at', 'desc')
+                        ->limit(5)
+                        ->get();
+                @endphp
+
                 <li class="icons dropdown">
-                    @php
-                        use App\Models\Notification;
-
-                        $notifications = Notification::where(function ($q) {
-                            $q->whereNull('user_id')->orWhere('user_id', Auth::id());
-                        })
-                            ->whereDoesntHave('users', function ($q) {
-                                $q->where('user_id', Auth::id())->where('is_read', 1);
-                            })
-                            ->latest()
-                            ->limit(5)
-                            ->get();
-
-                        $count = $notifications->count();
-                    @endphp
-
                     <div class="notify-badge" data-toggle="dropdown">
                         <span class="badge badge-pill badge-danger">{{ $count }}</span>
                         <i class="icon-bell"></i>
@@ -82,31 +73,32 @@
 
                         <div class="dropdown-content-body">
                             <ul class="list-unstyled m-0">
-                                @forelse ($notifications as $n)
+                                @forelse ($notifications as $notif)
                                     @php
-                                        $alertClass = match ($n->type) {
+                                        $alertClass = match ($notif->type) {
                                             'add' => 'alert-primary',
                                             'edit' => 'alert-warning',
                                             'delete' => 'alert-danger',
+                                            'revisi' => 'alert-warning',
+                                            'disetujui' => 'alert-success',
+                                            'jadwal_published' => 'alert-info',
                                             default => 'alert-secondary',
                                         };
                                     @endphp
 
-                                    <li class="mb-3" id="notification-{{ $n->id }}">
+                                    <li class="mb-3" id="notification-{{ $notif->id }}">
                                         <div class="alert {{ $alertClass }} alert-dismissible fade show position-relative"
                                             role="alert">
-                                            <strong>{{ $n->author_name }}</strong><br>
-                                            <span>{{ $n->message }}</span>
-
-                                            {{-- Tombol hapus / tandai dibaca --}}
+                                            <strong>{{ $notif->author_name }}</strong><br>
+                                            <span>{{ $notif->message }}</span>
+                                            <div class="mt-2 text-muted" style="font-size: 0.85rem;">
+                                                {{-- Ambil waktu attach ke user --}}
+                                                {{ \Carbon\Carbon::parse($notif->pivot->created_at ?? $notif->created_at)->isoFormat('dddd, D MMMM YYYY HH:mm') }}
+                                            </div>
                                             <button type="button" class="close" aria-label="Close"
-                                                onclick="deleteNotification({{ $n->id }}, this)">
+                                                onclick="deleteNotification({{ $notif->id }}, this)">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
-
-                                            <div class="mt-2">
-                                                <button class="btn btn-sm btn-info px-3">Info</button>
-                                            </div>
                                         </div>
                                     </li>
                                 @empty
@@ -124,27 +116,16 @@
 
 <script>
     function deleteNotification(id, btn) {
-        // Hapus notifikasi langsung dari DOM
         const li = btn.closest('li');
         li.remove();
-
-        // Update badge
         let badge = document.querySelector('.notify-badge .badge');
         badge.textContent = parseInt(badge.textContent) - 1;
-
-        // Tandai sebagai dibaca di database per user
         fetch("{{ url('/akademik/notification') }}/" + id, {
-                method: "PATCH",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    is_read: 1
-                })
-            })
-            .then(res => res.json())
-            .catch(err => console.error(err));
+            method: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                "Accept": "application/json"
+            }
+        }).then(res => res.json()).catch(err => console.error(err));
     }
 </script>

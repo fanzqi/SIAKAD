@@ -90,24 +90,24 @@
                             @endforeach
                         </select>
                     </div>
-<div class="mb-3">
-    <label>Status</label>
-   <input type="text" class="form-control" value="{{ $jadwal->status }}" disabled>
-
-</div>
-
+                    <div class="mb-3">
+                        <label>Status</label>
+                        <input type="text" class="form-control" value="{{ $jadwal->status }}" disabled>
 
                     </div>
-                    <!-- TOMBOL (HARUS DI DALAM FORM) -->
-                    <div class="d-flex justify-content-end">
-                        <a href="{{ route('jadwalkuliah.index') }}" class="btn btn-secondary me-2">Batal</a>
-                        <button type="submit" class="btn btn-primary">
-                            Update Jadwal
-                        </button>
-                    </div>
 
-                </form>
+
             </div>
+            <!-- TOMBOL (HARUS DI DALAM FORM) -->
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('jadwalkuliah.index') }}" class="btn btn-secondary me-2">Batal</a>
+                <button type="submit" class="btn btn-primary">
+                    Update Jadwal
+                </button>
+            </div>
+
+            </form>
         </div>
+    </div>
     </div>
 @endsection

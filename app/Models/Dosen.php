@@ -53,4 +53,8 @@ class Dosen extends Model
     {
         return $this->hasOne(User::class, 'dosen_id');
     }
+    public function jabatanStruktural()
+    {
+        return $this->hasMany(JabatanStruktural::class, 'dosen_id');
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Kaprodi\PlotingdosenController;
 use App\Http\Controllers\Kaprodi\DashboardController;
 use App\Http\Controllers\Kaprodi\JadwalController;
 
+
 Route::prefix('kaprodi')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('kaprodi.dashboard');
 

@@ -23,14 +23,6 @@
 
             <div class="card shadow-sm">
                 <div class="card-body">
-
-                    <h4 class="card-title">Jadwal Kuliah Program Studi</h4>
-                    <h6 class="mb-3">
-                        Kaprodi: {{ $kaprodi->dosen->nama_dosen ?? '-' }}
-                        <br>
-                        Program Studi: {{ $kaprodi->prodi->nama ?? '-' }}
-                    </h6>
-
                     @if(isset($message))
                         <div class="alert alert-warning">
                             {{ $message }}

@@ -30,30 +30,30 @@
                         <div class="mb-3 d-flex justify-content-end">
 
                             <div class="d-flex" style="gap: 0.75rem;">
-                                <!-- Export Excel -->
-                                <a href="{{ route('jadwalkuliah.export.excel') }}" class="btn btn-success btn-sm">
+                                <button type="button" class="btn btn-success btn-sm btn-konfirmasi"
+                                    data-url="{{ route('jadwalkuliah.export.excel') }}"
+                                    data-message="Apakah Anda yakin ingin mengekspor semua jadwal ke Excel?">
                                     <i class="bi bi-file-earmark-excel"></i> Export Excel
-                                </a>
-                                <!-- Export PDF -->
-                                <a href="{{ route('jadwal.pdf.all') }}" class="btn btn-danger btn-sm">
+                                </button>
+
+                                <button type="button" class="btn btn-danger btn-sm btn-konfirmasi"
+                                    data-url="{{ route('jadwal.pdf.all') }}"
+                                    data-message="Apakah Anda yakin ingin mengekspor semua jadwal ke PDF?">
                                     <i class="bi bi-file-earmark-pdf"></i> Export PDF
-                                </a>
-                                <form action="{{ route('jadwalkuliah.kirim.warek') }}" method="POST"
-                                    onsubmit="return confirm('Kirim semua jadwal ke Warek 1?')">
-                                    @csrf
-                                    <button type="submit" class="btn btn-info btn-sm">
-                                        <i class="bi bi-send"></i> Kirim ke Warek 1
-                                    </button>
-                                </form>
+                                </button>
+                                {{-- Tombol Kirim ke Warek 1 --}}
+                                <button type="button" class="btn btn-info btn-sm btn-konfirmasi"
+                                    data-url="{{ route('jadwalkuliah.kirim.warek') }}"
+                                    data-message="Kirim semua jadwal ke Warek 1?">
+                                    <i class="bi bi-send"></i> Kirim ke Warek 1
+                                </button>
 
-                                <form action="{{ route('jadwalkuliah.kirim.warek') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-info btn-sm">
-                                        <i class="bi bi-send"></i> Distribusikan Jadwal
-                                    </button>
-                                </form>
-
-
+                                {{-- Tombol Distribusikan Jadwal --}}
+                                <button type="button" class="btn btn-info btn-sm btn-konfirmasi"
+                                    data-url="{{ route('jadwalkuliah.distribusikan') }}"
+                                    data-message="Distribusikan semua jadwal?">
+                                    <i class="bi bi-send"></i> Distribusikan Jadwal
+                                </button>
 
                             </div>
                         </div>
@@ -76,6 +76,13 @@
                         @if (session('delete'))
                             <div class="alert alert-warning alert-dismissible fade show">
                                 <strong>Terhapus!</strong> {{ session('delete') }}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        @endif
+
+                        @if (session('info'))
+                            <div class="alert alert-primary alert-dismissible fade show">
+                                <strong>Info!</strong> {{ session('info') }}
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                             </div>
                         @endif
@@ -115,14 +122,15 @@
                                         <td>{{ $jadwals->ruang->nama_ruang }}</td>
                                         <td>
                                             @if ($jadwals->status == 'draft')
-                                                <span class="badge bg-warning">Draft</span>
+                                                <span class="badge bg-warning text-white">Draft</span>
                                             @elseif($jadwals->status == 'diajukan')
-                                                <span class="badge bg-info">Diajukan</span>
+                                                <span class="badge bg-info text-white">Diajukan</span>
                                             @elseif($jadwals->status == 'disetujui')
-                                                <span class="badge bg-success">Disetujui</span>
+                                                <span class="badge bg-success text-white">Disetujui</span>
                                             @elseif($jadwals->status == 'revisi')
-                                                <span class="badge bg-danger">Revisi</span>
+                                                <span class="badge bg-danger text-white">Revisi</span>
                                             @endif
+
                                         </td>
 
                                         <td>
@@ -130,10 +138,6 @@
                                                 class="btn btn-warning btn-sm">
                                                 Edit
                                             </a>
-                                            <button class="btn btn-danger btn-sm"
-                                                onclick="bukaModalHapus('{{ route('jadwalkuliah.destroy', $jadwals->id) }}')">
-                                                Hapus
-                                            </button>
                                         </td>
 
                                     </tr>
@@ -151,45 +155,55 @@
 
         </div>
     </div>
-
     </div>
-    <!-- Modal Hapus -->
-    <div class="modal fade" id="modalHapus" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    {{-- Modal Konfirmasi Universal --}}
+    <div class="modal fade" id="modalKonfirmasi" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">
-                        <i class="bi bi-exclamation-triangle-fill"></i> Konfirmasi Hapus
-                    </h5>
-                    <button type="button" class="close text-white" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill"></i> Konfirmasi Aksi</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
                 </div>
-
-                <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus data ini?
-                    <br>
-                    <small class="text-muted">Data yang sudah dihapus tidak dapat dikembalikan.</small>
+                <div class="modal-body" id="modalKonfirmasiBody">
+                    <!-- Pesan akan diisi lewat JS -->
                 </div>
-
                 <div class="modal-footer">
-                    <form id="formHapus" method="POST">
+                    <form id="formKonfirmasi" method="POST">
                         @csrf
-                        @method('DELETE')
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-danger">Hapus</button>
+                        <button type="submit" class="btn btn-info">Ya, Lanjutkan</button>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
+
+    {{-- Script --}}
     <script>
-        function bukaModalHapus(actionUrl) {
-            document.getElementById('formHapus').action = actionUrl;
-            $('#modalHapus').modal('show');
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = $('#modalKonfirmasi');
+            const form = document.getElementById('formKonfirmasi');
+            const modalBody = document.getElementById('modalKonfirmasiBody');
+
+            document.querySelectorAll('.btn-konfirmasi').forEach(button => {
+                button.addEventListener('click', function() {
+                    const url = this.getAttribute('data-url');
+                    const message = this.getAttribute('data-message');
+
+                    modalBody.textContent = message;
+
+                    // Untuk export Excel/PDF pakai GET, lainnya POST
+                    if (url.includes('export') || url.includes('pdf')) {
+                        form.setAttribute('method', 'GET');
+                    } else {
+                        form.setAttribute('method', 'POST');
+                    }
+
+                    form.setAttribute('action', url);
+                    modal.modal('show');
+                });
+            });
+        });
     </script>
 
 @endsection

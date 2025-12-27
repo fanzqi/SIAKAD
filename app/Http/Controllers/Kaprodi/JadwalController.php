@@ -8,6 +8,7 @@ use App\Models\Dosen;
 use App\Models\JabatanStruktural;
 use Illuminate\Support\Facades\Auth;
 
+
 class JadwalController extends Controller
 {
     public function index()

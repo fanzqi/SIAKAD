@@ -6,17 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+    public function up()
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::create('notification_user', function (Blueprint $table) {
             $table->id();
-            $table->string('message');   // isi pesan notifikasi
-            $table->timestamps();        // created_at & updated_at
+            $table->foreignId('notification_id')->constrained('notifications')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->boolean('is_read')->default(0);
+            $table->timestamps();
         });
     }
 
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('notification_user');
     }
 };

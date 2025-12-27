@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Models;
+
+
 use App\Models\MataKuliah;
+use App\Models\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -9,12 +12,12 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
 
-    public function notifications()
-    {
-        return $this->belongsToMany(Notification::class, 'notification_user')
-            ->withPivot('is_read')
-            ->withTimestamps();
-    }
+   // app/Models/User.php
+public function notifications()
+{
+    return $this->belongsToMany(\App\Models\Notification::class, 'notification_user')
+        ->withPivot('is_read', 'created_at', 'updated_at');
+}
 
     use Notifiable;
 
