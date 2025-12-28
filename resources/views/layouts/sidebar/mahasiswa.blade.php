@@ -13,26 +13,16 @@
                     <i class="icon-grid menu-icon"></i><span class="nav-text">Akademik</span>
                 </a>
                 <ul aria-expanded="false">
-            <li>
-                {{-- <a href="{{ url('akademik/semester') }}">
-                    <i class="fa fa-book"></i><span class="nav-text">Rencana Studi</span>
-                </a>
-            </li>
-            <li> --}}
-                <a href="{{ url('mahasiswa/jadwalkuliah') }}">
-                    <i class="fa fa-calendar"></i><span class="nav-text">Jadwal Kuliah</span>
-                </a>
-            </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-book"></i><span class="nav-text">Hasil Studi</span>
-                    </a>
-                </li>
-                {{-- <li>
-                    <a href="{{ url('akademik/classes') }}">
-                        <i class="icon-chart menu-icon"></i><span class="nav-text">Transkrip</span>
-                    </a>
-                </li> --}}
+                    <li>
+                        <a href="{{ url('mahasiswa/jadwalkuliah') }}">
+                            <i class="fa fa-calendar"></i><span class="nav-text">Jadwal Kuliah</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('mahasiswa/nilai') }}">
+                            <i class="fa fa-book"></i><span class="nav-text">Hasil Studi</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>

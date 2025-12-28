@@ -1,69 +1,36 @@
 <?php
 
 namespace App\Models;
-use App\Models\MataKuliah;
 
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Mahasiswa extends Model
 {
-    use HasFactory, SoftDeletes;
-
-    // Tabel yang digunakan
     protected $table = 'mahasiswa';
 
-    // Kolom yang bisa diisi secara massal
-    protected $fillable = [
-        'nim',
-        'nama',
-        'jenis_kelamin',
-        'tanggal_lahir',
-        'tempat_lahir',
-        'email',
-        'telepon',
-        'alamat',
-        'fakultas',
-        'prodi',
-        'angkatan',
-        'status',
-        'foto',
-        'fakultas_id',
-        'prodi_id'
-    ];
-
-    // Casting tipe data
-    protected $casts = [
-        'tanggal_lahir' => 'date',
-    ];
-
-    /**
-     * Relasi ke Fakultas
-     */
-    public function fakultasRelation()
+    public function nilaiMahasiswa()
     {
-        return $this->belongsTo(Fakultas::class, 'fakultas_id');
+        return $this->hasMany(NilaiMahasiswa::class, 'mahasiswa_id');
     }
 
-    /**
-     * Relasi ke Prodi
-     */
+    public function mataKuliah()
+    {
+        return $this->belongsToMany(
+            Mata_kuliah::class,
+            'krs',
+            'mahasiswa_id',
+            'mata_kuliah_id'
+        );
+    }
+
+    // <-- Tambahkan relasi jika mau akses $mahasiswa->prodi->nama
     public function prodi()
     {
         return $this->belongsTo(ProgramStudi::class, 'prodi_id');
     }
 
-    /**
-     * Relasi ke Tahun Akademik
-     */
-    public function tahunAkademik()
-    {
-        return $this->belongsTo(TahunAkademik::class, 'tahun_akademik_id');
-    }
-
-
-
-
+public function tahunAkademik()
+{
+    return $this->belongsTo(TahunAkademik::class, 'tahun_akademik_id');
+}
 }

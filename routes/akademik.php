@@ -8,7 +8,8 @@ use App\Http\Controllers\Akademik\MatakuliahController;
 use App\Http\Controllers\Akademik\JadwalkuliahController;
 use App\Http\Controllers\SmartJadwalController;
 use App\Http\Controllers\Akademik\JadwalPdfController;
- use App\Http\Controllers\Akademik\DashboardController;
+use App\Http\Controllers\Akademik\DashboardController;
+use App\Http\Controllers\Akademik\MonitoringNilaiController;
 
 
 Route::middleware('auth')->prefix('akademik')->group(function () {
@@ -16,7 +17,7 @@ Route::middleware('auth')->prefix('akademik')->group(function () {
     // Dashboard
 
     Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->name('akademik.dashboard');
+        ->name('akademik.dashboard');
 
     // ===============================
     // Semester / Tahun Akademik
@@ -81,23 +82,26 @@ Route::middleware('auth')->prefix('akademik')->group(function () {
 
     Route::get('/jadwal/pdf-all', [JadwalPdfController::class, 'exportAll'])
         ->name('jadwal.pdf.all');
-Route::post('/jadwalkuliah/kirim-warek', [JadwalkuliahController::class, 'kirimWarek'])
-    ->name('jadwalkuliah.kirim.warek');
+    Route::post('/jadwalkuliah/kirim-warek', [JadwalkuliahController::class, 'kirimWarek'])
+        ->name('jadwalkuliah.kirim.warek');
 
 
 
-Route::post('/akademik/jadwalkuliah/distribusikan', [JadwalkuliahController::class, 'publish'])
-    ->name('jadwalkuliah.distribusikan')
-    ->middleware('auth');
+    Route::post('/akademik/jadwalkuliah/distribusikan', [JadwalkuliahController::class, 'publish'])
+        ->name('jadwalkuliah.distribusikan')
+        ->middleware('auth');
 
 
-// routes/web.php
-Route::get('/check-warek1-approval', [JadwalKuliahController::class, 'checkWarek1Approval']);
 
-Route::get('/debug-notif-warek1', function() {
-    $user = \App\Models\User::find(2); // warek1
-    return $user->notifications()->orderByPivot('created_at', 'desc')->get();
-});
+    Route::get('/check-warek1-approval', [JadwalKuliahController::class, 'checkWarek1Approval']);
+
+    Route::get('/debug-notif-warek1', function () {
+        $user = \App\Models\User::find(2); // warek1
+        return $user->notifications()->orderByPivot('created_at', 'desc')->get();
+    });
+
+   Route::get('/monitoringnilai', [MonitoringNilaiController::class, 'index'])
+        ->name('akademik.monitoringnilai.index');
 
 
 });

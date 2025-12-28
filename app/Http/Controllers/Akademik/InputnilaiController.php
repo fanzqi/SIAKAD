@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\Akademik;
 
 use App\Http\Controllers\Controller;
 use App\Models\InputNilai;
 use App\Models\TahunAkademik;
 use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,18 +18,12 @@ class InputNilaiController extends Controller
         return view('akademik.input-nilai.index', compact('inputNilai'));
     }
 
-  public function create()
+    public function create()
     {
-        // Ambil Tahun Akademik yang statusnya Aktif
         $tahunAktif = TahunAkademik::where('status', 'Aktif')->first();
-
-        // Jika tidak ada Tahun Akademik aktif, redirect
         if (!$tahunAktif) {
-            return redirect()->route('input-nilai.index')
-                ->with('error', 'Tidak ada Tahun Akademik aktif.');
+            return redirect()->route('input-nilai.index')->with('error', 'Tidak ada Tahun Akademik aktif.');
         }
-
-        // Kirim $tahunAktif ke view
         return view('akademik.input-nilai.create', compact('tahunAktif'));
     }
 
@@ -43,23 +39,26 @@ class InputNilaiController extends Controller
 
         $inputNilai = InputNilai::create($request->all());
 
-        // Notifikasi global untuk semua user
-        Notification::create([
-            'user_id' => null,
-            'author_name' => Auth::user()?->name ?? 'Sistem',
-            'type' => 'add',
-            'message' => 'Input Nilai "' . $inputNilai->deskripsi . '" untuk Tahun Akademik ' . $inputNilai->tahunAkademik->tahun_akademik . ' berhasil ditambahkan'
-        ]);
+        // Kirim notifikasi ke user dosen, kaprodi, dekan, warek1
+        $userRoles = ['dosen', 'kaprodi', 'dekan', 'warek1'];
+        $userNotif = User::whereIn('role', $userRoles)->get();
 
-        return redirect()->route('input-nilai.index')
-            ->with('success', 'Data input nilai berhasil ditambahkan.');
+        foreach($userNotif as $user) {
+            Notification::create([
+                'user_id' => $user->id,
+                'author_name' => Auth::user()?->name ?? 'Sistem',
+                'type' => 'add',
+                'message' => 'Periode Input Nilai "' . $inputNilai->deskripsi . '" untuk Tahun Akademik ' . $inputNilai->tahunAkademik->tahun_akademik . ' telah dimulai'
+            ]);
+        }
+
+        return redirect()->route('input-nilai.index')->with('success', 'Data input nilai berhasil ditambahkan.');
     }
 
     public function edit($id)
     {
         $inputNilai = InputNilai::findOrFail($id);
         $tahunAkademikList = TahunAkademik::all();
-
         return view('akademik.input-nilai.edit', compact('inputNilai', 'tahunAkademikList'));
     }
 
@@ -76,7 +75,6 @@ class InputNilaiController extends Controller
         $inputNilai = InputNilai::findOrFail($id);
         $inputNilai->update($request->all());
 
-        // Notifikasi khusus user yang update
         Notification::create([
             'user_id' => Auth::id(),
             'author_name' => Auth::user()?->name ?? 'Sistem',
@@ -84,8 +82,7 @@ class InputNilaiController extends Controller
             'message' => 'Mengedit Input Nilai "' . $inputNilai->deskripsi . '" untuk Tahun Akademik ' . $inputNilai->tahunAkademik->tahun_akademik
         ]);
 
-        return redirect()->route('input-nilai.index')
-            ->with('edit', 'Data input nilai berhasil diperbarui.');
+        return redirect()->route('input-nilai.index')->with('edit', 'Data input nilai berhasil diperbarui.');
     }
 
     public function destroy($id)
@@ -94,7 +91,6 @@ class InputNilaiController extends Controller
         $info = $inputNilai->deskripsi . ' (' . $inputNilai->tahunAkademik->tahun_akademik . ')';
         $inputNilai->delete();
 
-        // Notifikasi khusus user yang delete
         Notification::create([
             'user_id' => Auth::id(),
             'author_name' => Auth::user()?->name ?? 'Sistem',
@@ -102,7 +98,8 @@ class InputNilaiController extends Controller
             'message' => 'Menghapus Input Nilai ' . $info
         ]);
 
-        return redirect()->route('input-nilai.index')
-            ->with('delete', 'Data input nilai berhasil dihapus.');
+        return redirect()->route('input-nilai.index')->with('delete', 'Data input nilai berhasil dihapus.');
     }
+
+    
 }

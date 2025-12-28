@@ -148,22 +148,25 @@ class JadwalKuliahController extends Controller
     /**
      * Distribusi hasil ke civitas (mahasiswa, dosen, kaprodi, warek1, dekan)
      */
-    public function publish(Request $request)
-    {
-        $jadwalSiap = JadwalKuliah::where('status', 'disetujui')->get();
+public function publish(Request $request)
+{
+    $jadwalSiap = JadwalKuliah::where('status', 'disetujui')->get();
 
-        if ($jadwalSiap->isEmpty()) {
-            return back()->with('warning', 'Belum ada jadwal disetujui untuk didistribusi');
-        }
-
-        $pesan = "Seluruh jadwal kuliah yang telah disetujui telah didistribusikan ke seluruh civitas akademika.";
-        $this->sendNotifToRoles(
-            ['mahasiswa', 'dosen', 'kaprodi', 'warek1', 'dekan'],
-            'distribusi',
-            $pesan
-        );
-        return back()->with('success', 'Jadwal berhasil didistribusikan (notifikasi dikirim ke civitas)');
+    if ($jadwalSiap->isEmpty()) {
+        return back()->with('warning', 'Belum ada jadwal disetujui untuk didistribusi');
     }
+JadwalKuliah::where('status', 'disetujui')->update([
+    'status' => 'didistribusi'
+]);
+
+    $pesan = "Seluruh jadwal kuliah yang telah disetujui telah didistribusikan ke seluruh civitas akademika.";
+    $this->sendNotifToRoles(
+        ['mahasiswa', 'dosen', 'kaprodi', 'warek1', 'dekan'],
+        'distribusi',
+        $pesan
+    );
+    return back()->with('success', 'Jadwal berhasil didistribusikan (notifikasi dikirim ke civitas)');
+}
 
     /**
      * NOTIFIKASI KHUSUS: Kirim ke hanya ke $roles (tidak ke pengirim)

@@ -14,22 +14,20 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Ambil mahasiswa berdasarkan username (nim)
         $mahasiswa = Mahasiswa::with('prodi')
-            ->where('nim', $user->username)  // username di users = nim mahasiswa
+            ->where('nim', $user->username)
             ->first();
 
         if (!$mahasiswa) {
             abort(404, 'Mahasiswa tidak ditemukan');
         }
 
-        $kurikulumId = $mahasiswa->kurikulum_id;
 
-        // Hitung total mata kuliah dan total SKS di kurikulum
-        $totalMatkul = Kurikulum::where('id', $kurikulumId)->count();
-        $totalSks = Kurikulum::where('id', $kurikulumId)->sum('sks');
+        $listMatkul = Kurikulum::where('id', $mahasiswa->kurikulum_id)->get();
 
-        // Ambil 5 notifikasi terbaru
+        $totalMatkul = $listMatkul->count(); // ini pasti 1
+        $totalSks = $listMatkul->sum('sks');
+
         $notifications = Notification::latest()
             ->limit(5)
             ->get();
@@ -39,7 +37,8 @@ class DashboardController extends Controller
             'mahasiswa',
             'totalMatkul',
             'totalSks',
-            'notifications'
+            'notifications',
+            'listMatkul'
         ));
     }
 }

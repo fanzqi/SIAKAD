@@ -53,19 +53,15 @@ public function notifications()
         return $this->belongsTo(Dosen::class, 'dosen_id');
     }
 
-    public function mahasiswa()
-    {
-        return $this->belongsTo(Mahasiswa::class, 'mahasiswa_id');
-    }
+public function mahasiswa()
+{
+    return $this->hasOne(\App\Models\Mahasiswa::class, 'nim', 'username');
+}
 
 public function getNamaAttribute(): string
 {
     if ($this->role === 'dosen') {
         return $this->dosen?->nama_dosen ?? $this->name;
-    }
-
-    if ($this->role === 'mahasiswa') {
-        return $this->mahasiswa?->nama_mahasiswa ?? $this->name;
     }
 
     if ($this->role === 'kaprodi') {
@@ -74,5 +70,7 @@ public function getNamaAttribute(): string
 
     return $this->name ?? 'User';
 }
+
+
 
 }

@@ -13,7 +13,7 @@
                     <i class="icon-grid menu-icon"></i><span class="nav-text">Dosen</span>
                 </a>
                 <ul aria-expanded="false">
-            {{-- <li>
+                    {{-- <li>
                 <a href="{{ url('akademik/semester') }}">
                     <i class="fa fa-book"></i><span class="nav-text">Semester</span>
                 </a>
@@ -23,19 +23,19 @@
                     <i class="fa fa-calendar"></i><span class="nav-text">Jadwal Kuliah</span>
                 </a>
             </li> --}}
-            <li>
-    <a href="{{ url('dosen/jadwalkuliah') }}">
-        <i class="fa fa-check-square"></i>
-        <span class="nav-text">Jadwal Mengajar</span>
-    </a>
-</li>
+                    <li>
+                        <a href="{{ url('dosen/jadwalkuliah') }}">
+                            <i class="fa fa-check-square"></i>
+                            <span class="nav-text">Jadwal Mengajar</span>
+                        </a>
+                    </li>
 
-            <li>
-                <a href="{{ url('dosen/inputnilaimahasiswa') }}">
-                    <i class="fa fa-check-square"></i><span class="nav-text">Input Nilai Matkul</span>
-                </a>
-            </li>
-                {{-- <li>
+                    <li>
+                        <a href="{{ url('dosen/inputnilaimahasiswa') }}">
+                            <i class="fa fa-check-square"></i><span class="nav-text">Input Nilai Matkul</span>
+                        </a>
+                    </li>
+                    {{-- <li>
                     <a href="{{ url('akademik/classes') }}">
                         <i class="icon-chart menu-icon"></i><span class="nav-text">Monitoring Nilai</span>
                     </a>

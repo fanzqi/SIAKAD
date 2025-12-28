@@ -36,11 +36,10 @@ class JadwalController extends Controller
         $program_studi = ProgramStudi::where('fakultas_id', $fakultas_id)->get();
 
         // Ambil semua jadwal fakultas ini
-        $jadwal = Jadwalkuliah::with(['mata_kuliah', 'dosen', 'ruang'])
-                    ->where('is_published', true)
-                    ->where('fakultas_id', $fakultas_id)
-                    ->get();
-
+       $jadwal = Jadwalkuliah::with(['mata_kuliah', 'dosen', 'ruang'])
+    ->where('status', 'didistribusi')
+    ->where('fakultas_id', $fakultas_id)
+    ->get();
         // Buat array jadwal per prodi
         $jadwalPerProdi = [];
         foreach ($program_studi as $prodi) {

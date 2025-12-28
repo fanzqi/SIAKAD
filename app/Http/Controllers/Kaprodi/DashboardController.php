@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Kaprodi;
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use App\Models\TahunAkademik;
+use App\Models\JabatanStruktural;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -12,10 +13,17 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-
         $dosen = $user->dosen ?? null;
-        $prodi = $user->prodi ?? ($dosen ? $dosen->prodi : null);
-        $fakultas = $prodi ? $prodi->fakultas : null;
+
+        // Ambil jabatan Kaprodi aktif berdasarkan dosen yang login
+        $jabatanKaprodi = $dosen ? JabatanStruktural::where('dosen_id', $dosen->id)
+            ->where('jabatan', 'Kaprodi') // pastikan 'Kaprodi' persis dengan field di DB
+            ->where('status', 'Aktif')
+            ->first() : null;
+
+        // Relasi ke model ProgramStudi (prodi)
+        $prodi = $jabatanKaprodi && $jabatanKaprodi->prodi ? $jabatanKaprodi->prodi : null;
+        $fakultas = $prodi && $prodi->fakultas ? $prodi->fakultas : null;
 
         $totalMahasiswa = $prodi ? $prodi->mahasiswa()->count() : 0;
         $totalMatkul = $prodi ? $prodi->mataKuliahs()->count() : 0;
@@ -38,7 +46,6 @@ class DashboardController extends Controller
                 ];
             })
             : [];
-
 
         return view('kaprodi.dashboard.index', [
             'namaKaprodi' => $dosen->nama ?? 'Belum diatur',

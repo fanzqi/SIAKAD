@@ -123,12 +123,14 @@
                                         <td>
                                             @if ($jadwals->status == 'draft')
                                                 <span class="badge bg-warning text-white">Draft</span>
-                                            @elseif($jadwals->status == 'diajukan')
+                                            @elseif ($jadwals->status == 'diajukan')
                                                 <span class="badge bg-info text-white">Diajukan</span>
-                                            @elseif($jadwals->status == 'disetujui')
+                                            @elseif ($jadwals->status == 'disetujui')
                                                 <span class="badge bg-success text-white">Disetujui</span>
-                                            @elseif($jadwals->status == 'revisi')
+                                            @elseif ($jadwals->status == 'revisi')
                                                 <span class="badge bg-danger text-white">Revisi</span>
+                                            @elseif ($jadwals->status == 'didistribusi')
+                                                <span class="badge bg-primary text-white">Didistribusi</span>
                                             @endif
 
                                         </td>

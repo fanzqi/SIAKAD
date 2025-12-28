@@ -50,22 +50,22 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('akademik/jadwalkuliah') }}">
-                            <i class="fa fa-calendar"></i> Jadwal Kuliah
+                        <a href="{{ url('akademik/monitoringnilai') }}">
+                            <i class="icon-chart menu-icon"></i>
+                            <span class="nav-text">Monitoring Nilai</span>
                         </a>
                     </li>
+
                 </ul>
             </li>
 
             <!-- MONITORING -->
-            <li class="nav-label">Monitoring</li>
             <li>
-                <a href="{{ url('akademik/classes') }}">
+                <a href="{{ url('akademik/monitoringnilai') }}">
                     <i class="icon-chart menu-icon"></i>
                     <span class="nav-text">Monitoring Nilai</span>
                 </a>
             </li>
-
         </ul>
     </div>
 </div>

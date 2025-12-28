@@ -4,24 +4,25 @@ namespace App\Http\Controllers\Kaprodi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Jadwalkuliah;
-use App\Models\Dosen;
 use App\Models\JabatanStruktural;
 use Illuminate\Support\Facades\Auth;
-
 
 class JadwalController extends Controller
 {
     public function index()
     {
-        // Ambil data dosen yang login
-        $dosen = Dosen::where('nidn', Auth::user()->username)->firstOrFail();
+        $user = Auth::user();
+        $dosen = $user->dosen ?? null;
 
-        // Ambil id_prodi dari dosen_jabatan (Kaprodi aktif)
-        $jabatan = JabatanStruktural::where('dosen_id', $dosen->id)
-                    ->where('status', 'Aktif')
-                    ->first();
+        // Ambil jabatan Kaprodi aktif (mengutamakan jabatan KAPRODI, bukan sekedar status aktif)
+      $jabatanKaprodi = JabatanStruktural::where('dosen_id', $dosen->id)
+    ->where('jabatan', 'Kaprodi')
+    ->where('status', 'Aktif')
+    ->first();
 
-        if (!$jabatan) {
+        $prodi = $jabatanKaprodi && $jabatanKaprodi->prodi ? $jabatanKaprodi->prodi : null;
+
+        if (!$prodi) {
             return view('kaprodi.jadwalkuliah.index', [
                 'jadwal' => collect(),
                 'dosen' => $dosen,
@@ -29,13 +30,11 @@ class JadwalController extends Controller
             ]);
         }
 
-        $prodi_id = $jabatan->id_prodi;
-
-        // Ambil jadwal untuk prodi yang bersangkutan
+        // Ambil jadwal untuk prodi diampu kaprodi aktif
         $jadwal = Jadwalkuliah::with(['mata_kuliah', 'ruang'])
-                    ->where('is_published', true)
-                    ->where('program_studi_id', $prodi_id)
-                    ->get();
+            ->where('status', 'didistribusi')
+            ->where('program_studi_id', $prodi->id)
+            ->get();
 
         return view('kaprodi.jadwalkuliah.index', compact('jadwal', 'dosen'));
     }

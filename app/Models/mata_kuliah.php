@@ -36,4 +36,9 @@ class mata_kuliah extends Model
         return $this->belongsTo(ProgramStudi::class, 'program_studi_id');
     }
 
+    public function mahasiswa()
+    {
+        return $this->belongsToMany(Mahasiswa::class, 'krs', 'mata_kuliah_id', 'mahasiswa_id');
+    }
+
 }

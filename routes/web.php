@@ -28,7 +28,7 @@ include 'akademik.php';
 include 'warek1.php';
 include 'dekan.php';
 include 'kaprodi.php';
-include 'dosen.php';
+require_once __DIR__ .'/dosen.php';
 include 'mahasiswa.php';
 
 // ===============================
@@ -36,5 +36,5 @@ include 'mahasiswa.php';
 // ===============================
 Route::middleware('auth')->post('/notifications/global', [NotificationController::class, 'createGlobalNotification']);
 Route::patch('/akademik/notification/{id}', [NotificationController::class, 'markAsRead']);
-    Route::delete('/notifikasi/{id}', [NotificationController::class, 'destroy']);
+Route::delete('/notifikasi/{id}', [NotificationController::class, 'destroy']);
 Route::post('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead']);

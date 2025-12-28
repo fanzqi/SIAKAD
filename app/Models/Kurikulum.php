@@ -9,10 +9,8 @@ class Kurikulum extends Model
 {
     use HasFactory;
 
-    // Nama tabel, kalau tidak pakai konvensi Laravel
     protected $table = 'kurikulums';
 
-    // Field yang boleh diisi mass assignment
     protected $fillable = [
         'tahun_akademik_id',
         'kode_mk',
@@ -23,9 +21,9 @@ class Kurikulum extends Model
         'status',
     ];
 
-    // Relasi ke tahun akademik
     public function tahunAkademik()
     {
         return $this->belongsTo(TahunAkademik::class);
     }
+
 }

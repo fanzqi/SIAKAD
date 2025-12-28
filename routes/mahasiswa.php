@@ -10,4 +10,6 @@ Route::prefix('mahasiswa')->middleware(['auth'])->group(function () {
 
     Route::get('/jadwalkuliah', [JadwalController::class, 'index'])
         ->name('mahasiswa.jadwalkuliah');
+
+    Route::get('nilai', [\App\Http\Controllers\Mahasiswa\NilaiController::class, 'index'])->name('mahasiswa.nilai.index');
 });
