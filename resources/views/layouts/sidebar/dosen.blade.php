@@ -25,14 +25,15 @@
             </li> --}}
                     <li>
                         <a href="{{ url('dosen/jadwalkuliah') }}">
-                            <i class="fa fa-check-square"></i>
+                            <i class="fa fa-calendar"></i>
                             <span class="nav-text">Jadwal Mengajar</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ url('dosen/inputnilaimahasiswa') }}">
-                            <i class="fa fa-check-square"></i><span class="nav-text">Input Nilai Matkul</span>
+                            <i class="fa fa-check-square"></i>
+                            <span class="nav-text">Input Nilai Matkul</span>
                         </a>
                     </li>
                     {{-- <li>
