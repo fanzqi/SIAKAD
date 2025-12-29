@@ -27,9 +27,11 @@ class KurikulumController extends Controller
             return redirect()->route('input-nilai.index')
                 ->with('error', 'Tidak ada Tahun Akademik aktif.');
         }
-
+        
+        $kurikulums = Kurikulum::all();
+        
         // Kirim $tahunAktif ke view
-        return view('kaprodi.kurikulum.create', compact('tahunAktif'));
+        return view('kaprodi.kurikulum.create', compact('tahunAktif', 'kurikulums'));
     }
 
 
@@ -40,6 +42,7 @@ class KurikulumController extends Controller
             'tahun_akademik_id' => 'required|exists:tahun_akademik,id',
             'kode_mk' => 'required|string',
             'nama_mk' => 'required|string',
+            'semester' => 'required|integer|min:1|max:8',
             'sks' => 'required|integer',
             'wajib_pilihan' => 'required|in:Wajib,Pilihan',
             'prasyarat' => 'nullable|string',
@@ -50,6 +53,7 @@ class KurikulumController extends Controller
             'tahun_akademik_id',
             'kode_mk',
             'nama_mk',
+            'semester',
             'sks',
             'wajib_pilihan',
             'prasyarat',
@@ -76,6 +80,7 @@ class KurikulumController extends Controller
             'tahun_akademik_id' => 'required|exists:tahun_akademik,id',
             'kode_mk' => 'required|string',
             'nama_mk' => 'required|string',
+            'semester' => 'required|integer|min:1|max:8',
             'sks' => 'required|integer',
             'wajib_pilihan' => 'required|in:Wajib,Pilihan',
             'prasyarat' => 'nullable|string',
@@ -87,6 +92,7 @@ class KurikulumController extends Controller
             'tahun_akademik_id',
             'kode_mk',
             'nama_mk',
+            'semester',
             'sks',
             'wajib_pilihan',
             'prasyarat',

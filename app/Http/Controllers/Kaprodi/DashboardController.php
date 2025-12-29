@@ -31,21 +31,21 @@ class DashboardController extends Controller
         $notifications = Notification::latest()->limit(5)->get();
         $semesterBerjalan = TahunAkademik::latest()->first();
 
-        // Sebaran mahasiswa per semester
         $sebaranMahasiswaPerSemester = $prodi ? $prodi->mahasiswa()
-            ->join('tahun_akademik', 'mahasiswa.semester_aktif_id', '=', 'tahun_akademik.id')
-            ->whereIn('tahun_akademik.semester_ke', [1, 3, 5, 7])
-            ->selectRaw('tahun_akademik.semester_ke as semester, COUNT(mahasiswa.id) as jumlah')
-            ->groupBy('tahun_akademik.semester_ke')
-            ->orderBy('tahun_akademik.semester_ke')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'semester' => 'Semester ' . $item->semester,
-                    'jumlah' => $item->jumlah
-                ];
-            })
-            : [];
+
+    
+    ->join('tahun_akademik', 'mahasiswa.tahun_akademik_id', '=', 'tahun_akademik.id')
+    ->selectRaw('tahun_akademik.semester as semester, COUNT(mahasiswa.id) as jumlah')
+    ->groupBy('tahun_akademik.semester')
+    ->orderBy('tahun_akademik.semester')
+    ->get()
+    ->map(function($item) {
+        return [
+            'semester' => 'Semester ' . $item->semester,
+            'jumlah' => $item->jumlah
+        ];
+    }) : [];
+
 
         return view('kaprodi.dashboard.index', [
             'namaKaprodi' => $dosen->nama ?? 'Belum diatur',

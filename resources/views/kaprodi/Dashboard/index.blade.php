@@ -23,7 +23,7 @@
                     style="background: linear-gradient(90deg, #f7971e 0%, #ffd200 100%); color: #222; font-size: 0.85rem; padding: 0.25em 0.8em;">
                     {{ $namaFakultas }}
                 </span>
-                Podi
+                Prodi
                 <span class="badge badge-pill"
                     style="background: linear-gradient(90deg, #7571f9 0%, #9d4de6 100%); color: #fff; font-size: 0.85rem; padding: 0.25em 0.8em;">
                     {{ $namaProdi }}

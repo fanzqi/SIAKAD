@@ -18,9 +18,14 @@
                     <i class="fa fa-book"></i><span class="nav-text">Kurikulum</span>
                 </a>
             </li>
-            <li>
+            <!--<li>
                 <a href="{{ url('kaprodi/jadwalkuliah') }}">
                     <i class="fa fa-calendar"></i><span class="nav-text">Jadwal Kuliah</span>
+                </a>
+            </li> -->
+             <li>
+                <a href="{{ url('kaprodi/plotingdosen') }}">
+                    <i class="fa fa-calendar"></i><span class="nav-text">Ploting Dosen Matkul</span>
                 </a>
             </li>
                 <li>

@@ -17,22 +17,19 @@
 <!-- Floating Alerts -->
 <div style="position: fixed; top: 20px; right: 20px; z-index: 9999; width: 300px;">
     @foreach (['success','edit','delete'] as $msg)
-        @if (session($msg))
-            <div class="alert alert-{{ $msg == 'delete' ? 'warning' : ($msg == 'edit' ? 'info' : 'success') }} alert-dismissible fade show">
-                {{ session($msg) }}
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-        @endif
+    @if (session($msg))
+    <div class="alert alert-{{ $msg == 'delete' ? 'warning' : ($msg == 'edit' ? 'info' : 'success') }} alert-dismissible fade show">
+        {{ session($msg) }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    @endif
     @endforeach
 </div>
 
 <div class="container mt-4">
     <div class="card shadow-sm">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Form Tambah Kurikulum</h5>
-            <a href="{{ route('kurikulum.index') }}" class="btn btn-secondary btn-sm">
-                <i class="bi bi-arrow-left"></i> Kembali
-            </a>
+            <h4 class="mb-0">Form Tambah Kurikulum</h4>
         </div>
         <div class="card-body">
 
@@ -53,7 +50,7 @@
                         class="form-control @error('kode_mk') is-invalid @enderror"
                         value="{{ old('kode_mk') }}" required>
                     @error('kode_mk')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                    <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -63,7 +60,17 @@
                         class="form-control @error('nama_mk') is-invalid @enderror"
                         value="{{ old('nama_mk') }}" required>
                     @error('nama_mk')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="semester" class="form-label">Semester</label>
+                    <input type="number" name="semester" id="semester"
+                        class="form-control @error('semester') is-invalid @enderror"
+                        value="{{ old('semester') }}" required>
+                    @error('semester')
+                    <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -73,50 +80,48 @@
                         class="form-control @error('sks') is-invalid @enderror"
                         value="{{ old('sks') }}" required>
                     @error('sks')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                    <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
                     <label for="wajib_pilihan" class="form-label">Wajib/Pilihan</label>
-                    <select name="wajib_pilihan" id="wajib_pilihan" class="form-select @error('wajib_pilihan') is-invalid @enderror" required>
+                    <select name="wajib_pilihan" id="wajib_pilihan" class="form-control @error('wajib_pilihan') is-invalid @enderror" required>
                         <option value="">-- Pilih --</option>
                         <option value="Wajib" {{ old('wajib_pilihan') == 'Wajib' ? 'selected' : '' }}>Wajib</option>
                         <option value="Pilihan" {{ old('wajib_pilihan') == 'Pilihan' ? 'selected' : '' }}>Pilihan</option>
                     </select>
                     @error('wajib_pilihan')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                    <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
                     <label for="prasyarat" class="form-label">Mata Kuliah Prasyarat</label>
-                    <select name="prasyarat" id="prasyarat" class="form-select">
+                    <select name="prasyarat" id="prasyarat" class="form-control">
                         <option value="">Tidak Ada</option>
                         @foreach ($kurikulums as $mk)
-                            <option value="{{ $mk->kode_mk }}" {{ old('prasyarat') == $mk->kode_mk ? 'selected' : '' }}>
-                                {{ $mk->kode_mk }} - {{ $mk->nama_mk }}
-                            </option>
+                        <option value="{{ $mk->kode_mk }}" {{ old('prasyarat') == $mk->kode_mk ? 'selected' : '' }}>
+                            {{ $mk->kode_mk }} - {{ $mk->nama_mk }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="mb-3">
                     <label for="status" class="form-label">Status</label>
-                    <select name="status" id="status" class="form-select @error('status') is-invalid @enderror" required>
+                    <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
                         <option value="">-- Pilih --</option>
                         <option value="Aktif" {{ old('status') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
                         <option value="Nonaktif" {{ old('status') == 'Nonaktif' ? 'selected' : '' }}>Nonaktif</option>
                     </select>
                     @error('status')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                    <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="{{ route('kurikulum.index') }}" class="btn btn-secondary">Batal</a>
-                </div>
+                <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+                <a href="{{ route('kurikulum.index') }}" class="btn btn-secondary mt-3">Batal</a>
 
             </form>
 

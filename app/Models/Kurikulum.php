@@ -15,6 +15,7 @@ class Kurikulum extends Model
         'tahun_akademik_id',
         'kode_mk',
         'nama_mk',
+        'semester',
         'sks',
         'wajib_pilihan',
         'prasyarat',

@@ -15,6 +15,7 @@ class PlotingDosen extends Model
         'nama_mata_kuliah_id',
         'dosen',
         'kelas',
+        'id_prodi',
         'semester_id',
         'status',
     ];
@@ -29,6 +30,11 @@ class PlotingDosen extends Model
     {
         return $this->belongsTo(mata_kuliah::class, 'nama_mata_kuliah_id', 'id');
     }
+
+    public function dosen()
+{
+    return $this->belongsTo(Dosen::class);
+}
 
     // 🔗 dosen_id → dosen (NANTI)
     //public function dosen()
