@@ -42,9 +42,9 @@ class MonitoringNilaiController extends Controller
         // =========================
         $detailDosen = DB::table('dosen as d')
             ->leftJoin('fakultas as f', 'f.id', '=', 'd.fakultas_id')
-            ->leftJoin('program_studi as ps', 'ps.id', '=', 'd.prodi_id')
+            ->leftJoin('program_studi as ps', 'ps.id', '=', 'd.program_studi_id') // ✅ FIXED: prodi_id → program_studi_id
             ->when($fakultasId, fn ($q) => $q->where('d.fakultas_id', $fakultasId))
-            ->when($prodiId, fn ($q) => $q->where('d.prodi_id', $prodiId))
+            ->when($prodiId, fn ($q) => $q->where('d.program_studi_id', $prodiId)) // ✅ FIXED: prodi_id → program_studi_id
             ->select([
                 'd.id as dosen_id',
                 'd.nidn',
@@ -68,19 +68,18 @@ class MonitoringNilaiController extends Controller
                       AND nm.tahun_akademik_id = {$tahunAkademikId}
                 ) AS input_total"),
 
-                // ✅ expected_total:
-                // jumlah mahasiswa unik dari KRS untuk MK dosen tsb
-                // tapi hanya yang relevan terhadap TA yg dipilih (EXISTS nilai_mahasiswa)
+                // ✅ expected_total melalui kurikulums
                 DB::raw("(
                     SELECT COUNT(DISTINCT krs.mahasiswa_id)
                     FROM krs
-                    JOIN mata_kuliah mk ON mk.id = krs.mata_kuliah_id
+                    JOIN kurikulums k ON k.id = krs.kurikulum_id
+                    JOIN mata_kuliah mk ON mk.kode = k.kode_mk
                     WHERE mk.dosen_id = d.id
                       AND EXISTS (
                           SELECT 1
                           FROM nilai_mahasiswa nm2
                           WHERE nm2.mahasiswa_id = krs.mahasiswa_id
-                            AND nm2.mata_kuliah_id = krs.mata_kuliah_id
+                            AND nm2.mata_kuliah_id = mk.id
                             AND nm2.dosen_id = d.id
                             AND nm2.tahun_akademik_id = {$tahunAkademikId}
                       )
@@ -117,7 +116,7 @@ class MonitoringNilaiController extends Controller
                 $input    = (int) $items->sum('input_total');
 
                 return (object) [
-                    'nama_fakultas'  => $namaFakultas,
+                    'nama_fakultas'  => $namaFakultas ?: '-',
                     'expected_total' => $expected,
                     'input_total'    => $input,
                     'persen'         => $expected > 0 ? round(($input / $expected) * 100, 2) : 0,
@@ -135,7 +134,7 @@ class MonitoringNilaiController extends Controller
                 $input    = (int) $items->sum('input_total');
 
                 return (object) [
-                    'nama_prodi'     => $namaProdi,
+                    'nama_prodi'     => $namaProdi ?: '-',
                     'expected_total' => $expected,
                     'input_total'    => $input,
                     'persen'         => $expected > 0 ? round(($input / $expected) * 100, 2) : 0,
@@ -144,7 +143,7 @@ class MonitoringNilaiController extends Controller
             ->values();
 
         // =========================
-        // RETURN VIEW (PAKAI ARRAY BUKAN COMPACT)
+        // RETURN VIEW
         // =========================
         return view('akademik.monitoringnilai.index', [
             'tahunAkademikList' => $tahunAkademikList,
@@ -158,7 +157,7 @@ class MonitoringNilaiController extends Controller
             'rekapFakultas'     => $rekapFakultas,
             'rekapProdi'        => $rekapProdi,
 
-            'rows'              => $rows, // ✅ biar view kamu tidak error
+            'rows'              => $rows,
         ]);
     }
 }

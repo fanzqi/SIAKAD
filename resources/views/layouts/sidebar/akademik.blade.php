@@ -50,9 +50,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('akademik/monitoringnilai') }}">
-                            <i class="icon-chart menu-icon"></i>
-                            <span class="nav-text">Monitoring Nilai</span>
+                        <a href="{{ url('akademik/jadwalkuliah') }}">
+                            <i class="icon-chart date-icon"></i>
+                            <span class="nav-text">Jadwal Kuliah</span>
                         </a>
                     </li>
 

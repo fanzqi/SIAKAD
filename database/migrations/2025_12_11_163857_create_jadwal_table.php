@@ -6,84 +6,67 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::table('jadwal', function (Blueprint $table) {
+        Schema::create('jadwal', function (Blueprint $table) {
+            $table->id();
 
-            // ===== kolom fakultas & prodi =====
-            if (!Schema::hasColumn('jadwal', 'fakultas_id')) {
-                $table->unsignedBigInteger('fakultas_id')
-                      ->nullable()
-                      ->after('semester');
-                $table->foreign('fakultas_id')
-                      ->references('id')
-                      ->on('fakultas')
-                      ->onDelete('set null');
-            }
+            // Relasi
+            $table->foreignId('mata_kuliah_id')
+                ->constrained('mata_kuliah')
+                ->cascadeOnDelete();
 
-            if (!Schema::hasColumn('jadwal', 'program_studi_id')) {
-                $table->unsignedBigInteger('program_studi_id')
-                      ->nullable()
-                      ->after('fakultas_id');
-                $table->foreign('program_studi_id')
-                      ->references('id')
-                      ->on('program_studi')
-                      ->onDelete('set null');
-            }
+            $table->foreignId('ruangs_id')
+                ->constrained('ruangs')
+                ->cascadeOnDelete();
 
-            // ===== kolom status Warek 1 =====
-            if (!Schema::hasColumn('jadwal', 'status')) {
-                $table->enum('status', ['draft','diajukan','disetujui','revisi'])
-                      ->default('draft')
-                      ->after('program_studi_id');
-            }
+            $table->foreignId('dosen_id')
+                ->nullable()
+                ->constrained('dosen')
+                ->nullOnDelete();
 
-            // ===== kolom catatan Warek =====
-            if (!Schema::hasColumn('jadwal', 'catatan_warek')) {
-                $table->text('catatan_warek')
-                      ->nullable()
-                      ->after('status');
-            }
+            $table->string('semester');
+            $table->string('hari');
+            $table->time('jam_mulai');
+            $table->time('jam_selesai');
 
-            // ===== kolom tanggal persetujuan =====
-            if (!Schema::hasColumn('jadwal', 'tanggal_persetujuan')) {
-                $table->timestamp('tanggal_persetujuan')
-                      ->nullable()
-                      ->after('catatan_warek');
-            }
+            // Fakultas & program_studi
+            $table->foreignId('fakultas_id')
+                ->nullable()
+                ->constrained('fakultas')
+                ->nullOnDelete();
+
+            $table->foreignId('program_studi_id')
+                ->nullable()
+                ->constrained('program_studi')
+                ->nullOnDelete();
+
+            // Status Persetujuan
+            $table->enum('status', [
+                'draft',
+                'diajukan',
+                'disetujui',
+                'revisi'
+            ])->default('draft');
+
+            $table->text('catatan_warek')->nullable();
+
+            $table->timestamp('tanggal_persetujuan')->nullable();
+
+            $table->boolean('is_published')->default(false);
+
+            $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::table('jadwal', function (Blueprint $table) {
-
-            // drop foreign key dulu sebelum kolom
-            if (Schema::hasColumn('jadwal', 'fakultas_id')) {
-                $table->dropForeign(['fakultas_id']);
-            }
-            if (Schema::hasColumn('jadwal', 'program_studi_id')) {
-                $table->dropForeign(['program_studi_id']);
-            }
-
-            // drop kolom Warek
-            if (Schema::hasColumn('jadwal', 'status')) {
-                $table->dropColumn('status');
-            }
-            if (Schema::hasColumn('jadwal', 'catatan_warek')) {
-                $table->dropColumn('catatan_warek');
-            }
-            if (Schema::hasColumn('jadwal', 'tanggal_persetujuan')) {
-                $table->dropColumn('tanggal_persetujuan');
-            }
-
-            // drop kolom fakultas & prodi
-            if (Schema::hasColumn('jadwal', 'fakultas_id')) {
-                $table->dropColumn('fakultas_id');
-            }
-            if (Schema::hasColumn('jadwal', 'program_studi_id')) {
-                $table->dropColumn('program_studi_id');
-            }
-        });
+        Schema::dropIfExists('jadwal');
     }
 };

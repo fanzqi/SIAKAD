@@ -48,14 +48,14 @@ public function notifications()
         return $this->belongsTo(Fakultas::class, 'fakultas_id');
     }
 
-    public function dosen()
-    {
-        return $this->belongsTo(Dosen::class, 'dosen_id');
-    }
+ public function dosen()
+{
+    return $this->hasOne(Dosen::class);
+}
 
 public function mahasiswa()
 {
-    return $this->hasOne(\App\Models\Mahasiswa::class, 'nim', 'username');
+    return $this->hasOne(Mahasiswa::class);
 }
 
 public function getNamaAttribute(): string

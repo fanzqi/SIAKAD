@@ -24,13 +24,23 @@ class Mahasiswa extends Model
     }
 
     // <-- Tambahkan relasi jika mau akses $mahasiswa->prodi->nama
-    public function prodi()
-    {
-        return $this->belongsTo(ProgramStudi::class, 'prodi_id');
-    }
 
 public function tahunAkademik()
 {
     return $this->belongsTo(TahunAkademik::class, 'tahun_akademik_id');
+}
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
+public function fakultas()
+{
+    return $this->belongsTo(Fakultas::class);
+}
+
+public function prodi()
+{
+    return $this->belongsTo(ProgramStudi::class,'prodi_id');
 }
 }

@@ -528,3 +528,773 @@ D:\KULIAH\SMT V\PROYEK\SIAKAD\routes\dosen.php
 D:\KULIAH\SMT V\PROYEK\SIAKAD\routes\dosen.php
 D:\KULIAH\SMT V\PROYEK\SIAKAD\routes\dosen.php
 D:\KULIAH\SMT V\PROYEK\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+E:\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php
+D:\KULIAH\SMT VI\KKL\SIAKAD\routes\dosen.php

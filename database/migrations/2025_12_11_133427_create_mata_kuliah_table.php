@@ -10,18 +10,36 @@ return new class extends Migration
     {
         Schema::create('mata_kuliah', function (Blueprint $table) {
             $table->id();
-            $table->string('kode');
+
+            $table->string('kode')->unique();
             $table->string('nama_mata_kuliah');
-            $table->string('dosen');
-            $table->string('fakultas');
-            $table->string('program_studi');
-            $table->integer('sks');
-            $table->integer('fakultas_id');
-            $table->integer('progran_studi_id');
+            $table->unsignedTinyInteger('sks');
+
+            // relasi
+            $table->foreignId('dosen_id')
+                ->nullable()
+                ->constrained('dosen')
+                ->nullOnDelete();
+
+            $table->foreignId('fakultas_id')
+                ->nullable()
+                ->constrained('fakultas')
+                ->nullOnDelete();
+
+            $table->foreignId('program_studi_id')
+                ->nullable()
+                ->constrained('program_studi')
+                ->nullOnDelete();
+
+            // semester dan group
+            $table->unsignedTinyInteger('semester');
+            $table->string('group',10)->nullable();
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
-    
+
     public function down(): void
     {
         Schema::dropIfExists('mata_kuliah');

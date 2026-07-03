@@ -34,27 +34,23 @@ class Dosen extends Model
         'tanggal_lahir' => 'date',
     ];
 
-    /**
-     * Relasi ke Fakultas
-     */
-    public function fakultasRelation()
-    {
-        return $this->belongsTo(Fakultas::class, 'fakultas_id');
-    }
 
     /**
      * Relasi ke Prodi
      */
-    public function prodi()
-    {
-        return $this->belongsTo(ProgramStudi::class, 'prodi_id');
-    }
-    public function user()
-    {
-        return $this->hasOne(User::class, 'dosen_id');
-    }
-    public function jabatanStruktural()
-    {
-        return $this->hasMany(JabatanStruktural::class, 'dosen_id');
-    }
+   public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
+public function fakultas()
+{
+    return $this->belongsTo(Fakultas::class);
+}
+
+public function programStudi()
+{
+    return $this->belongsTo(ProgramStudi::class, 'program_studi_id');
+}
+
 }

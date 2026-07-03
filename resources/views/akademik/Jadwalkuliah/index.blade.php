@@ -106,20 +106,29 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
-                                @forelse($jadwal as $index => $jadwals)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $jadwals->mata_kuliah->nama_mata_kuliah }}</td>
-                                        <td>{{ $jadwals->mata_kuliah->dosen ? $jadwals->mata_kuliah->dosen->nama : '-' }}
-                                        </td>
-                                        <td>{{ $jadwals->mata_kuliah->program_studi ? $jadwals->mata_kuliah->program_studi->nama : '-' }}
-                                        </td>
-                                        <td>{{ $jadwals->semester }}</td>
-                                        <td>{{ $jadwals->mata_kuliah->group }}</td>
-                                        <td>{{ $jadwals->hari }}</td>
-                                        <td>{{ $jadwals->jam_mulai }} - {{ $jadwals->jam_selesai }}</td>
-                                        <td>{{ $jadwals->ruang->nama_ruang }}</td>
+                           <tbody>
+@forelse($jadwal as $index => $jadwals)
+<tr>
+    <td>{{ $index + 1 }}</td>
+
+    <td>{{ $jadwals->mata_kuliah->nama_mata_kuliah ?? '-' }}</td>
+
+    <td>{{ $jadwals->mata_kuliah->dosen->nama ?? '-' }}</td>
+
+    <td>{{ $jadwals->mata_kuliah->program_studi->nama ?? '-' }}</td>
+
+    <td>{{ $jadwals->mata_kuliah->semester ?? '-' }}</td>
+
+    <td>{{ $jadwals->mata_kuliah->group ?? '-' }}</td>
+
+    <td>{{ $jadwals->hari }}</td>
+
+    <td>{{ $jadwals->jam_mulai }} - {{ $jadwals->jam_selesai }}</td>
+
+    <td>{{ $jadwals->ruang->nama_ruang ?? '-' }}</td>
+
+
+
                                         <td>
                                             @if ($jadwals->status == 'draft')
                                                 <span class="badge bg-warning text-white">Draft</span>

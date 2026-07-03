@@ -77,11 +77,11 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $mk->kode }}</td>
                                 <td>{{ $mk->nama_mata_kuliah }}</td>
-                                <td>{{ $mk->dosen ? $mk->dosen->nama : '-' }}</td>
-                                <td>{{ $mk->fakultas ? $mk->fakultas->nama : '-' }}</td>
-                                <td>{{ $mk->program_studi ? $mk->program_studi->nama : '-' }}</td>
+                                <td>{{ $mk->dosen->nama ?? '-' }}</td>
+                                <td>{{ $mk->fakultas->nama ?? '-' }}</td>
+                                <td>{{ $mk->program_studi->nama ?? '-' }}</td>
                                 <td>{{ $mk->sks }}</td>
-                                <td>{{ $mk->group }}</td>
+                                <td>{{ $mk->group ?? '-' }}</td>
                                 {{-- <td>
                                     <div class="d-flex justify-content-between">
                                         <a href="{{ route('matakuliah.edit', $mk->id) }}" class="btn btn-sm btn-warning"
